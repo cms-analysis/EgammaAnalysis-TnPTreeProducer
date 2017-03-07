@@ -68,18 +68,11 @@ if inputTnPCrab.has_key('OriginalConfig'):
 print config
 
 
-### mount eos directory
-#print os.environ
-#subprocess.call(['bash','-i','-c','eosumount eos'])
-#subprocess.call(['bash','-i','-c','eosmount eos'])
-#os.rmdir('eos')
-#os.mkdir('eos')
-
 dasDataset = string.split(config.Data.inputDataset,'/')[1]
 crabName   = 'crab_' + config.General.requestName
 
 
-proc = subprocess.Popen('ls eos/cms/%s/%s/%s/*/*/*root'%(config.Data.outLFNDirBase,dasDataset,crabName), shell=True, 
+proc = subprocess.Popen('ls /eos/cms/%s/%s/%s/*/*/*root'%(config.Data.outLFNDirBase,dasDataset,crabName), shell=True, 
                         stdout=subprocess.PIPE)
 out,err = proc.communicate()
 filelistTmp = string.split(out,'\n')
@@ -221,5 +214,5 @@ haddCommand = ['hadd','-f',outFile]
 haddCommand += filelistTohAdd
 
 subprocess.call(haddCommand)
-subprocess.call(['mv',outFile,'eos/cms/%s'%config.Data.outLFNDirBase])
+subprocess.call(['mv',outFile,'/eos/cms/%s'%config.Data.outLFNDirBase])
 

@@ -16,7 +16,7 @@ config.General.transferLogs = False
 config.JobType.pluginName  = 'Analysis'
 
 # Name of the CMSSW configuration file
-config.JobType.psetName  = 'makeTree.py'
+config.JobType.psetName  = 'TnPTreeProducer_cfg.py'
 config.Data.allowNonValidInputDataset = False
 
 config.Data.inputDBS = 'global'
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     # We want to put all the CRAB project directories from the tasks we submit here into one common directory.
     # That's why we need to set this parameter (here or above in the configuration file, it does not matter, we will not overwrite it).
-    config.General.workArea = 'crab_projects_%s' % submitVersion
+    config.General.workArea = 'crab_%s' % submitVersion
 
     def submit(config):
         try:
