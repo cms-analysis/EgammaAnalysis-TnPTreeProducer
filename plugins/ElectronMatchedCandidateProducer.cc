@@ -1,4 +1,4 @@
-#include "EgammaAnalysis/tnp_tree_producer/plugins/ElectronMatchedCandidateProducer.h"
+#include "ElectronMatchedCandidateProducer.h"
 #include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "DataFormats/PatCandidates/interface/Electron.h"
