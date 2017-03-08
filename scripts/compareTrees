@@ -1,0 +1,221 @@
+#!/usr/bin/env python
+
+###### fcouderc: this is imported from TnPUtils (muons)
+
+import argparse
+import sys
+
+"""
+Setup argument parser
+"""
+
+# Parse arguments
+
+parser = argparse.ArgumentParser(description="The program goes through the target and reference files and compare all of the branches in the given directory and tree. A branch is compared with another by going through all events and calculate the mean squared error of the values. Whether the resulting mean squared error tagges the branch as different from the reference can be controlled by the 'cut' argument. NOTE: It is assumed that the number of events of the given input ROOT files are identical!")
+parser.add_argument("filenameTarget", help="Path to the Tag-And-Probe ROOT file which is compared against the reference")
+parser.add_argument("filenameReference", help="Path to the Tag-And-Probe ROOT file which serves as reference")
+parser.add_argument("-d", "--directory", default="tpTree", help="Directory in the input ROOT files which contains the Tag-And-Probe tree")
+parser.add_argument("-t", "--tree", default="fitter_tree", help="Name of the tree holding the variables which shall be compared")
+parser.add_argument("-v", "--verbosity", default=0, action="count", help="Increase output verbosity by printing names of branches which do not differ")
+parser.add_argument("-c", "--cut", default=0, help="Branches with a difference below this cut will not be treated as different")
+parser.add_argument("-s", "--singleValue", default=0, action="count", help="Show branches in target and reference which are filled with a single value")
+args = parser.parse_args()
+
+"""
+Compare variables of input files
+"""
+
+from ROOT import * # import this here, otherwise it overwrites the argparse stuff
+
+# Get tree and branches from target and reference
+fileTarget = TFile.Open(args.filenameTarget)
+fileReference = TFile.Open(args.filenameReference)
+if not fileTarget:
+    print('[ERROR] Target file does not exist: {}'.format(args.filenameTarget))
+    sys.exit()
+if not fileReference:
+    print('[ERROR] Reference file does not exist: {}'.format(args.filenameReference))
+    sys.exit()
+
+dirTarget = fileTarget.GetDirectory(args.directory)
+dirReference = fileReference.GetDirectory(args.directory)
+if not dirTarget:
+    print('[ERROR] Directory does not exist in target file: {}'.format(args.directory))
+    sys.exit()
+if not dirReference:
+    print('[ERROR] Directory does not exist in reference file: {}'.format(args.directory))
+    sys.exit()
+
+treeTarget = dirTarget.Get(args.tree)
+treeReference = dirReference.Get(args.tree)
+if not treeTarget:
+    print('[ERROR] Tree does not exist in target file: {}'.format(args.tree))
+    sys.exit()
+if not treeReference:
+    print('[ERROR] Tree does not exist in reference file: {}'.format(args.tree))
+    sys.exit()
+
+numEvents = treeReference.GetEntries() # number of events
+if treeTarget.GetEntries() != treeReference.GetEntries():
+    print('[ERROR] Target and reference file have different number of events: {}/{}'.format(treeTarget.GetEntries(), treeReference.GetEntries()))
+    sys.exit()
+
+print " -- comparing nEvts: " , numEvents
+
+# Compare the trees
+branchesReference = treeReference.GetListOfBranches()
+branchesTarget = treeTarget.GetListOfBranches()
+branchesNotInTarget = [] # branches found in reference but not in target
+branchesNotInReference = [] # branches found in target but not in reference
+branchesSame = [] # branches found in both and do not differ
+branchesDiffer = [] # branches found in both but differ
+branchesTargetSingleVal = [] # branches in target filled with a single value
+branchesRefSingleVal = [] # branches in reference filled with a single value
+
+for branchRef in branchesReference:
+    # Compare branches in reference with branches in target
+#    print " -- comparing branch ", branchRef.GetName() 
+    if treeTarget.GetBranch(branchRef.GetName()):
+        # Check whether the branches differ by going through branch event by event
+        branchTarget = treeTarget.GetBranch(branchRef.GetName())        
+        leafTarget = branchTarget.GetLeaf(branchRef.GetListOfLeaves()[0].GetName())
+        leafRef = branchRef.GetLeaf(branchRef.GetListOfLeaves()[0].GetName())
+
+        if not leafTarget : print ' - null target pointer for branch ', branchRef.GetName() 
+        if not leafRef    : print ' - null ref    pointer for branch ', branchRef.GetName() 
+        
+        if not leafTarget :
+            branchTarget.Print()
+            for leaf in branchTarget.GetListOfLeaves():
+                leaf.Print()
+        mse = 0
+        for iEvent in range(numEvents):
+            branchTarget.GetEntry(iEvent)
+            branchRef.GetEntry(iEvent)
+            if leafTarget and leafRef:
+                mse += (leafTarget.GetValue()-leafRef.GetValue())**2
+        mse /= numEvents
+        if mse>args.cut:
+            branchesDiffer.append({'name' : branchRef.GetName(), 'MSE' : mse})
+        else:
+            branchesSame.append({'name' : branchRef.GetName()})
+    else:
+        branchesNotInTarget.append({'name' : branchRef.GetName()})
+
+# Check whether all branches in target are as well in reference
+for branchTarget in branchesTarget:
+    if not treeReference.GetBranch(branchTarget.GetName()):
+        branchesNotInReference.append({'name' : branchTarget.GetName()})
+
+# Check for single values in branches
+if args.singleValue:
+    for branch in branchesTarget:
+        leaf = branch.GetLeaf(branch.GetName())
+        refVal = None
+        hasMultVals = False
+        for iEvent in range(numEvents):
+            branch.GetEntry(iEvent)
+            if iEvent==0:
+                refVal = leaf.GetValue()
+            else:
+                if refVal != leaf.GetValue(): hasMultVals = True
+        if not hasMultVals:
+            branchesTargetSingleVal.append({'name' : branch.GetName(), 'value' : refVal})
+
+    for branch in branchesReference:
+        leaf = branch.GetLeaf(branch.GetName())
+        refVal = None
+        hasMultVals = False
+        for iEvent in range(numEvents):
+            branch.GetEntry(iEvent)
+            if iEvent==0:
+                refVal = leaf.GetValue()
+            else:
+                if refVal != leaf.GetValue(): hasMultVals = True
+        if not hasMultVals:
+            branchesRefSingleVal.append({'name' : branch.GetName(), 'value' : refVal})
+
+"""
+Print summary
+"""
+
+print('Used parameters:')
+print('----------------')
+print('Target file:    {}'.format(args.filenameTarget))
+print('Reference file: {}'.format(args.filenameReference))
+print('Directory name: {}'.format(args.directory))
+print('Tree name:      {}'.format(args.tree))
+print('Cut value:      {}'.format(args.cut))
+print('')
+
+print('Trees properties:')
+print('-----------------')
+print('Number of events (target/reference): {}/{}'.format(treeTarget.GetEntries(), treeReference.GetEntries()))
+print('Number of branches (target/reference): {}/{}'.format(len(branchesTarget), len(branchesReference)))
+print('')
+
+print('Branches which do not differ:')
+print('-----------------------------')
+if args.verbosity :
+    for branch in branchesSame:
+        print(branch['name'])
+else:
+    print('Increase verbosity (-v) to show this')
+print('')
+print('Entries: {}'.format(len(branchesSame)))
+print('')
+
+print('Branches which differ:')
+print('----------------------')
+
+for branch in branchesDiffer:
+    print('{} : MSE {}'.format(branch['name'], branch['MSE']))
+print('')
+print('Entries: {}'.format(len(branchesDiffer)))
+print('')
+
+print('Branches found in reference but not in target:')
+print('----------------------------------------------')
+
+for branch in branchesNotInTarget:
+    print(branch['name'])
+print('')
+print('Entries: {}'.format(len(branchesNotInTarget)))
+print('')
+
+print('Branches found in target but not in reference:')
+print('----------------------------------------------')
+
+for branch in branchesNotInReference:
+    print(branch['name'])
+print('')
+print('Entries: {}'.format(len(branchesNotInReference)))
+print('')
+
+print('Branches in target with a single value in all entries:')
+print('------------------------------------------------------')
+
+if args.singleValue:
+    for branch in branchesTargetSingleVal:
+        print('{} : value {}'.format(branch['name'], branch['value']))
+    print('')
+    print('Entries: {}'.format(len(branchesTargetSingleVal)))
+    print('')
+else:
+    print('')
+    print('Set flag (-s) to enable this')
+    print('')
+
+print('Branches in reference with a single value in all entries:')
+print('---------------------------------------------------------')
+
+if args.singleValue:
+    for branch in branchesTargetSingleVal:
+        print('{} : value {}'.format(branch['name'], branch['value']))
+    print('')
+    print('Entries: {}'.format(len(branchesRefSingleVal)))
+    print('')
+else:
+    print('')
+    print('Set flag (-s) to enable this')
+    print('')
