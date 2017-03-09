@@ -10,5 +10,8 @@ DEFINE_FWK_MODULE(PatElectronSelectorByValueMap);
 typedef SelectorByValueMap<reco::GsfElectron, bool> GsfElectronSelectorByValueMap;
 DEFINE_FWK_MODULE(GsfElectronSelectorByValueMap);
 
-typedef SelectorByValueMap<pat::Photon, bool> PatPhotonSelectorByValueMap;
+typedef SelectorByValueMap<reco::Photon, bool> PhotonSelectorByValueMap;
+DEFINE_FWK_MODULE(PhotonSelectorByValueMap);
+
+typedef SelectorByValueMap<pat::Photon , bool> PatPhotonSelectorByValueMap;
 DEFINE_FWK_MODULE(PatPhotonSelectorByValueMap);
