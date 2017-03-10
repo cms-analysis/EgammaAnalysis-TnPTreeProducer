@@ -12,19 +12,20 @@ ZVariablesToStore = cms.PSet(
     )   
 
 SCProbeVariablesToStore = cms.PSet(
-    probe_sc_eta    = cms.string("eta"),
-    probe_sc_abseta = cms.string("abs(eta)"),
-    probe_sc_pt     = cms.string("pt"),
-    probe_sc_et     = cms.string("et"),
-    probe_sc_e      = cms.string("energy"),
-
-    probe_sc_tkIso  = cms.InputTag("recoEcalCandidateHelper:scTkIso"),
+    sc_eta    = cms.string("eta"),
+    sc_abseta = cms.string("abs(eta)"),
+    sc_pt     = cms.string("pt"),
+    sc_et     = cms.string("et"),
+    sc_e      = cms.string("energy"),
+    sc_tkIso  = cms.InputTag("recoEcalCandidateHelper:scTkIso"),
     )
 
 EleProbeVariablesToStore = cms.PSet(
     el_eta    = cms.string("eta"),
+    el_phi    = cms.string("phi"),
     el_abseta = cms.string("abs(eta)"),
     el_pt     = cms.string("pt"),
+    el_pf_pt  = cms.InputTag("eleVarHelper:pfPt"),
     el_et     = cms.string("et"),
     el_e      = cms.string("energy"),
     el_q      = cms.string("charge"),
@@ -53,6 +54,7 @@ EleProbeVariablesToStore = cms.PSet(
     el_5x5_e5x5      = cms.string("full5x5_showerShape().e5x5"),
     el_5x5_r9        = cms.string("full5x5_showerShape().r9"),
     el_5x5_sieie     = cms.string("full5x5_showerShape().sigmaIetaIeta"),    
+    el_5x5_sieip     = cms.string("full5x5_showerShape().sigmaIetaIphi"),    
     el_e1x5          = cms.string("showerShape().e1x5"),
     el_e2x5          = cms.string("showerShape().e2x5Max"),
     el_e5x5          = cms.string("showerShape().e5x5"),
@@ -62,6 +64,7 @@ EleProbeVariablesToStore = cms.PSet(
     el_hoe           = cms.string("hcalOverEcalBc"),
     el_eoverp        = cms.string("(superCluster().rawEnergy+superCluster().preshowerEnergy)/gsfTrack().pMode()"),
 
+    # mva id
     el_nonTrigMVA    = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15NonTrig25nsV1Values"),
     el_nonTrigMVA80X = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16GeneralPurposeV1Values"),
     el_hzzMVA80X     = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16HZZV1Values"),
@@ -77,9 +80,9 @@ EleProbeVariablesToStore = cms.PSet(
     el_dr03TkSumPt   = cms.string("dr03TkSumPt"),
 
     # tracker
-    el_trk_pt        = cms.string("gsfTrack().ptMode"),
-    el_trk_eta       = cms.string("gsfTrack().etaMode"),
-    el_trk_phi       = cms.string("gsfTrack().phiMode"),
+    el_tk_pt        = cms.string("gsfTrack().ptMode"),
+    el_tk_eta       = cms.string("gsfTrack().etaMode"),
+    el_tk_phi       = cms.string("gsfTrack().phiMode"),
     el_fbrem         = cms.string("fbrem"),
     el_chisq         = cms.InputTag("eleVarHelper:chi2"),
     el_mHits         = cms.InputTag("eleVarHelper:missinghits"),
@@ -91,35 +94,35 @@ EleProbeVariablesToStore = cms.PSet(
     )
 
 PhoProbeVariablesToStore = cms.PSet(
-    probe_Pho_eta    = cms.string("eta"),
-    probe_Pho_abseta = cms.string("abs(eta)"),
-    probe_Pho_et     = cms.string("et"),
-    probe_Pho_e      = cms.string("energy"),
+    ph_eta    = cms.string("eta"),
+    ph_abseta = cms.string("abs(eta)"),
+    ph_et     = cms.string("et"),
+    ph_e      = cms.string("energy"),
 
 ## super cluster quantities
-    probe_sc_energy = cms.string("superCluster.energy"),
-    probe_sc_et     = cms.string("superCluster.energy*sin(superCluster.position.theta)"),    
-    probe_sc_eta    = cms.string("-log(tan(superCluster.position.theta/2))"),
-    probe_sc_abseta = cms.string("abs(-log(tan(superCluster.position.theta/2)))"),
+    ph_sc_energy = cms.string("superCluster.energy"),
+    ph_sc_et     = cms.string("superCluster.energy*sin(superCluster.position.theta)"),    
+    ph_sc_eta    = cms.string("-log(tan(superCluster.position.theta/2))"),
+    phsc_abseta = cms.string("abs(-log(tan(superCluster.position.theta/2)))"),
 
 
 #id based
-    probe_Pho_full5x5x_r9   = cms.string("full5x5_r9"),
-    probe_Pho_r9            = cms.string("r9"),
-    probe_Pho_sieie         = cms.string("full5x5_sigmaIetaIeta"),
-    probe_Pho_sieip         = cms.InputTag("photonIDValueMapProducer:phoFull5x5SigmaIEtaIPhi"),
-    probe_Pho_ESsigma       = cms.InputTag("photonIDValueMapProducer:phoESEffSigmaRR"),
-    probe_Pho_hoe           = cms.string("hadronicOverEm"),
+    ph_full5x5x_r9   = cms.string("full5x5_r9"),
+    ph_r9            = cms.string("r9"),
+    ph_sieie         = cms.string("full5x5_sigmaIetaIeta"),
+    ph_sieip         = cms.InputTag("photonIDValueMapProducer:phoFull5x5SigmaIEtaIPhi"),
+    ph_ESsigma       = cms.InputTag("photonIDValueMapProducer:phoESEffSigmaRR"),
+    ph_hoe           = cms.string("hadronicOverEm"),
 
 #iso
-    probe_Pho_chIso    = cms.InputTag("photonIDValueMapProducer:phoChargedIsolation"),
-    probe_Pho_neuIso   = cms.InputTag("photonIDValueMapProducer:phoNeutralHadronIsolation"),
-    probe_Pho_phoIso   = cms.InputTag("photonIDValueMapProducer:phoPhotonIsolation"),
-    probe_Pho_chWorIso = cms.InputTag("photonIDValueMapProducer:phoWorstChargedIsolation"), 
+    ph_chIso    = cms.InputTag("photonIDValueMapProducer:phoChargedIsolation"),
+    ph_neuIso   = cms.InputTag("photonIDValueMapProducer:phoNeutralHadronIsolation"),
+    ph_phoIso   = cms.InputTag("photonIDValueMapProducer:phoPhotonIsolation"),
+    ph_chWorIso = cms.InputTag("photonIDValueMapProducer:phoWorstChargedIsolation"), 
 
 #pho mva
-    probe_mva          = cms.InputTag("photonMVAValueMapProducer:PhotonMVAEstimatorRun2Spring15NonTrig25nsV2p1Values"),
-    probe_mva80X       = cms.InputTag("photonMVAValueMapProducer:PhotonMVAEstimatorRun2Spring16NonTrigV1Values"),
+    ph_mva          = cms.InputTag("photonMVAValueMapProducer:PhotonMVAEstimatorRun2Spring15NonTrig25nsV2p1Values"),
+    ph_mva80X       = cms.InputTag("photonMVAValueMapProducer:PhotonMVAEstimatorRun2Spring16NonTrigV1Values"),
 )
 
 
@@ -189,7 +192,7 @@ mcTruthCommonStuff = cms.PSet(
     #checkMotherInUnbiasEff = cms.bool(False),
     mcVariables = cms.PSet(
         probe_eta    = cms.string("eta"),
-        probe_abseta = cms.string("abs(eta)"),
+        probe_phi    = cms.string("phi"),
         probe_et     = cms.string("et"),
         probe_e      = cms.string("energy"),
         ),
@@ -212,3 +215,8 @@ def setupTnPVariablesForAOD():
     CommonStuffForPhotonProbe.pileupInfoTag          = cms.InputTag("addPileupInfo")
     CommonStuffForPhotonProbe.vertexCollection       = cms.InputTag("offlinePrimaryVerticesWithBS")
     CommonStuffForPhotonProbe.pfMet                  = cms.InputTag("pfMet")
+
+    del CommonStuffForGsfElectronProbe.variables.el_ecalIso
+    del CommonStuffForGsfElectronProbe.variables.el_hcalIso
+    del CommonStuffForGsfElectronProbe.variables.el_trkIso
+   

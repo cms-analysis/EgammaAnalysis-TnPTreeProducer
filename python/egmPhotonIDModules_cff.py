@@ -9,9 +9,11 @@ from PhysicsTools.SelectorUtils.tools.vid_id_tools import *
 def setIDs(process, options):
 
     dataFormat = DataFormat.MiniAOD
+    phoProducer = "PatPhotonSelectorByValueMap"
     if (options['useAOD']):
         dataFormat = DataFormat.AOD
-        
+        phoProducer = "PhotonSelectorByValueMap"
+
     switchOnVIDPhotonIdProducer(process, dataFormat)
         
     # define which IDs we want to produce
@@ -30,12 +32,12 @@ def setIDs(process, options):
     process.photonMVAValueMapProducer.src        = cms.InputTag(options['PHOTON_COLL'])
 
 
-    process.probePhoCutBasedLoose = cms.EDProducer("PatPhotonSelectorByValueMap",
-                                                           input     = cms.InputTag("goodPhotons"),
-                                                           cut       = cms.string(options['PHOTON_CUTS']),
-                                                           selection = cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Spring15-25ns-V1-standalone-loose"),
-                                                           id_cut    = cms.bool(True)
-                                                           )
+    process.probePhoCutBasedLoose = cms.EDProducer( phoProducer,
+                                                    input     = cms.InputTag("goodPhotons"),
+                                                    cut       = cms.string(options['PHOTON_CUTS']),
+                                                    selection = cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Spring15-25ns-V1-standalone-loose"),
+                                                    id_cut    = cms.bool(True)
+                                                    )
 
     process.probePhoCutBasedMedium = process.probePhoCutBasedLoose.clone()
     process.probePhoCutBasedMedium.selection = cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Spring15-25ns-V1-standalone-medium")
