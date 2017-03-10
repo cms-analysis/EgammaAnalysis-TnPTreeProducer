@@ -55,7 +55,8 @@ def setTagsProbes(process, options):
                                         dR          = cms.double(0.3),
                                         isAND       = cms.bool(True)
                                         )
-
+    if options['useAOD'] : process.probePho = process.goodPhotons.clone()
+    
     ######################### PROBE SCs #############################    
     process.probeSC     = cms.EDProducer("RecoEcalCandidateTriggerCandProducer",
                                             filterNames  = cms.vstring(options['TnPHLTProbeFilters']),
@@ -74,10 +75,13 @@ def setTagsProbes(process, options):
 
     ########################## gen tag & probes ######################
     if options['isMC'] :
-        process.genEle    = cms.EDFilter( "GenParticleSelector",
+        cut_gen_standard = 'abs(pdgId) == 11 && pt > 3 && abs(eta) < 2.7 && isPromptFinalState'
+        cut_gen_flashgg  = 'abs(pdgId) == 11 && pt > 3 && abs(eta) < 2.7 && ( isPromptFinalState || status == 23)'
+        cut_gen_tau      = 'abs(pdgId) == 11 && pt > 3 && abs(eta) < 2.7 && ( isPromptFinalState || isDirectPromptTauDecayProductFinalState) '
+        
+        process.genEle   = cms.EDFilter( "GenParticleSelector",
                                           src = cms.InputTag(genParticles), 
-                                          cut = cms.string("abs(pdgId) == 11 && pt > 3 && abs(eta) < 2.7 && ( isPromptFinalState || status == 23 )"),
-
+                                          cut = cms.string(cut_gen_standard),
                                           )
 
         process.genTagEle = cms.EDProducer("MCMatcher",
@@ -87,7 +91,7 @@ def setTagsProbes(process, options):
                                             mcPdgId  = cms.vint32(),
                                             checkCharge = cms.bool(False),
                                             maxDeltaR   = cms.double(0.20),   # Minimum deltaR for the match
-                                            maxDPtRel   = cms.double(5.0),    # Minimum deltaPt/Pt for the match
+                                            maxDPtRel   = cms.double(50.0),    # Minimum deltaPt/Pt for the match
                                             resolveAmbiguities    = cms.bool(False), # Forbid two RECO objects to match to the same GEN objec
                                             resolveByMatchQuality = cms.bool(True),  # False = just match input in order; True = pick lowest deltaR pair first
                                             )        
@@ -99,23 +103,23 @@ def setTagsProbes(process, options):
         
     ########################### TnP pairs ############################
     masscut = cms.string("50<mass<130")         
-    process.tagTightEleHLT   = cms.EDProducer("CandViewShallowCloneCombiner",
-                                                decay = cms.string("tagEle@+ probeEle@-"), 
-                                                checkCharge = cms.bool(True),
-                                                cut = masscut,
-                                            )
+    process.tnpPairingEleHLT   = cms.EDProducer("CandViewShallowCloneCombiner",
+                                        decay = cms.string("tagEle@+ probeEle@-"), 
+                                        checkCharge = cms.bool(True),
+                                        cut = masscut,
+                                        )
     
-    process.tagTightSC                = process.tagTightEleHLT.clone()
-    process.tagTightSC.decay          = cms.string("tagEle probeSC" ) 
-    process.tagTightSC.checkCharge    = cms.bool(False)
+    process.tnpPairingEleRec             = process.tnpPairingEleHLT.clone()
+    process.tnpPairingEleRec.decay       = cms.string("tagEle probeSC" ) 
+    process.tnpPairingEleRec.checkCharge = cms.bool(False)
     
-    process.tagTightEleID             = process.tagTightSC.clone()
-    process.tagTightEleID.decay       = cms.string("tagEle probeEle")
-    process.tagTightEleID.checkCharge = cms.bool(False)
+    process.tnpPairingEleIDs             = process.tnpPairingEleHLT.clone()
+    process.tnpPairingEleIDs.decay       = cms.string("tagEle probeEle")
+    process.tnpPairingEleIDs.checkCharge = cms.bool(False)
 
-    process.tagTightPhoID             = process.tagTightSC.clone()
-    process.tagTightPhoID.decay       = cms.string("tagEle probePho")
-    process.tagTightPhoID.checkCharge = cms.bool(False)
+    process.tnpPairingPhoIDs             = process.tnpPairingEleHLT.clone()
+    process.tnpPairingPhoIDs.decay       = cms.string("tagEle probePho")
+    process.tnpPairingPhoIDs.checkCharge = cms.bool(False)
 
     ######################## probe passing ID ##########################
     import EgammaAnalysis.TnPTreeProducer.egmElectronIDModules_cff as egmEleID
@@ -156,38 +160,37 @@ def setSequences(process, options):
     process.sc_sequence += process.probeSC
     process.sc_sequence += process.probeSCEle
 
-    if not options['useAOD'] :
-        process.ele_sequence = cms.Sequence(
-            process.probeEleHLTsafe           +
-            process.probeEleCutBasedVeto      +
-            process.probeEleCutBasedLoose     +
-            process.probeEleCutBasedMedium    +
-            process.probeEleCutBasedTight     +
-            process.probeEleCutBasedVeto80X   +
-            process.probeEleCutBasedLoose80X  +
-            process.probeEleCutBasedMedium80X +
-            process.probeEleCutBasedTight80X  +
-            process.probeEleMVA80Xwp90        +
-            process.probeEleMVA80Xwp80        +
-            process.probeEle 
-            )
+    process.ele_sequence = cms.Sequence(
+        process.probeEleCutBasedVeto      +
+        process.probeEleCutBasedLoose     +
+        process.probeEleCutBasedMedium    +
+        process.probeEleCutBasedTight     +
+        process.probeEleCutBasedVeto80X   +
+        process.probeEleCutBasedLoose80X  +
+        process.probeEleCutBasedMedium80X +
+        process.probeEleCutBasedTight80X  +
+        process.probeEleMVA80Xwp90        +
+        process.probeEleMVA80Xwp80        +
+        process.probeEle 
+        )
+    if not options['useAOD'] : process.ele_sequence += process.probeEleHLTsafe
 
-        process.pho_sequence = cms.Sequence(
-            process.goodPhotons               +
-            process.egmPhotonIDSequence       +
-            process.probePhoCutBasedLoose     +
-            process.probePhoCutBasedMedium    +
-            process.probePhoCutBasedTight     +
-            process.probePhoMVA               +
-            #        process.probePhoCutBasedLoose80X  +
-            #        process.probePhoCutBasedMedium80X +
-            #        process.probePhoCutBasedTight80X  +
-            #        process.probePhoMVA80Xwp90       +
-            #        process.probePhoMVA80Xwp80       +
-            process.probePho                
-            )
+    process.pho_sequence = cms.Sequence(
+        process.goodPhotons               +
+        process.egmPhotonIDSequence       +
+        process.probePhoCutBasedLoose     +
+        process.probePhoCutBasedMedium    +
+        process.probePhoCutBasedTight     +
+        process.probePhoMVA               +
+        #        process.probePhoCutBasedLoose80X  +
+        #        process.probePhoCutBasedMedium80X +
+        #        process.probePhoCutBasedTight80X  +
+        #        process.probePhoMVA80Xwp90       +
+        #        process.probePhoMVA80Xwp80       +
+        process.probePho                
+        )
 
-        process.hlt_sequence = cms.Sequence( process.probeElePassHLT )
+    process.hlt_sequence = cms.Sequence( process.probeElePassHLT )
 
     if options['isMC'] :
         process.tag_sequence += process.genEle + process.genTagEle 
@@ -214,6 +217,7 @@ def setupTreeMaker(process, options) :
     
     setTagsProbes( process, options )
     setSequences(  process, options )
+
     
 def customize( tnpTree, options ):
     tnpTree.arbitration = cms.string("HighestPt")

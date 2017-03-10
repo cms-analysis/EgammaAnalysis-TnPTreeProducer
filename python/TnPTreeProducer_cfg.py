@@ -93,6 +93,7 @@ options['PHOTON_COLL']          = "slimmedPhotons"
 options['SUPERCLUSTER_COLL']    = "reducedEgamma:reducedSuperClusters" ### not used in AOD
 if options['useAOD']:
     options['ELECTRON_COLL']    = "gedGsfElectrons"
+    options['PHOTON_COLL'  ]    = "gedPhotons"
 
 
 options['ELECTRON_CUTS']        = "ecalEnergy*sin(superClusterPosition.theta)>5.0 &&  (abs(-log(tan(superClusterPosition.theta/2)))<2.5)"
@@ -114,6 +115,7 @@ options['UseCalibEn']           = varOptions.useCalibEn
 if (varOptions.isMC):
     options['isMC']                = cms.bool(True)
     options['OUTPUT_FILE_NAME']    = "TnPTree_mc.root"
+    if varOptions.isAOD :  options['OUTPUT_FILE_NAME']    = "TnPTree_mc_aod.root"
 #    options['TnPPATHS']            = cms.vstring("HLT*")
 #    options['TnPHLTTagFilters']    = cms.vstring()
 #    options['TnPHLTProbeFilters']  = cms.vstring()
@@ -194,10 +196,10 @@ if options['DoTrigger']                       : process.cand_sequence += process
 if options['DoRECO']                          : process.cand_sequence += process.sc_sequence
 
 process.tnpPairs_sequence = cms.Sequence()
-if options['DoTrigger'] : process.tnpPairs_sequence *= process.tagTightEleHLT
-if options['DoRECO']    : process.tnpPairs_sequence *= process.tagTightSC
-if options['DoEleID']   : process.tnpPairs_sequence *= process.tagTightEleID
-if options['DoPhoID']   : process.tnpPairs_sequence *= process.tagTightPhoID
+if options['DoTrigger'] : process.tnpPairs_sequence *= process.tnpPairingEleHLT
+if options['DoRECO']    : process.tnpPairs_sequence *= process.tnpPairingEleRec
+if options['DoEleID']   : process.tnpPairs_sequence *= process.tnpPairingEleIDs
+if options['DoPhoID']   : process.tnpPairs_sequence *= process.tnpPairingPhoIDs
 
 ##########################################################################
 ## TnP Trees
@@ -208,61 +210,66 @@ tnpVars.mcTruthCommonStuff.isMC = cms.bool(varOptions.isMC)
 
 process.tnpEleTrig = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     tnpVars.CommonStuffForGsfElectronProbe, tnpVars.mcTruthCommonStuff,
-                                    tagProbePairs = cms.InputTag("tagTightEleHLT"),
-                                    flags         = cms.PSet(passingHLT     = cms.InputTag("probeElePassHLT"),
-                                                             passingLoose   = cms.InputTag("probeEleCutBasedLoose80X" ),
-                                                             passingMedium  = cms.InputTag("probeEleCutBasedMedium80X"),
-                                                             passingTight   = cms.InputTag("probeEleCutBasedTight80X" ),
-                                                             passingHLTsafe = cms.InputTag("probeEleHLTsafe"),
-                                                             ),
+                                    tagProbePairs = cms.InputTag("tnpPairingEleHLT"),
                                     probeMatches  = cms.InputTag("genProbeEle"),
                                     allProbes     = cms.InputTag("probeEle"),
+                                    flags = cms.PSet(
+                                        passingHLT        = cms.InputTag("probeElePassHLT"),
+                                        passingLoose80X   = cms.InputTag("probeEleCutBasedLoose80X" ),
+                                        passingMedium80X  = cms.InputTag("probeEleCutBasedMedium80X"),
+                                        passingTight80X   = cms.InputTag("probeEleCutBasedTight80X" ),
+                                        ),
                                     )
 
 process.tnpEleReco = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     tnpVars.mcTruthCommonStuff, tnpVars.CommonStuffForSuperClusterProbe, 
-                                    tagProbePairs = cms.InputTag("tagTightSC"),
-                                    flags         = cms.PSet(passingRECO   = cms.InputTag("probeSCEle", "superclusters")
-                                                             ),
+                                    tagProbePairs = cms.InputTag("tnpPairingEleRec"),
                                     probeMatches  = cms.InputTag("genProbeSC"),
                                     allProbes     = cms.InputTag("probeSC"),
+                                    flags         = cms.PSet(passingRECO   = cms.InputTag("probeSCEle", "superclusters") ),
                                     )
 
 process.tnpEleIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
-                                   tnpVars.mcTruthCommonStuff, tnpVars.CommonStuffForGsfElectronProbe,
-                                   tagProbePairs = cms.InputTag("tagTightEleID"),
-                                   flags         = cms.PSet(passingVeto       = cms.InputTag("probeEleCutBasedVeto"  ),
-                                                            passingLoose      = cms.InputTag("probeEleCutBasedLoose" ),
-                                                            passingMedium     = cms.InputTag("probeEleCutBasedMedium"),
-                                                            passingTight      = cms.InputTag("probeEleCutBasedTight" ),
-                                                            passingVeto80X    = cms.InputTag("probeEleCutBasedVeto80X"  ),
-                                                            passingLoose80X   = cms.InputTag("probeEleCutBasedLoose80X" ),
-                                                            passingMedium80X  = cms.InputTag("probeEleCutBasedMedium80X"),
-                                                            passingTight80X   = cms.InputTag("probeEleCutBasedTight80X" ),
-                                                            passingMVA80Xwp90 = cms.InputTag("probeEleMVA80Xwp90" ),
-                                                            passingMVA80Xwp80 = cms.InputTag("probeEleMVA80Xwp80" ),
-                                                            passingHLTsafe    = cms.InputTag("probeEleHLTsafe"),
-                                                            ),
+                                    tnpVars.mcTruthCommonStuff, tnpVars.CommonStuffForGsfElectronProbe,
+                                    tagProbePairs = cms.InputTag("tnpPairingEleIDs"),
                                     probeMatches  = cms.InputTag("genProbeEle"),
                                     allProbes     = cms.InputTag("probeEle"),
+                                    flags         = cms.PSet(
+                                        passingVeto       = cms.InputTag("probeEleCutBasedVeto"  ),
+                                        passingLoose      = cms.InputTag("probeEleCutBasedLoose" ),
+                                        passingMedium     = cms.InputTag("probeEleCutBasedMedium"),
+                                        passingTight      = cms.InputTag("probeEleCutBasedTight" ),
+                                        passingVeto80X    = cms.InputTag("probeEleCutBasedVeto80X"  ),
+                                        passingLoose80X   = cms.InputTag("probeEleCutBasedLoose80X" ),
+                                        passingMedium80X  = cms.InputTag("probeEleCutBasedMedium80X"),
+                                        passingTight80X   = cms.InputTag("probeEleCutBasedTight80X" ),
+                                        passingMVA80Xwp90 = cms.InputTag("probeEleMVA80Xwp90" ),
+                                        passingMVA80Xwp80 = cms.InputTag("probeEleMVA80Xwp80" ),
+                                        )
                                     )
 
 process.tnpPhoIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
-                                   tnpVars.mcTruthCommonStuff, tnpVars.CommonStuffForPhotonProbe,
-                                   tagProbePairs = cms.InputTag("tagTightPhoID"),
-                                   flags         = cms.PSet(passingLoose      = cms.InputTag("probePhoCutBasedLoose"),
-                                                            passingMedium     = cms.InputTag("probePhoCutBasedMedium"),
-                                                            passingTight      = cms.InputTag("probePhoCutBasedTight"),
-                                                            passingMVA        = cms.InputTag("probePhoMVA"),
-                                                            # passingLoose80X   = cms.InputTag("probePhoCutBasedLoose80X"),
-                                                            # passingMedium80X  = cms.InputTag("probePhoCutBasedMedium80X"),
-                                                            # passingTight80X   = cms.InputTag("probePhoCutBasedTight80X"),
-                                                            # passingMVA80Xwp90 = cms.InputTag("probePhoMVA80Xwp90"),
-                                                            # passingMVA80Xwp80 = cms.InputTag("probePhoMVA80Xwp80"),
-                                                            ),                                                                                           
+                                    tnpVars.mcTruthCommonStuff, tnpVars.CommonStuffForPhotonProbe,
+                                    tagProbePairs = cms.InputTag("tnpPairingPhoIDs"),                                                                                         
                                     probeMatches  = cms.InputTag("genProbePho"),
                                     allProbes     = cms.InputTag("probePho"),
+                                    flags         = cms.PSet(
+                                        passingLoose      = cms.InputTag("probePhoCutBasedLoose"),
+                                        passingMedium     = cms.InputTag("probePhoCutBasedMedium"),
+                                        passingTight      = cms.InputTag("probePhoCutBasedTight"),
+                                        passingMVA        = cms.InputTag("probePhoMVA"),
+                                        # passingLoose80X   = cms.InputTag("probePhoCutBasedLoose80X"),
+                                        # passingMedium80X  = cms.InputTag("probePhoCutBasedMedium80X"),
+                                        # passingTight80X   = cms.InputTag("probePhoCutBasedTight80X"),
+                                        # passingMVA80Xwp90 = cms.InputTag("probePhoMVA80Xwp90"),
+                                        # passingMVA80Xwp80 = cms.InputTag("probePhoMVA80Xwp80"),
+                                        )
                                     )
+
+## add pass HLT-safe flag, available for miniAOD only
+if not options['useAOD'] :
+    setattr( process.tnpEleTrig.flags, 'passingHLTsafe', cms.InputTag("probeEleHLTsafe" ) )
+    setattr( process.tnpEleIDs.flags , 'passingHLTsafe', cms.InputTag("probeEleHLTsafe" ) )
 
 tnpSetup.customize( process.tnpEleTrig , options )
 tnpSetup.customize( process.tnpEleIDs  , options )
