@@ -23,6 +23,16 @@
 
 #include "DataFormats/Math/interface/deltaR.h"
 
+#include "DataFormats/ParticleFlowCandidate/interface/PFCandidate.h"
+#include "DataFormats/PatCandidates/interface/PackedCandidate.h"
+
+#include "DataFormats/Candidate/interface/CandidateFwd.h"
+#include "DataFormats/Candidate/interface/Candidate.h"
+
+
+
+typedef edm::View<reco::Candidate> CandView;
+
 template <class T>
 class ElectronVariableHelper : public edm::EDProducer {
  public:
@@ -35,6 +45,7 @@ private:
   edm::EDGetTokenT<std::vector<T> > probesToken_;
   edm::EDGetTokenT<reco::VertexCollection> vtxToken_;
   edm::EDGetTokenT<BXVector<l1t::EGamma> > l1EGTkn;
+  edm::EDGetTokenT<CandView> pfCandToken_;
 };
 
 template<class T>
@@ -51,6 +62,12 @@ ElectronVariableHelper<T>::ElectronVariableHelper(const edm::ParameterSet & iCon
   produces<edm::ValueMap<float> >("l1et");
   produces<edm::ValueMap<float> >("l1eta");
   produces<edm::ValueMap<float> >("l1phi");
+  produces<edm::ValueMap<float> >("pfPt");
+
+  if( iConfig.existsAs<edm::InputTag>("pfCandColl") ) {
+    pfCandToken_ = consumes<CandView>(iConfig.getParameter<edm::InputTag>("pfCandColl"));
+  }
+
 }
 
 template<class T>
@@ -70,7 +87,10 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
 
   edm::Handle<BXVector<l1t::EGamma> > l1Cands;
   iEvent.getByToken(l1EGTkn, l1Cands);
-
+  
+  edm::Handle<CandView> pfCands;
+  if( !pfCandToken_.isUninitialized() ) iEvent.getByToken(pfCandToken_,pfCands);
+  
   // prepare vector for output
   std::vector<float> chi2Vals;
   std::vector<float> dzVals;
@@ -80,6 +100,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
   std::vector<float> l1EtVals;
   std::vector<float> l1EtaVals;
   std::vector<float> l1PhiVals;
+  std::vector<float> pfPtVals;
 
   typename std::vector<T>::const_iterator probe, endprobes = probes->end();
 
@@ -94,6 +115,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     float l1et = 999999.;
     float l1eta = 999999.;
     float l1phi = 999999.;
+    float pfpt = 999999.;
     float dRmin = 0.3;
     for (std::vector<l1t::EGamma>::const_iterator l1Cand = l1Cands->begin(0); l1Cand != l1Cands->end(0); ++l1Cand) {
 
@@ -106,11 +128,20 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
         l1phi = l1Cand->phi();
       }
     }
+    if( pfCands.isValid() )
+    for( size_t ipf = 0; ipf < pfCands->size(); ++ipf ) {
+        auto pfcand = pfCands->ptrAt(ipf);
+	if( abs( pfcand->pdgId() ) != 11 ) continue;
+	float dR = deltaR(pfcand->eta(), pfcand->phi() , probe->eta(), probe->phi());
+	if( dR < 0.0001 ) pfpt = pfcand->pt();
+    }
 
     l1EVals.push_back(l1e);
     l1EtVals.push_back(l1et);
     l1EtaVals.push_back(l1eta);
     l1PhiVals.push_back(l1phi);
+    pfPtVals.push_back(pfpt);
+    
   }
 
   
@@ -162,6 +193,14 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
   l1PhiFill.insert(probes, l1PhiVals.begin(), l1PhiVals.end());
   l1PhiFill.fill();
   iEvent.put(l1PhiValMap, "l1phi");
+
+  std::auto_ptr<edm::ValueMap<float> > pfPtValMap(new edm::ValueMap<float>());
+  edm::ValueMap<float>::Filler pfPtFill(*pfPtValMap);
+  pfPtFill.insert(probes, pfPtVals.begin(), pfPtVals.end());
+  pfPtFill.fill();
+  iEvent.put(pfPtValMap, "pfPt");
+
+  
 }
 
 #endif

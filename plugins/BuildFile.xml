@@ -5,7 +5,9 @@
   <use   name="PhysicsTools/TagAndProbe"/>
   <use   name="HLTrigger/HLTcore"/>
   <use   name="DataFormats/PatCandidates"/>
-  <used  name="CommonTools/UtilAlgos"/>
+  <use   name="DataFormats/Candidate"/>
+  <use   name="CommonTools/Utils"/>
+  <use  name="CommonTools/UtilAlgos"/>
   <use   name="RecoEgamma/EgammaHLTAlgos"/>
 <flags EDM_PLUGIN="1"/>
 </library>
