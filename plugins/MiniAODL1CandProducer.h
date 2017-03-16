@@ -88,7 +88,7 @@ void MiniAODL1CandProducer<T>::produce(edm::Event &iEvent, const edm::EventSetup
   std::sort(mergedL1.begin(), mergedL1.end(), ptComparator);
 
   // Create the output collection
-  std::auto_ptr<TRefVector> outColRef(new TRefVector);
+  std::unique_ptr<TRefVector> outColRef(new TRefVector);
 
   for (size_t i=0; i<inputs->size(); i++) {
     TRef ref = (*inputs)[i];
@@ -99,7 +99,7 @@ void MiniAODL1CandProducer<T>::produce(edm::Event &iEvent, const edm::EventSetup
     }
   }	  
 
-  iEvent.put(outColRef);
+  iEvent.put(std::move(outColRef));
 }
 
 template <class T>

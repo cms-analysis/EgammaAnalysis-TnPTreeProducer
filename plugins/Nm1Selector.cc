@@ -70,7 +70,7 @@ Nm1Selector<T>::Nm1Selector(edm::ParameterSet const & config) :
   
 template <typename T>
 void Nm1Selector<T>::produce(edm::Event & event, const edm::EventSetup & setup) {
-  std::auto_ptr<candidateRefVector> candidates(new candidateRefVector());
+  std::unique_ptr<candidateRefVector> candidates(new candidateRefVector());
 
   edm::Handle<candidateRefVector> h_inputs;
   event.getByToken(token_inputs, h_inputs);
@@ -109,7 +109,7 @@ void Nm1Selector<T>::produce(edm::Event & event, const edm::EventSetup & setup) 
       candidates->push_back(ptr);
   }
   
-  event.put(candidates);
+  event.put(std::move(candidates));
 }
 #endif
 

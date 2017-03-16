@@ -146,59 +146,59 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
 
   
   // convert into ValueMap and store
-  std::auto_ptr<edm::ValueMap<float> > chi2ValMap(new edm::ValueMap<float>());
+  std::unique_ptr<edm::ValueMap<float> > chi2ValMap(new edm::ValueMap<float>());
   edm::ValueMap<float>::Filler chi2Filler(*chi2ValMap);
   chi2Filler.insert(probes, chi2Vals.begin(), chi2Vals.end());
   chi2Filler.fill();
-  iEvent.put(chi2ValMap, "chi2");
+  iEvent.put(std::move(chi2ValMap), "chi2");
 
-  std::auto_ptr<edm::ValueMap<float> > dzValMap(new edm::ValueMap<float>());
+  std::unique_ptr<edm::ValueMap<float> > dzValMap(new edm::ValueMap<float>());
   edm::ValueMap<float>::Filler dzFiller(*dzValMap);
   dzFiller.insert(probes, dzVals.begin(), dzVals.end());
   dzFiller.fill();
-  iEvent.put(dzValMap, "dz");
+  iEvent.put(std::move(dzValMap), "dz");
 
-  std::auto_ptr<edm::ValueMap<float> > dxyValMap(new edm::ValueMap<float>());
+  std::unique_ptr<edm::ValueMap<float> > dxyValMap(new edm::ValueMap<float>());
   edm::ValueMap<float>::Filler dxyFiller(*dxyValMap);
   dxyFiller.insert(probes, dxyVals.begin(), dxyVals.end());
   dxyFiller.fill();
-  iEvent.put(dxyValMap, "dxy");
+  iEvent.put(std::move(dxyValMap), "dxy");
 
-  std::auto_ptr<edm::ValueMap<float> > mhValMap(new edm::ValueMap<float>());
+  std::unique_ptr<edm::ValueMap<float> > mhValMap(new edm::ValueMap<float>());
   edm::ValueMap<float>::Filler mhFiller(*mhValMap);
   mhFiller.insert(probes, mhVals.begin(), mhVals.end());
   mhFiller.fill();
-  iEvent.put(mhValMap, "missinghits");
+  iEvent.put(std::move(mhValMap), "missinghits");
 
-  std::auto_ptr<edm::ValueMap<float> > l1EValMap(new edm::ValueMap<float>());
+  std::unique_ptr<edm::ValueMap<float> > l1EValMap(new edm::ValueMap<float>());
   edm::ValueMap<float>::Filler l1EFill(*l1EValMap);
   l1EFill.insert(probes, l1EVals.begin(), l1EVals.end());
   l1EFill.fill();
-  iEvent.put(l1EValMap, "l1e");
+  iEvent.put(std::move(l1EValMap), "l1e");
 
-  std::auto_ptr<edm::ValueMap<float> > l1EtValMap(new edm::ValueMap<float>());
+  std::unique_ptr<edm::ValueMap<float> > l1EtValMap(new edm::ValueMap<float>());
   edm::ValueMap<float>::Filler l1EtFill(*l1EtValMap);
   l1EtFill.insert(probes, l1EtVals.begin(), l1EtVals.end());
   l1EtFill.fill();
-  iEvent.put(l1EtValMap, "l1et");
+  iEvent.put(std::move(l1EtValMap), "l1et");
 
-  std::auto_ptr<edm::ValueMap<float> > l1EtaValMap(new edm::ValueMap<float>());
+  std::unique_ptr<edm::ValueMap<float> > l1EtaValMap(new edm::ValueMap<float>());
   edm::ValueMap<float>::Filler l1EtaFill(*l1EtaValMap);
   l1EtaFill.insert(probes, l1EtaVals.begin(), l1EtaVals.end());
   l1EtaFill.fill();
-  iEvent.put(l1EtaValMap, "l1eta");
+  iEvent.put(std::move(l1EtaValMap), "l1eta");
 
-  std::auto_ptr<edm::ValueMap<float> > l1PhiValMap(new edm::ValueMap<float>());
+  std::unique_ptr<edm::ValueMap<float> > l1PhiValMap(new edm::ValueMap<float>());
   edm::ValueMap<float>::Filler l1PhiFill(*l1PhiValMap);
   l1PhiFill.insert(probes, l1PhiVals.begin(), l1PhiVals.end());
   l1PhiFill.fill();
-  iEvent.put(l1PhiValMap, "l1phi");
+  iEvent.put(std::move(l1PhiValMap), "l1phi");
 
-  std::auto_ptr<edm::ValueMap<float> > pfPtValMap(new edm::ValueMap<float>());
+  std::unique_ptr<edm::ValueMap<float> > pfPtValMap(new edm::ValueMap<float>());
   edm::ValueMap<float>::Filler pfPtFill(*pfPtValMap);
   pfPtFill.insert(probes, pfPtVals.begin(), pfPtVals.end());
   pfPtFill.fill();
-  iEvent.put(pfPtValMap, "pfPt");
+  iEvent.put(std::move(pfPtValMap), "pfPt");
 
   
 }

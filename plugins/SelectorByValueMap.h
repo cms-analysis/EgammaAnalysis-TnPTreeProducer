@@ -97,8 +97,8 @@ reco::RecoEcalCandidateRef SelectorByValueMap<T, C>::getRecoEcalCandidate(reco::
 
 template <typename T, typename C>
 void SelectorByValueMap<T, C>::produce(edm::Event & event, const edm::EventSetup & setup) {
-  std::auto_ptr<candidateRefVector> candidates(new candidateRefVector());
-  std::auto_ptr<reco::RecoEcalCandidateRefVector> scCandidates(new reco::RecoEcalCandidateRefVector());
+  std::unique_ptr<candidateRefVector> candidates(new candidateRefVector());
+  std::unique_ptr<reco::RecoEcalCandidateRefVector> scCandidates(new reco::RecoEcalCandidateRefVector());
 
   edm::Handle<candidateRefVector> h_inputs;
   event.getByToken(token_inputs, h_inputs);
@@ -139,9 +139,9 @@ void SelectorByValueMap<T, C>::produce(edm::Event & event, const edm::EventSetup
   }
   
   if (saveSCRef_)
-    event.put(scCandidates, "superclusters");
+    event.put(std::move(scCandidates), "superclusters");
   else
-    event.put(candidates);
+    event.put(std::move(candidates));
 }
 #endif
 

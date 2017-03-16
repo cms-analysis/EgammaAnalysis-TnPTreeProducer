@@ -92,11 +92,11 @@ void SCVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSetup & i
 
   
   // convert into ValueMap and store
-  std::auto_ptr<edm::ValueMap<float> > scIsoValMap(new edm::ValueMap<float>());
+  std::unique_ptr<edm::ValueMap<float> > scIsoValMap(new edm::ValueMap<float>());
   edm::ValueMap<float>::Filler scIsoFiller(*scIsoValMap);
   scIsoFiller.insert(probes, scIsoValues.begin(), scIsoValues.end());
   scIsoFiller.fill();
-  iEvent.put(scIsoValMap, "scTkIso");
+  iEvent.put(std::move(scIsoValMap), "scTkIso");
 }
 
 #endif

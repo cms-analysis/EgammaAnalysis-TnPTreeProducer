@@ -69,7 +69,7 @@ PileupWeightProducer::~PileupWeightProducer()
 
 void PileupWeightProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
 
-  std::auto_ptr<double> pileupWeight( new double );
+  std::unique_ptr<double> pileupWeight( new double );
   *pileupWeight = 1.;
 
   edm::Handle<std::vector<PileupSummaryInfo> > PupInfo;
@@ -80,7 +80,7 @@ void PileupWeightProducer::produce(edm::Event& iEvent, const edm::EventSetup& iS
     //    *pileupWeight = pileupWeights_[nPUtrue+1]; // NOT 100% sure
     *pileupWeight = pileupWeights_[nPUtrue]; // most likely better estimate
   }
-  iEvent.put(pileupWeight, "pileupWeights"); 
+  iEvent.put(std::move(pileupWeight), "pileupWeights"); 
 
 }
 
