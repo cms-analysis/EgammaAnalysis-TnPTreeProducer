@@ -58,8 +58,8 @@ template <class T>
 void ElectronMatchedCandidateProducer<T>::produce(edm::Event &event,
 						  const edm::EventSetup &eventSetup) {
 
-  std::auto_ptr<edm::RefVector<reco::RecoEcalCandidateCollection> > outCol (new edm::RefVector<reco::RecoEcalCandidateCollection>);
-  std::auto_ptr<TRefVector> outCol2 (new TRefVector);
+  std::unique_ptr<edm::RefVector<reco::RecoEcalCandidateCollection> > outCol (new edm::RefVector<reco::RecoEcalCandidateCollection>);
+  std::unique_ptr<TRefVector> outCol2 (new TRefVector);
   
   // Read electrons
   edm::Handle<TRefVector> electrons;
@@ -109,8 +109,8 @@ void ElectronMatchedCandidateProducer<T>::produce(edm::Event &event,
     }
   }
   */
-  event.put(outCol, "superclusters");
-  event.put(outCol2, "electrons");
+  event.put(std::move(outCol ), "superclusters");
+  event.put(std::move(outCol2), "electrons");
 }
 
 #endif

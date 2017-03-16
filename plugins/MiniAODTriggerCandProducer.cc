@@ -53,7 +53,7 @@ void MiniAODTriggerCandProducer<reco::GsfElectron, trigger::TriggerObject>::prod
   iEvent.getByToken(inputs_, inputs);
 
   // Create the output collection
-  std::auto_ptr<TRefVector> outColRef(new TRefVector);
+  std::unique_ptr<TRefVector> outColRef(new TRefVector);
   
   if (!triggerBits.isValid()) {
     LogDebug("") << "TriggerResults product not found - returning result=false!";
@@ -113,7 +113,7 @@ void MiniAODTriggerCandProducer<reco::GsfElectron, trigger::TriggerObject>::prod
       outColRef->push_back(ref);
   }	  
 
-  iEvent.put(outColRef);
+  iEvent.put(std::move(outColRef));
 }
 
 template<>
