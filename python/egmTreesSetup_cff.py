@@ -134,12 +134,13 @@ def setTagsProbes(process, options):
 def setSequences(process, options):
 
     process.init_sequence = cms.Sequence()
-    if options['UseCalibEn'] and options['useAOD']:
+    if options['UseCalibEn']:
         process.enCalib_sequence = cms.Sequence(
-            process.selectElectronsBase    +
-            process.selectPhotonsBase      +
-            process.calibratedPatElectrons +
-            process.calibratedPatPhotons   
+            process.regressionApplication  *
+            process.calibratedPatElectrons *
+            process.calibratedPatPhotons   *
+            process.selectElectronsBase    *
+            process.selectPhotonsBase      
             )
         process.init_sequence += process.enCalib_sequence
 

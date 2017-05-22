@@ -3,18 +3,10 @@ import FWCore.ParameterSet.Config as cms
 
 
 def calibrateEGM(process, options ):
-    process.selectElectronsBase = cms.EDFilter("PATElectronSelector",
-                                               src = cms.InputTag( options['ELECTRON_COLL'] ),
-                                               cut = cms.string(options['ELECTRON_CUTS']),
-                                               filter = cms.bool(True),
-                                               )
-
-    process.selectPhotonsBase   = cms.EDFilter("PATPhotonSelector",
-                                               src = cms.InputTag( options['PHOTON_COLL'] ),
-                                               cut = cms.string(options['PHOTON_CUTS']),
-                                               filter = cms.bool(True),
-                                               )
-
+    
+    ### apply 80X regression
+    from EgammaAnalysis.ElectronTools.regressionWeights_cfi import regressionWeights
+    process = regressionWeights(process)
 
     process.RandomNumberGeneratorService = cms.Service("RandomNumberGeneratorService",
                                                        calibratedPatElectrons  = cms.PSet( initialSeed = cms.untracked.uint32(81),
@@ -24,24 +16,45 @@ def calibrateEGM(process, options ):
                                                                                            engineName = cms.untracked.string('TRandom3'),                
                                                                                            ),
                                                        )
-    process.load('EgammaAnalysis.ElectronTools.calibratedElectronsRun2_cfi')
-    process.load('EgammaAnalysis.ElectronTools.calibratedPhotonsRun2_cfi')
 
+    process.load('EgammaAnalysis.ElectronTools.regressionApplication_cff')
+    process.load('EgammaAnalysis.ElectronTools.calibratedPatElectronsRun2_cfi')
+    process.load('EgammaAnalysis.ElectronTools.calibratedPatPhotonsRun2_cfi')
 
-    process.calibratedPatElectrons.electrons = cms.InputTag('selectElectronsBase')
-    process.calibratedPatPhotons.photons     = cms.InputTag('selectPhotonsBase')
+    process.calibratedPatElectrons.electrons = cms.InputTag(options['ELECTRON_COLL'])
+    process.calibratedPatPhotons.photons     = cms.InputTag(options['PHOTON_COLL']  )
     if options['isMC']:
         process.calibratedPatElectrons.isMC = cms.bool(True)
         process.calibratedPatPhotons.isMC   = cms.bool(True)
+    else :
+        process.calibratedPatElectrons.isMC = cms.bool(False)
+        process.calibratedPatPhotons.isMC   = cms.bool(False)
+
+
+    
+    process.selectElectronsBase = cms.EDFilter("PATElectronSelector",
+                                               src = cms.InputTag('calibratedPatElectrons'),
+                                               cut = cms.string(  options['ELECTRON_CUTS']),
+                                               )
+
+    process.selectPhotonsBase   = cms.EDFilter("PATPhotonSelector",
+                                               src = cms.InputTag('calibratedPatPhotons' ),
+                                               cut = cms.string(options['PHOTON_CUTS']),
+                                               )
 
     ### change the input collection to be the calibrated energy one for all other modules from now on
-    options['ELECTRON_COLL'] = 'calibratedPatElectrons'
-    options['PHOTON_COLL']   = 'calibratedPatPhotons'
+    options['ELECTRON_COLL'] = 'selectElectronsBase'
+    options['PHOTON_COLL']   = 'selectPhotonsBase'
+
+
+
 
 ###################################################################################
 ################  --- GOOD particles MiniAOD
 ################################################################################### 
 def setGoodParticlesMiniAOD(process, options):
+
+    if options['UseCalibEn']:  calibrateEGM( process, options )
 
     
     process.eleVarHelper = cms.EDProducer("PatElectronVariableHelper",
@@ -52,14 +65,11 @@ def setGoodParticlesMiniAOD(process, options):
                                           )
     
 
-    
-
-    if options['UseCalibEn']:  calibrateEGM( process, options )
-        
+            
     ####################  Electron collection
     process.goodElectrons = cms.EDFilter("PATElectronRefSelector",
                                          src = cms.InputTag( options['ELECTRON_COLL'] ),
-                                         cut = cms.string(   options['ELECTRON_CUTS'] )
+                                         cut = cms.string(   options['ELECTRON_CUTS'] ),
                                          )
     
     ####################  Photon collection
