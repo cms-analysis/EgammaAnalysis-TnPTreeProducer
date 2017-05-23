@@ -34,6 +34,7 @@ def setIDs(process, options):
 
     process.egmGsfElectronIDs.physicsObjectSrc     = cms.InputTag(options['ELECTRON_COLL'])
     process.electronMVAValueMapProducer.srcMiniAOD = cms.InputTag(options['ELECTRON_COLL'])
+    process.electronRegressionValueMapProducer.srcMiniAOD = cms.InputTag(options['ELECTRON_COLL'])
 
     process.probeEleCutBasedVeto = cms.EDProducer(eleProducer,
                                                       input     = cms.InputTag("goodElectrons"),

@@ -44,7 +44,7 @@ varOptions.register(
     )
 
 varOptions.register(
-    "useCalibEn", False,
+    "calibEn", False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
 
@@ -110,7 +110,7 @@ options['DoPhoID']              = cms.bool( varOptions.doPhoID   )
 options['OUTPUTEDMFILENAME']    = 'edmFile.root'
 options['DEBUG']                = cms.bool(False)
 options['isMC']                 = cms.bool(False)
-options['UseCalibEn']           = varOptions.useCalibEn
+options['UseCalibEn']           = varOptions.calibEn
 
 if (varOptions.isMC):
     options['isMC']                = cms.bool(True)
@@ -296,7 +296,7 @@ if (not options['DEBUG']):
 
 process.p = cms.Path(
         process.hltFilter         +
-        process.cand_sequence     +
+        process.cand_sequence     + 
         process.tnpPairs_sequence +
         process.mc_sequence       +
         process.eleVarHelper      +
