@@ -124,9 +124,10 @@ def setTagsProbes(process, options):
     ######################## probe passing ID ##########################
     import EgammaAnalysis.TnPTreeProducer.egmElectronIDModules_cff as egmEleID
     import EgammaAnalysis.TnPTreeProducer.egmPhotonIDModules_cff   as egmPhoID
+    import EgammaAnalysis.TnPTreeProducer.egmElectronMiniIsoModules_cff   as egmEleMiniIso
     egmEleID.setIDs(process, options)
     egmPhoID.setIDs(process, options)
-
+    egmEleMiniIso.addMiniIso(process, options)
     
 ###################################################################################
 ################  --- SEQUENCES
@@ -171,6 +172,8 @@ def setSequences(process, options):
         process.probeEleCutBasedTight80X  +
         process.probeEleMVA80Xwp90        +
         process.probeEleMVA80Xwp80        +
+	process.probeEleMiniIso		  +
+	process.probeEleMiniIsoEffArea	  +
         process.probeEle 
         )
     if not options['useAOD'] : process.ele_sequence += process.probeEleHLTsafe
