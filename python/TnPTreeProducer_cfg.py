@@ -218,9 +218,9 @@ process.tnpEleTrig = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     allProbes     = cms.InputTag("probeEle"),
                                     flags = cms.PSet(
                                         passingHLT        = cms.InputTag("probeElePassHLT"),
-                                        passingLoose80X   = cms.InputTag("probeEleCutBasedLoose80X" ),
-                                        passingMedium80X  = cms.InputTag("probeEleCutBasedMedium80X"),
-                                        passingTight80X   = cms.InputTag("probeEleCutBasedTight80X" ),
+                                        passingLoose92XX   = cms.InputTag("probeEleCutBasedLoose92X" ),
+                                        passingMedium92XX  = cms.InputTag("probeEleCutBasedMedium92X"),
+                                        passingTight92XX   = cms.InputTag("probeEleCutBasedTight92X" ),
                                         ),
                                     )
 
@@ -242,12 +242,12 @@ process.tnpEleIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                         passingLoose      = cms.InputTag("probeEleCutBasedLoose" ),
                                         passingMedium     = cms.InputTag("probeEleCutBasedMedium"),
                                         passingTight      = cms.InputTag("probeEleCutBasedTight" ),
-                                        passingVeto80X    = cms.InputTag("probeEleCutBasedVeto80X"  ),
-                                        passingLoose80X   = cms.InputTag("probeEleCutBasedLoose80X" ),
-                                        passingMedium80X  = cms.InputTag("probeEleCutBasedMedium80X"),
-                                        passingTight80X   = cms.InputTag("probeEleCutBasedTight80X" ),
-                                        passingMVA80Xwp90 = cms.InputTag("probeEleMVA80Xwp90" ),
-                                        passingMVA80Xwp80 = cms.InputTag("probeEleMVA80Xwp80" ),
+                                        passingVeto92X    = cms.InputTag("probeEleCutBasedVeto92X"  ),
+                                        passingLoose92X   = cms.InputTag("probeEleCutBasedLoose92X" ),
+                                        passingMedium92X  = cms.InputTag("probeEleCutBasedMedium92X"),
+                                        passingTight92X   = cms.InputTag("probeEleCutBasedTight92X" ),
+                                        passingMVA92Xwp90 = cms.InputTag("probeEleMVA92Xwp90" ),
+                                        passingMVA92Xwp80 = cms.InputTag("probeEleMVA92Xwp80" ),
                                         )
                                     )
 
@@ -261,11 +261,11 @@ process.tnpPhoIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
 #                                        passingMedium     = cms.InputTag("probePhoCutBasedMedium"),
 #                                        passingTight      = cms.InputTag("probePhoCutBasedTight"),
 #                                        passingMVA        = cms.InputTag("probePhoMVA"),
-                                         passingLoose80X   = cms.InputTag("probePhoCutBasedLoose80X"),
-                                         passingMedium80X  = cms.InputTag("probePhoCutBasedMedium80X"),
-                                         passingTight80X   = cms.InputTag("probePhoCutBasedTight80X"),
-                                         passingMVA80Xwp90 = cms.InputTag("probePhoMVA80Xwp90"),
-                                         passingMVA80Xwp80 = cms.InputTag("probePhoMVA80Xwp80"),
+                                         passingLoose92X   = cms.InputTag("probePhoCutBasedLoose92X"),
+                                         passingMedium92X  = cms.InputTag("probePhoCutBasedMedium92X"),
+                                         passingTight92X   = cms.InputTag("probePhoCutBasedTight92X"),
+                                         passingMVA92Xwp90 = cms.InputTag("probePhoMVA92Xwp90"),
+                                         passingMVA92Xwp80 = cms.InputTag("probePhoMVA92Xwp80"),
                                         )
                                     )
 
