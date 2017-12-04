@@ -10,7 +10,7 @@ def setTagsProbes(process, options):
 
     eleHLTProducer = 'PatElectronTriggerCandProducer'
     gamHLTProducer = 'PatPhotonTriggerCandProducer'
-    hltObjects     = 'selectedPatTrigger'
+    hltObjects     = 'slimmedPatTrigger' # 'selectedPatTrigger' FOR 2016
     genParticles   = 'prunedGenParticles'
     SCEleMatcher   = 'PatElectronMatchedCandidateProducer' 
     if (options['useAOD']):
@@ -179,15 +179,15 @@ def setSequences(process, options):
     process.pho_sequence = cms.Sequence(
         process.goodPhotons               +
         process.egmPhotonIDSequence       +
-        process.probePhoCutBasedLoose     +
-        process.probePhoCutBasedMedium    +
-        process.probePhoCutBasedTight     +
-        process.probePhoMVA               +
-        #        process.probePhoCutBasedLoose80X  +
-        #        process.probePhoCutBasedMedium80X +
-        #        process.probePhoCutBasedTight80X  +
-        #        process.probePhoMVA80Xwp90       +
-        #        process.probePhoMVA80Xwp80       +
+        #process.probePhoCutBasedLoose     +
+        #process.probePhoCutBasedMedium    +
+        #process.probePhoCutBasedTight     +
+        #process.probePhoMVA               +
+        process.probePhoCutBasedLoose80X  +
+        process.probePhoCutBasedMedium80X +
+        process.probePhoCutBasedTight80X  +
+        process.probePhoMVA80Xwp90       +
+        process.probePhoMVA80Xwp80       +
         process.probePho                
         )
 

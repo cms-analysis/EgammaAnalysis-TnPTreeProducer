@@ -40,7 +40,7 @@ public:
   void init(const edm::TriggerResults &result, const edm::TriggerNames & triggerNames);
   bool onlineOfflineMatching(TRef ref, 
 			     const UCollection* triggerObjects, 
-			     std::string filterLabel, float dRmin);
+			     std::string filterLabel, float dRmin,const edm::Handle<edm::TriggerResults> & triggerBits,const edm::TriggerNames &triggerNames,edm::Event &iEvent);
 
   bool onlineOfflineMatchingRECO(TRef ref, 
 				 const UCollection* triggerObjects,
@@ -122,13 +122,13 @@ template <class T, class U>
     TRef ref = (*inputs)[i];
     //std::cout << typeof(triggerObjects.product()) << std::endl;
     if (filterNames_.size() > 0) {
-      saveObj = onlineOfflineMatching(ref, triggerObjects.product(), filterNames_[0], dRMatch_);
+      saveObj = onlineOfflineMatching(ref, triggerObjects.product(), filterNames_[0], dRMatch_,triggerBits,triggerNames,iEvent);
       
       for (size_t f=1; f<filterNames_.size(); f++) {
 	if (isAND_)
-	  saveObj = (saveObj && onlineOfflineMatching(ref, triggerObjects.product(), filterNames_[f], dRMatch_));
+	  saveObj = (saveObj && onlineOfflineMatching(ref, triggerObjects.product(), filterNames_[f], dRMatch_,triggerBits,triggerNames,iEvent));
 	else
-	  saveObj = (saveObj || onlineOfflineMatching(ref, triggerObjects.product(), filterNames_[f], dRMatch_));
+	  saveObj = (saveObj || onlineOfflineMatching(ref, triggerObjects.product(), filterNames_[f], dRMatch_,triggerBits,triggerNames,iEvent));
       } 
     }
 

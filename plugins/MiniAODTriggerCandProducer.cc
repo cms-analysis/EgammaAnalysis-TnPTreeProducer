@@ -119,10 +119,12 @@ void MiniAODTriggerCandProducer<reco::GsfElectron, trigger::TriggerObject>::prod
 template<>
 bool MiniAODTriggerCandProducer<pat::Electron, pat::TriggerObjectStandAlone>::onlineOfflineMatching(pat::ElectronRef ref, 
 												    const std::vector<pat::TriggerObjectStandAlone>* triggerObjects, 
-												    std::string filterLabel, float dRmin) {
+												    std::string filterLabel, float dRmin,const edm::Handle<edm::TriggerResults> & triggerBits,const edm::TriggerNames &triggerNames, edm::Event &iEvent) {
   
   for (pat::TriggerObjectStandAlone obj : *triggerObjects) { 
     //obj.unpackPathNames(triggerNames); 
+    obj.unpackPathNames(triggerNames);
+    obj.unpackFilterLabels(iEvent, *triggerBits);
     if (obj.hasFilterLabel(filterLabel)) {
       float dR = deltaR(ref->superCluster()->position(), obj.p4());
       if (dR < dRmin)
@@ -136,10 +138,13 @@ bool MiniAODTriggerCandProducer<pat::Electron, pat::TriggerObjectStandAlone>::on
 template <>
 bool MiniAODTriggerCandProducer<pat::Photon, pat::TriggerObjectStandAlone>::onlineOfflineMatching(pat::PhotonRef ref,
 												  const std::vector<pat::TriggerObjectStandAlone>* triggerObjects, 
-												  std::string filterLabel, float dRmin) {
+												  std::string filterLabel, float dRmin,const edm::Handle<edm::TriggerResults> & triggerBits,const edm::TriggerNames &triggerNames, edm::Event &iEvent) {
   
   for (pat::TriggerObjectStandAlone obj : *triggerObjects) { 
     //obj.unpackPathNames(triggerNames); 
+
+    obj.unpackPathNames(triggerNames);
+    obj.unpackFilterLabels(iEvent, *triggerBits);
     if (obj.hasFilterLabel(filterLabel)) {
       float dR = deltaR(ref->superCluster()->position(), obj.p4());
       if (dR < dRmin)
@@ -153,10 +158,13 @@ bool MiniAODTriggerCandProducer<pat::Photon, pat::TriggerObjectStandAlone>::onli
 template <>
 bool MiniAODTriggerCandProducer<reco::RecoEcalCandidate, pat::TriggerObjectStandAlone>::onlineOfflineMatching(edm::Ref<std::vector<reco::RecoEcalCandidate>> ref,
 													      const std::vector<pat::TriggerObjectStandAlone>* triggerObjects, 
-													      std::string filterLabel, float dRmin) {
+													      std::string filterLabel, float dRmin,const edm::Handle<edm::TriggerResults> & triggerBits,const edm::TriggerNames &triggerNames, edm::Event &iEvent) {
 
   for (pat::TriggerObjectStandAlone obj : *triggerObjects) { 
     //obj.unpackPathNames(triggerNames); 
+
+    obj.unpackPathNames(triggerNames);
+    obj.unpackFilterLabels(iEvent, *triggerBits);
     if (obj.hasFilterLabel(filterLabel)) {
       float dR = deltaR(ref->superCluster()->position(), obj.p4());
       if (dR < dRmin)
