@@ -162,22 +162,22 @@ def setSequences(process, options):
     process.sc_sequence += process.probeSCEle
 
     process.ele_sequence = cms.Sequence(
-        process.probeEleCutBasedVeto      +
-        process.probeEleCutBasedLoose     +
-        process.probeEleCutBasedMedium    +
-        process.probeEleCutBasedTight     +
-        process.probeEleCutBasedVeto80X   +
-        process.probeEleCutBasedLoose80X  +
-        process.probeEleCutBasedMedium80X +
-        process.probeEleCutBasedTight80X  +
-        process.probeEleMVA80Xwp90        +
-        process.probeEleMVA80Xwp80        +
-        process.probeEleCutBasedVeto92X   +
-        process.probeEleCutBasedLoose92X  +
-        process.probeEleCutBasedMedium92X +
-        process.probeEleCutBasedTight92X  +
-        process.probeEleMVA92Xwp90        +
-        process.probeEleMVA92Xwp80        +
+#        process.probeEleCutBasedVeto      +
+#        process.probeEleCutBasedLoose     +
+#        process.probeEleCutBasedMedium    +
+#        process.probeEleCutBasedTight     +
+#        process.probeEleCutBasedVeto80X   +
+#        process.probeEleCutBasedLoose80X  +
+#        process.probeEleCutBasedMedium80X +
+#        process.probeEleCutBasedTight80X  +
+#        process.probeEleMVA80Xwp90        +
+#        process.probeEleMVA80Xwp80        +
+        process.probeEleCutBasedVeto94X   +
+        process.probeEleCutBasedLoose94X  +
+        process.probeEleCutBasedMedium94X +
+        process.probeEleCutBasedTight94X  +
+        process.probeEleMVA94Xwp90        +
+        process.probeEleMVA94Xwp80        +
         process.probeEle 
         )
     if not options['useAOD'] : process.ele_sequence += process.probeEleHLTsafe
@@ -194,11 +194,11 @@ def setSequences(process, options):
         process.probePhoCutBasedTight80X  +
         process.probePhoMVA80Xwp90       +
         process.probePhoMVA80Xwp80       +
-        process.probePhoCutBasedLoose92X  +
-        process.probePhoCutBasedMedium92X +
-        process.probePhoCutBasedTight92X  +
-        process.probePhoMVA92Xwp90       +
-        process.probePhoMVA92Xwp80       +
+        process.probePhoCutBasedLoose94X  +
+        process.probePhoCutBasedMedium94X +
+        process.probePhoCutBasedTight94X  +
+        process.probePhoMVA94Xwp90       +
+        process.probePhoMVA94Xwp80       +
         process.probePho                
         )
 

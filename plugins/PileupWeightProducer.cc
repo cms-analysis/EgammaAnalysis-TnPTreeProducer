@@ -15,7 +15,7 @@
 //         Created:  Mon Nov 21 15:05:26 CET 2011
 //
 //
-
+#include <numeric>
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/EDProducer.h"
 
