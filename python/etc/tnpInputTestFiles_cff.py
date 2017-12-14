@@ -1,4 +1,4 @@
- import FWCore.ParameterSet.Config as cms
+import FWCore.ParameterSet.Config as cms
  
 filesMiniAOD_Preliminary2017 = {
     'mc' :  cms.untracked.vstring(
