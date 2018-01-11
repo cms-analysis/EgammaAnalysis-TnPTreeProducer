@@ -124,10 +124,10 @@ def setTagsProbes(process, options):
     ######################## probe passing ID ##########################
     import EgammaAnalysis.TnPTreeProducer.egmElectronIDModules_cff as egmEleID
     import EgammaAnalysis.TnPTreeProducer.egmPhotonIDModules_cff   as egmPhoID
-    import EgammaAnalysis.TnPTreeProducer.egmElectronMiniIsoModules_cff   as egmEleMiniIso
+#    import EgammaAnalysis.TnPTreeProducer.egmElectronMiniIsoModules_cff   as egmEleMiniIso
     egmEleID.setIDs(process, options)
     egmPhoID.setIDs(process, options)
-    egmEleMiniIso.addMiniIso(process, options)
+#    egmEleMiniIso.addMiniIso(process, options)
     
 ###################################################################################
 ################  --- SEQUENCES
