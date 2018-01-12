@@ -246,8 +246,10 @@ process.tnpEleIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                         passingLoose94X   = cms.InputTag("probeEleCutBasedLoose94X" ),
                                         passingMedium94X  = cms.InputTag("probeEleCutBasedMedium94X"),
                                         passingTight94X   = cms.InputTag("probeEleCutBasedTight94X" ),
-                                        passingMVA94Xwp90 = cms.InputTag("probeEleMVA94Xwp90" ),
-                                        passingMVA94Xwp80 = cms.InputTag("probeEleMVA94Xwp80" ),
+                                        passingMVA94Xwp90noiso = cms.InputTag("probeEleMVA94Xwp90noiso" ),
+                                        passingMVA94Xwp80noiso = cms.InputTag("probeEleMVA94Xwp80noiso" ),
+                                        passingMVA94Xwp90iso = cms.InputTag("probeEleMVA94Xwp90iso" ),
+                                        passingMVA94Xwp80iso = cms.InputTag("probeEleMVA94Xwp80iso" ),
                                         )
                                     )
 

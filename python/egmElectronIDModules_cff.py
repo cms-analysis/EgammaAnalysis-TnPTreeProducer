@@ -23,7 +23,9 @@ def setIDs(process, options):
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring15_25ns_nonTrig_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring16_GeneralPurpose_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V1_Preliminary_cff',
-        ]
+        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V1_cff',
+        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V1_cff',
+       ]
 
     ### add only miniAOD supported IDs
     if not options['useAOD'] :
@@ -96,14 +98,18 @@ def setIDs(process, options):
     process.probeEleCutBasedLoose94X  = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedMedium94X = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedTight94X  = process.probeEleCutBasedVeto.clone()
-    process.probeEleMVA94Xwp90        = process.probeEleCutBasedVeto.clone()
-    process.probeEleMVA94Xwp80        = process.probeEleCutBasedVeto.clone()
+    process.probeEleMVA94Xwp90noiso        = process.probeEleCutBasedVeto.clone()
+    process.probeEleMVA94Xwp80noiso        = process.probeEleCutBasedVeto.clone()
+    process.probeEleMVA94Xwp90iso        = process.probeEleCutBasedVeto.clone()
+    process.probeEleMVA94Xwp80iso        = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedVeto94X.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-Preliminary-veto"  )
     process.probeEleCutBasedLoose94X.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-Preliminary-loose" )
     process.probeEleCutBasedMedium94X.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-Preliminary-medium")
     process.probeEleCutBasedTight94X.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-Preliminary-tight" )
-    process.probeEleMVA94Xwp90.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Spring16-GeneralPurpose-V1-wp90" )
-    process.probeEleMVA94Xwp80.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Spring16-GeneralPurpose-V1-wp80" )
+    process.probeEleMVA94Xwp90noiso.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp90" )
+    process.probeEleMVA94Xwp80noiso.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp80" )
+    process.probeEleMVA94Xwp90iso.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp90" )
+    process.probeEleMVA94Xwp80iso.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp80" )
 
 
     
