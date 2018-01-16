@@ -166,12 +166,12 @@ def setSequences(process, options):
 #        process.probeEleCutBasedLoose     +
 #        process.probeEleCutBasedMedium    +
 #        process.probeEleCutBasedTight     +
-#        process.probeEleCutBasedVeto80X   +
-#        process.probeEleCutBasedLoose80X  +
-#        process.probeEleCutBasedMedium80X +
-#        process.probeEleCutBasedTight80X  +
-#        process.probeEleMVA80Xwp90        +
-#        process.probeEleMVA80Xwp80        +
+        process.probeEleCutBasedVeto80X   +
+        process.probeEleCutBasedLoose80X  +
+        process.probeEleCutBasedMedium80X +
+        process.probeEleCutBasedTight80X  +
+        process.probeEleMVA80Xwp90        +
+        process.probeEleMVA80Xwp80        +
         process.probeEleCutBasedVeto94X   +
         process.probeEleCutBasedLoose94X  +
         process.probeEleCutBasedMedium94X +
