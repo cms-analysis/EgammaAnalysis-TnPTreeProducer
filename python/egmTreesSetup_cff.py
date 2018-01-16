@@ -166,12 +166,12 @@ def setSequences(process, options):
 #        process.probeEleCutBasedLoose     +
 #        process.probeEleCutBasedMedium    +
 #        process.probeEleCutBasedTight     +
-#        process.probeEleCutBasedVeto80X   +
-#        process.probeEleCutBasedLoose80X  +
-#        process.probeEleCutBasedMedium80X +
-##        process.probeEleCutBasedTight80X  +
-#        process.probeEleMVA80Xwp90        +
-#        process.probeEleMVA80Xwp80        +
+        process.probeEleCutBasedVeto80X   +
+        process.probeEleCutBasedLoose80X  +
+        process.probeEleCutBasedMedium80X +
+        process.probeEleCutBasedTight80X  +
+        process.probeEleMVA80Xwp90        +
+        process.probeEleMVA80Xwp80        +
         process.probeEleCutBasedVeto94X   +
         process.probeEleCutBasedLoose94X  +
         process.probeEleCutBasedMedium94X +
@@ -191,11 +191,11 @@ def setSequences(process, options):
         #process.probePhoCutBasedMedium    +
         #process.probePhoCutBasedTight     +
         #process.probePhoMVA               +
-#        process.probePhoCutBasedLoose80X  +
-#        process.probePhoCutBasedMedium80X +
-#        process.probePhoCutBasedTight80X  +
-#        process.probePhoMVA80Xwp90       +
-#        process.probePhoMVA80Xwp80       +
+        process.probePhoCutBasedLoose80X  +
+        process.probePhoCutBasedMedium80X +
+        process.probePhoCutBasedTight80X  +
+        process.probePhoMVA80Xwp90       +
+        process.probePhoMVA80Xwp80       +
         process.probePhoCutBasedLoose94X  +
         process.probePhoCutBasedMedium94X +
         process.probePhoCutBasedTight94X  +
