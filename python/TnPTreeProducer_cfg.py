@@ -112,6 +112,10 @@ options['DEBUG']                = cms.bool(False)
 options['isMC']                 = cms.bool(False)
 options['UseCalibEn']           = varOptions.calibEn
 
+options['addSUSY']               = cms.bool(True)
+if options['useAOD']: 
+    options['addSUSY']               = cms.bool(False)
+
 if (varOptions.isMC):
     options['isMC']                = cms.bool(True)
     options['OUTPUT_FILE_NAME']    = "TnPTree_mc.root"
@@ -301,6 +305,7 @@ if (options['DoRECO'])   : process.tree_sequence *= process.tnpEleReco
 if (options['DoEleID'])  : process.tree_sequence *= process.tnpEleIDs
 if (options['DoPhoID'])  : process.tree_sequence *= process.tnpPhoIDs
 
+
 ##########################################################################
 ## PATHS
 ##########################################################################
@@ -317,7 +322,6 @@ process.p = cms.Path(
         process.cand_sequence     + 
         process.tnpPairs_sequence +
         process.mc_sequence       +
-        process.eleVarHelper      +
         process.tree_sequence 
         )
 

@@ -94,6 +94,14 @@ EleProbeVariablesToStore = cms.PSet(
     el_dxy           = cms.InputTag("eleVarHelper:dxy"),
     el_3charge       = cms.string("chargeInfo().isGsfCtfScPixConsistent"),
     el_ecalDriven    = cms.string("ecalDrivenSeed"),
+
+    # SUSY (based on NanoAOD producers)
+    el_miniIsoChg = cms.string("userFloat('miniIsoChg')"),
+    el_miniIsoAll = cms.string("userFloat('miniIsoAll')"),
+    el_ptRatio = cms.string("userFloat('ptRatio')"),
+    el_ptRel = cms.string("userFloat('ptRel')"),
+    el_MVATTH  = cms.InputTag("electronMVATTH"),
+
     
     )
 
