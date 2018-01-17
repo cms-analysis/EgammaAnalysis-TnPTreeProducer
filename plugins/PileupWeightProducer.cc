@@ -77,6 +77,8 @@ void PileupWeightProducer::produce(edm::Event& iEvent, const edm::EventSetup& iS
   if(!iEvent.isRealData() ) {
     iEvent.getByToken(pileupInfoTag_, PupInfo);
     int nPUtrue = PupInfo->begin()->getTrueNumInteractions();
+    //    std::cout<<nPUtrue<<std::endl;
+    if(nPUtrue<0) nPUtrue=0;
     //    *pileupWeight = pileupWeights_[nPUtrue+1]; // NOT 100% sure
     *pileupWeight = pileupWeights_[nPUtrue]; // most likely better estimate
   }
