@@ -15,13 +15,13 @@ config.General.transferLogs = False
 config.JobType.pluginName  = 'Analysis'
 
 # Name of the CMSSW configuration file
-config.JobType.psetName  = '/afs/cern.ch/user/s/soffi/scratch0/TEST/CMSSW_10_0_0_pre3/src/EgammaAnalysis/TnPTreeProducer/python/TnPTreeProducer_cfg.py'
-config.Data.allowNonValidInputDataset = False
+config.JobType.psetName  = '/afs/cern.ch/user/s/soffi/scratch0/TEST/CMSSW-10-0-0-pre3/src/EgammaAnalysis/TnPTreeProducer/python/TnPTreeProducer_cfg.py'
+#config.Data.allowNonValidInputDataset = False
 config.JobType.sendExternalFolder     = True
 
 config.Data.inputDBS = 'global'
 config.Data.publication = False
-
+config.Data.allowNonValidInputDataset = True
 #config.Data.publishDataName = 
 
 config.Site.storageSite = 'T2_CH_CERN'
@@ -70,19 +70,19 @@ if __name__ == '__main__':
  
     config.General.requestName  = '17Nov2017_RunB'
     config.Data.inputDataset    = '/SingleElectron/Run2017B-17Nov2017-v1/MINIAOD'
-    submit(config)    
+  #  submit(config)    
     config.General.requestName  = '17Nov2017_RunC'
     config.Data.inputDataset    = ''
   #  submit(config)    
     config.General.requestName  = '17Nov2017_RunD'
     config.Data.inputDataset    = '/SingleElectron/Run2017D-17Nov2017-v1/MINIAOD'
-    submit(config)    
+   # submit(config)    
     config.General.requestName  = '17Nov2017_RunE'
     config.Data.inputDataset    = '/SingleElectron/Run2017E-17Nov2017-v1/MINIAOD'
-    submit(config)    
+ #   submit(config)    
     config.General.requestName  = '17Nov2017_RunF'
     config.Data.inputDataset    = '/SingleElectron/Run2017F-17Nov2017-v1/MINIAOD'
-    submit(config)    
+    #submit(config)    
 
 
 
