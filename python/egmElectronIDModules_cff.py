@@ -120,3 +120,21 @@ def setIDs(process, options):
                                                      id_cut    = cms.bool(True)
                                                 )    
     process.tagEleCutBasedTight.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-Preliminary-tight")
+
+    if options['addSUSY'] :
+
+        from EgammaAnalysis.TnPTreeProducer.electronsExtrasSUSY_cff  import workingPoints
+
+        process.susy_ele_sequence = cms.Sequence()
+
+        # Based on https://github.com/UAEDF-tomc/cmssw/blob/susy_tnp_80X_v3/PhysicsTools/TagAndProbe/python/makeTreeSusy_cfi.py#L76-L184
+        # Applies probe cuts and WP (numerators and denominators both need to be listed here)
+        def getProbes(name):
+            temp = process.probeEleCutBasedVeto.clone()
+            temp.selection = cms.InputTag('susyEleVarHelper:pass' + wp)
+            setattr(process, 'probes' + name, temp)
+            process.susy_ele_sequence += temp
+
+        for wp in workingPoints: getProbes(wp)
+
+

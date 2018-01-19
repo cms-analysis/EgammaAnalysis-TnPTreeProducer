@@ -197,6 +197,7 @@ if options['DoPhoID']   : print "  -- Producing photon SF tree      -- "
 ## Define sequences and TnP pairs
 ###################################################################
 process.cand_sequence = cms.Sequence( process.init_sequence + process.tag_sequence )
+if options['addSUSY']                         : process.cand_sequence += process.susy_ele_sequence
 if options['DoEleID'] or options['DoTrigger'] : process.cand_sequence += process.ele_sequence
 if options['DoPhoID']                         : process.cand_sequence += process.pho_sequence
 if options['DoTrigger']                       : process.cand_sequence += process.hlt_sequence
@@ -292,6 +293,20 @@ process.tnpPhoIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
 if not options['useAOD'] :
     setattr( process.tnpEleTrig.flags, 'passingHLTsafe', cms.InputTag("probeEleHLTsafe" ) )
     setattr( process.tnpEleIDs.flags , 'passingHLTsafe', cms.InputTag("probeEleHLTsafe" ) )
+
+# Add SUSY variables to the "variables", add SUSY IDs to the "flags"
+if options['addSUSY'] :
+    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_miniIsoChg', cms.string("userFloat('miniIsoChg')") )
+    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_miniIsoAll', cms.string("userFloat('miniIsoAll')") )
+    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_ptRatio', cms.string("userFloat('ptRatio')") )
+    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_ptRel', cms.string("userFloat('ptRel')") )
+    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_MVATTH', cms.InputTag("electronMVATTH") )   
+    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_sip3d', cms.InputTag("susyEleVarHelper:sip3d") )
+    def addFlag(name):
+        setattr( process.tnpEleIDs.flags, 'passing'+name, cms.InputTag('probes'+name ) )
+    from EgammaAnalysis.TnPTreeProducer.electronsExtrasSUSY_cff  import workingPoints
+    for wp in workingPoints: addFlag(wp)
+
 
 tnpSetup.customize( process.tnpEleTrig , options )
 tnpSetup.customize( process.tnpEleIDs  , options )

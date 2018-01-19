@@ -146,8 +146,9 @@ def setSequences(process, options):
 
     if options['addSUSY'] : process.init_sequence += process.susy_sequence
     process.init_sequence += process.egmGsfElectronIDSequence
-    if options['addSUSY'] : process.init_sequence += process.susy_sequence_requiresVID
     process.init_sequence += process.eleVarHelper 
+    if options['addSUSY'] : process.init_sequence += process.susy_sequence_requiresVID
+
 
 
     process.sc_sequence  = cms.Sequence( )

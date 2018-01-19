@@ -4,6 +4,21 @@
 import FWCore.ParameterSet.Config as cms
 from math import ceil,log
 
+ # All workingpoints we need to probe
+# Note: cut based wp are without isolation
+workingPoints = ["ConvVeto", "MVAVLooseFO", "MVAVLoose", "Mini", "Mini2", "Mini4",
+    "MVAVLooseMini", "MVAVLooseMini2", "MVAVLooseMini4", "MVATight", "MVAWP80", "MVAWP90",
+     "TightIP2D", "TightIP3D", "IDEmu", "ISOEmu", "Charge", "IHit0", "IHit1", "Loose2D",
+     "TightIP2D", "TightIP3D", "IDEmu", "ISOEmu", "IHit0", "IHit1", "Loose2D",
+     "FOID2D", "Tight2D3D", "TightID2D3D", "ConvIHit0", "TightConvIHit0", "ConvIHit1", "ConvIHit0Chg",
+     "FOID2D", "Tight2D3D", "TightID2D3D", "TightConvIHit0", "ConvIHit1", "ConvIHit0Chg",
+     "MultiIsoM", "MultiIsoT", "MultiIsoVT", "MultiIsoEmu", "LeptonMvaM", "LeptonMvaVT",
+     "CutBasedVeto", "CutBasedLoose", "CutBasedMedium", "CutBasedTight",
+     "CutBasedMediumMini", "CutBasedTightMini", "CutBasedTTZ", "CutBasedIllia", "CutBasedStopsDilepton",
+     "LeptonMvaVTIDEmuTightIP2DSIP3D8miniIso04", "LeptonMvaMIDEmuTightIP2DSIP3D8miniIso04"]
+
+
+
 def addSusyIDs(process, options):
 
     # For some reason importing the NanoAOD configuration breakes VID, so we need to make 
@@ -54,6 +69,16 @@ def addSusyIDs(process, options):
     # Next, we'll call Tom's MyElectronVariableHelper, which will calculate all the needed IDs. Alternatively, we could hack these into the fitter, since all the needed variables exist...
     # ... if the fitter can edit the probe requirements both at the numerator and the denominator, then all the work can be done there, starting from the loosest Tag/Probe combination!
 
+    process.susyEleVarHelper = cms.EDProducer("SusyElectronVariableHelper",
+        probes         = cms.InputTag("slimmedElectronsWithUserData"),
+        mvas           = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15NonTrig25nsV1Values"),
+        dxy            = cms.InputTag("eleVarHelper:dxy"),
+        dz             = cms.InputTag("eleVarHelper:dz"),
+        leptonMvas     = cms.InputTag("electronMVATTH"),
+    )
+
+
+
     process.susy_sequence = cms.Sequence(
         process.isoForEle +
         process.ptRatioRelForEle + 
@@ -61,7 +86,8 @@ def addSusyIDs(process, options):
         )
 
     process.susy_sequence_requiresVID = cms.Sequence(
-        process.electronMVATTH
+        process.electronMVATTH + 
+        process.susyEleVarHelper
         )
 
 
