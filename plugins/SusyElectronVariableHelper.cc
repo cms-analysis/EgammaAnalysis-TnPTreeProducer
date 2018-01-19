@@ -107,10 +107,8 @@ namespace{
       && ele.dr03TkSumPt() / ele.pt() < 0.2;
   }
 
-  // CMS coding rule number 1: be careful with POG recommended packages, especially when they were able to transform something
-  // simple as a cut based id into a web of hundreds of python config files and are using bad coding standards
-  // Therefore, simply implement the cut based id in a much more transparant way in the following 30 lines
-  // Furthermore, we do not want the isolation cut, and you really don't want to mess with the EGamma code
+  // We want the EGM IDs but don't want the isolation cut, and you really don't want to mess with the EGamma VID code
+  // So we implement the IDs by hand, in 30 lines, rather than navigating the web of classes and config files of VID
   // Cuts based on: https://twiki.cern.ch/twiki/bin/viewauth/CMS/CutBasedElectronIdentificationRun2#Spring15_selection_25ns
   // Spring15, 25ns		         Veto B    Loose B   Medium B  Tight B    Veto E   Loose E   Medium E  Tight E
   std::vector<float> maxSigmaIetaIeta = {0.0114,   0.0103,   0.0101,   0.0101,    0.0352,  0.0301,   0.0283,   0.0279};
