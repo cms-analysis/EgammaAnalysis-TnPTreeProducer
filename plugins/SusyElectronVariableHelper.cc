@@ -222,7 +222,7 @@ SusyElectronVariableHelper::SusyElectronVariableHelper(const edm::ParameterSet &
 		     "TightIP2D", "TightIP3D", "IDEmu", "ISOEmu", "Charge", "IHit0", "IHit1", "Loose2D",
 		     "FOID2D", "Tight2D3D", "TightID2D3D", "ConvIHit0", "TightConvIHit0", "ConvIHit1", "ConvIHit0Chg",
 		     "MultiIsoM", "MultiIsoT", "MultiIsoVT", "MultiIsoEmu", "LeptonMvaM", "LeptonMvaVT",
-		     "CutBasedVeto", "CutBasedLoose", "CutBasedMedium", "CutBasedTight",
+		     "CutBasedVetoNoIso", "CutBasedLooseNoIso", "CutBasedMediumNoIso", "CutBasedTightNoIso",
 		     "CutBasedMediumMini", "CutBasedTightMini", "CutBasedTTZ", "CutBasedIllia", "CutBasedStopsDilepton",
 		     "LeptonMvaVTIDEmuTightIP2DSIP3D8miniIso04", "LeptonMvaMIDEmuTightIP2DSIP3D8miniIso04"};
 
