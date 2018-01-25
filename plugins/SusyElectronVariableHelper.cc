@@ -108,7 +108,7 @@ namespace{
   }
 
   // We want the EGM IDs but don't want the isolation cut, and you really don't want to mess with the EGamma VID code
-  // So we implement the IDs by hand, in 30 lines, rather than navigating the web of classes and config files of VID
+  // So we implement the IDs by hand, rather than navigating the web of classes and config files of VID
   // Cuts based on: https://twiki.cern.ch/twiki/bin/viewauth/CMS/CutBasedElectronIdentificationRun2#Spring15_selection_25ns
   // Spring15, 25ns		         Veto B    Loose B   Medium B  Tight B    Veto E   Loose E   Medium E  Tight E
   std::vector<float> maxSigmaIetaIeta = {0.0114,   0.0103,   0.0101,   0.0101,    0.0352,  0.0301,   0.0283,   0.0279};
@@ -141,29 +141,48 @@ namespace{
     return true;
   }
 
+  // 94X cuts based on Version 52 of https://twiki.cern.ch/twiki/bin/view/CMS/CutBasedElectronIdentificationRun2#Offline_selection_criteria
+  // Fall17                               Veto B    Loose B   Medium B  Tight B    Veto E   Loose E   Medium E  Tight E
+  std::vector<float> maxSigmaIetaIeta94X = {0.0128,   0.0105,   0.0105,   0.0104,    0.0445,  0.0356,   0.0309,   0.0305};
+  std::vector<float> maxDEtaIn94X        = {0.00523,  0.00387,  0.00365,  0.00353,   0.00984, 0.0072,   0.00625,  0.00567};
+  std::vector<float> maxDPhiIn94X        = {0.159,    0.0716,   0.0588,   0.0499,    0.157,   0.147,    0.0355,   0.0165};
+  std::vector<float> maxHOverE94X        = {0.05,     0.05,     0.025,    0.26,      0.05,    0.0414,   0.026,    0.026};
+  std::vector<float> maxOoEmooP94X       = {0.193,    0.102,    0.0174,   0.012,     0.0962,  0.0875,   0.0335,   0.0158};
+  std::vector<float> maxd094X            = {0.05,     0.05,     0.05,     0.05,      0.10,    0.10,     0.10,     0.10};
+  std::vector<float> maxdz94X            = {0.10,     0.10,     0.10,     0.10,      0.20,    0.20,     0.20,     0.20};
+  std::vector<int>   maxMissingHits94X   = {2,        1,        1,        1,         3,       1,        1,        1};
+  std::vector<bool>  convVeto94X         = {true,     true,     true,     true,      true,    true,     true,     true};
 
-  // On request of Deniz for her TTZ analysis, based on the (as usual to CMS standards) horrible code given here: https://github.com/peruzzim/cmgtools-lite/blob/76X_for2016basis/TTHAnalysis/python/tools/functionsTTH.py#L10-L20
-  bool PassCutBasedTTZ(const pat::Electron &ele){
-    float eInvMinusPInv = ele.ecalEnergy() > 0 ? (1.0/ele.ecalEnergy() - ele.eSuperClusterOverP()/ele.ecalEnergy()) : 9e9;
-    if(ele.isEB()){
-      if (ele.hadronicOverEm() >= 0.10)                    return false;
-      if (abs(ele.deltaEtaSuperClusterTrackAtVtx())>=0.01) return false;
-      if (abs(ele.deltaPhiSuperClusterTrackAtVtx())>=0.04) return false;
-      if (eInvMinusPInv<=-0.05)                            return false;
-      if (eInvMinusPInv>=0.01)                             return false;
-      if (ele.full5x5_sigmaIetaIeta()>=0.011)              return false;
-      return true;
-
-    } else if(ele.isEE()){
-      if (ele.hadronicOverEm() >= 0.07)                     return false;
-      if (abs(ele.deltaEtaSuperClusterTrackAtVtx())>=0.008) return false;
-      if (abs(ele.deltaPhiSuperClusterTrackAtVtx())>=0.07)  return false;
-      if (eInvMinusPInv<=-0.05)                             return false;
-      if (eInvMinusPInv>=0.005)                             return false;
-      if (ele.full5x5_sigmaIetaIeta()>=0.03)                return false;
-      return true;
-    } else return false;
+  // from https://github.com/ikrav/cmssw/blob/egm_id_80X_v1/RecoEgamma/ElectronIdentification/plugins/cuts/GsfEleDEtaInSeedCut.cc#L30-L33
+  float dEtaInSeed(const pat::Electron &ele){
+    return ele.superCluster().isNonnull() && ele.superCluster()->seed().isNonnull() ? 
+      ele.deltaEtaSuperClusterTrackAtVtx() - ele.superCluster()->eta() + ele.superCluster()->seed()->eta() : std::numeric_limits<float>::max();
   }
+
+  bool passHoverE(const pat::Electron &ele, double rho, float C0 ) {
+    if(ele.isEB())   return (ele.hadronicOverEm() < C0 + 1.12/ele.superCluster()->energy() + 0.0368*rho/ele.superCluster()->energy());
+    else             return (ele.hadronicOverEm() < C0 +  0.5/ele.superCluster()->energy() +  0.201*rho/ele.superCluster()->energy());
+  }
+
+  bool PassCutBased94X(const pat::Electron &ele, float dxy, float dz, int missingHits, double rho, int level){
+    if(ele.isEB())      level = level;
+    else                level = level + 4;
+
+    float eInvMinusPInv = std::abs(1.0 - ele.eSuperClusterOverP())/ele.ecalEnergy();
+
+    if(ele.full5x5_sigmaIetaIeta()               >= maxSigmaIetaIeta[level]) return false;
+    if(abs(dEtaInSeed(ele))                      >= maxDEtaIn[level])        return false;
+    if(abs(ele.deltaPhiSuperClusterTrackAtVtx()) >= maxDPhiIn[level])        return false;
+    if(! passHoverE( ele, rho, maxHOverE[level]) )                           return false;
+    if(eInvMinusPInv                             >= maxOoEmooP[level])       return false;
+    if(abs(dxy)                                  >= maxd0[level])            return false;
+    if(abs(dz)                                   >= maxdz[level])            return false;
+    if(missingHits                               >  maxMissingHits[level])   return false;
+    if(convVeto[level] and not ele.passConversionVeto())                     return false;
+
+    return true;
+  }
+
 
   bool PassMultiIso(TString level, double mini_iso, double jetPtRatio, double jetPtRel){
     if(level == "VL") return mini_iso < 0.25 && (jetPtRatio > 0.67 || jetPtRel > 4.4);
@@ -203,6 +222,7 @@ private:
   edm::EDGetTokenT<edm::ValueMap<float>> dxyToken_;
   edm::EDGetTokenT<edm::ValueMap<float>> dzToken_;
   edm::EDGetTokenT<edm::ValueMap<float>> leptonMvaToken_;
+  edm::EDGetTokenT<double> rhoToken_;
 
   std::vector<TString> workingPoints;
 };
@@ -213,7 +233,8 @@ SusyElectronVariableHelper::SusyElectronVariableHelper(const edm::ParameterSet &
   mvaToken_(           consumes<edm::ValueMap<float>>(      iConfig.getParameter<edm::InputTag>("mvas"))),
   dxyToken_(           consumes<edm::ValueMap<float>>(      iConfig.getParameter<edm::InputTag>("dxy"))),
   dzToken_(            consumes<edm::ValueMap<float>>(      iConfig.getParameter<edm::InputTag>("dz"))),
-  leptonMvaToken_(     consumes<edm::ValueMap<float>>(      iConfig.getParameter<edm::InputTag>("leptonMvas"))){
+  leptonMvaToken_(     consumes<edm::ValueMap<float>>(      iConfig.getParameter<edm::InputTag>("leptonMvas"))),
+  rhoToken_(           consumes<double>(                    iConfig.getParameter<edm::InputTag>("rho"))) {
 
     produces<edm::ValueMap<float> >("sip3d");
 
@@ -222,8 +243,9 @@ SusyElectronVariableHelper::SusyElectronVariableHelper(const edm::ParameterSet &
 		     "TightIP2D", "TightIP3D", "IDEmu", "ISOEmu", "Charge", "IHit0", "IHit1", "Loose2D",
 		     "FOID2D", "Tight2D3D", "TightID2D3D", "ConvIHit0", "TightConvIHit0", "ConvIHit1", "ConvIHit0Chg",
 		     "MultiIsoM", "MultiIsoT", "MultiIsoVT", "MultiIsoEmu", "LeptonMvaM", "LeptonMvaVT",
-		     "CutBasedVetoNoIso", "CutBasedLooseNoIso", "CutBasedMediumNoIso", "CutBasedTightNoIso",
-		     "CutBasedMediumMini", "CutBasedTightMini", "CutBasedTTZ", "CutBasedIllia", "CutBasedStopsDilepton",
+         "CutBasedVetoNoIso", "CutBasedLooseNoIso", "CutBasedMediumNoIso", "CutBasedTightNoIso",
+         "CutBasedVetoNoIso94X", "CutBasedLooseNoIso94X", "CutBasedMediumNoIso94X", "CutBasedTightNoIso94X",
+		     "CutBasedMediumMini", "CutBasedTightMini", "CutBasedMediumMini94X", "CutBasedTightMini94X", "CutBasedStopsDilepton",
 		     "LeptonMvaVTIDEmuTightIP2DSIP3D8miniIso04", "LeptonMvaMIDEmuTightIP2DSIP3D8miniIso04"};
 
     for(TString wp : workingPoints) produces<edm::ValueMap<bool>>(("pass" + wp).Data());
@@ -251,6 +273,7 @@ void SusyElectronVariableHelper::produce(edm::Event & iEvent, const edm::EventSe
   edm::Handle<edm::ValueMap<float>> dxys;              iEvent.getByToken(dxyToken_,            dxys);
   edm::Handle<edm::ValueMap<float>> dzs;               iEvent.getByToken(dzToken_,             dzs);
   edm::Handle<edm::ValueMap<float>> leptonMvas;        iEvent.getByToken(leptonMvaToken_,      leptonMvas);
+  edm::Handle<double> rhos;                            iEvent.getByToken(rhoToken_,            rhos);
 
   // prepare vector for output
   std::vector<float> sip3dValues;
@@ -258,6 +281,8 @@ void SusyElectronVariableHelper::produce(edm::Event & iEvent, const edm::EventSe
 
   std::map<TString, std::vector<bool>> passWorkingPoints;
   for(TString wp : workingPoints) passWorkingPoints[wp] = std::vector<bool>();
+
+  double rho              = (*rhos);
 
   size_t i = 0;
   for(const auto &probe: *probes){
@@ -301,10 +326,14 @@ void SusyElectronVariableHelper::produce(edm::Event & iEvent, const edm::EventSe
     passWorkingPoints["MultiIsoVT"].push_back(    PassMultiIso("VT", mini_iso, jetPtRatio, jetPtRel));
     passWorkingPoints["LeptonMvaM"].push_back(    PassLeptonMva("M",  leptonMva));
     passWorkingPoints["LeptonMvaVT"].push_back(   PassLeptonMva("VT", leptonMva));
-    passWorkingPoints["CutBasedVeto"].push_back(  PassCutBased(probe, dxy, dz, missingInnerHits, 0));
-    passWorkingPoints["CutBasedLoose"].push_back( PassCutBased(probe, dxy, dz, missingInnerHits, 1));
-    passWorkingPoints["CutBasedMedium"].push_back(PassCutBased(probe, dxy, dz, missingInnerHits, 2));
-    passWorkingPoints["CutBasedTight"].push_back( PassCutBased(probe, dxy, dz, missingInnerHits, 3));
+    passWorkingPoints["CutBasedVetoNoIso"].push_back(  PassCutBased(probe, dxy, dz, missingInnerHits, 0));
+    passWorkingPoints["CutBasedLooseNoIso"].push_back( PassCutBased(probe, dxy, dz, missingInnerHits, 1));
+    passWorkingPoints["CutBasedMediumNoIso"].push_back(PassCutBased(probe, dxy, dz, missingInnerHits, 2));
+    passWorkingPoints["CutBasedTightNoIso"].push_back( PassCutBased(probe, dxy, dz, missingInnerHits, 3));
+    passWorkingPoints["CutBasedVetoNoIso94X"].push_back(  PassCutBased94X(probe, dxy, dz, missingInnerHits, rho, 0));
+    passWorkingPoints["CutBasedLooseNoIso94X"].push_back( PassCutBased94X(probe, dxy, dz, missingInnerHits, rho, 1));
+    passWorkingPoints["CutBasedMediumNoIso94X"].push_back(PassCutBased94X(probe, dxy, dz, missingInnerHits, rho, 2));
+    passWorkingPoints["CutBasedTightNoIso94X"].push_back( PassCutBased94X(probe, dxy, dz, missingInnerHits, rho, 3));
 
     passWorkingPoints["MVAVLooseMini"].push_back(                           combine(passWorkingPoints, {"MVAVLoose", "Mini"}));
     passWorkingPoints["MVAVLooseMini2"].push_back(                          combine(passWorkingPoints, {"MVAVLoose", "Mini2"}));
@@ -313,16 +342,16 @@ void SusyElectronVariableHelper::produce(edm::Event & iEvent, const edm::EventSe
     passWorkingPoints["FOID2D"].push_back(                                  combine(passWorkingPoints, {"MVAVLooseFO", "IDEmu", "TightIP2D"}));
     passWorkingPoints["Tight2D3D"].push_back(                               combine(passWorkingPoints, {"MVATight", "TightIP2D", "SIP3D4"}));
     passWorkingPoints["TightID2D3D"].push_back(                             combine(passWorkingPoints, {"MVATight", "IDEmu", "TightIP2D", "SIP3D4"}));
-    passWorkingPoints["CutBasedStopsDilepton"].push_back(                   combine(passWorkingPoints, {"CutBasedTight", "TightIP2D", "SIP3D4"}));
+    passWorkingPoints["CutBasedStopsDilepton"].push_back(                   combine(passWorkingPoints, {"CutBasedTightNoIso", "TightIP2D", "SIP3D4"}));
     passWorkingPoints["ConvIHit1"].push_back(                               combine(passWorkingPoints, {"ConvVeto","IHit1"}));
     passWorkingPoints["ConvIHit0"].push_back(                               combine(passWorkingPoints, {"ConvVeto","IHit0"}));
     passWorkingPoints["ConvIHit0Chg"].push_back(                            combine(passWorkingPoints, {"ConvIHit0", "Charge"}));
     passWorkingPoints["TightConvIHit0"].push_back(                          combine(passWorkingPoints, {"Tight2D3D", "ConvVeto","IHit0"}));
     passWorkingPoints["MultiIsoEmu"].push_back(                             combine(passWorkingPoints, {"MultiIsoT", "ISOEmu"}));
-    passWorkingPoints["CutBasedMediumMini"].push_back(                      combine(passWorkingPoints, {"CutBasedMedium", "Mini"}));
-    passWorkingPoints["CutBasedTightMini"].push_back(                       combine(passWorkingPoints, {"CutBasedTight", "Mini"}));
-    passWorkingPoints["CutBasedTTZ"].push_back(                             combine(passWorkingPoints, {"CutBasedMedium","TightIP2D", "SIP3D4"}) and PassCutBasedTTZ(probe));
-    passWorkingPoints["CutBasedIllia"].push_back(                           combine(passWorkingPoints, {"CutBasedTTZ", "Charge"}));
+    passWorkingPoints["CutBasedMediumMini"].push_back(                      combine(passWorkingPoints, {"CutBasedMediumNoIso", "Mini"}));
+    passWorkingPoints["CutBasedTightMini"].push_back(                       combine(passWorkingPoints, {"CutBasedTightNoIso", "Mini"}));
+    passWorkingPoints["CutBasedMediumMini94X"].push_back(                   combine(passWorkingPoints, {"CutBasedMediumNoIso94X", "Mini"}));
+    passWorkingPoints["CutBasedTightMini94X"].push_back(                    combine(passWorkingPoints, {"CutBasedTightNoIso94X", "Mini"}));
     passWorkingPoints["LeptonMvaVTIDEmuTightIP2DSIP3D8miniIso04"].push_back(combine(passWorkingPoints, {"LeptonMvaVT", "IDEmu", "TightIP2D", "SIP3D8", "Mini4"}));
     passWorkingPoints["LeptonMvaMIDEmuTightIP2DSIP3D8miniIso04"].push_back( combine(passWorkingPoints, {"LeptonMvaM", "IDEmu", "TightIP2D", "SIP3D8", "Mini4"}));
 

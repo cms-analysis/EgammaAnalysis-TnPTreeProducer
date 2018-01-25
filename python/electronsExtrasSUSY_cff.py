@@ -14,7 +14,8 @@ workingPoints = ["ConvVeto", "MVAVLooseFO", "MVAVLoose", "Mini", "Mini2", "Mini4
      "FOID2D", "Tight2D3D", "TightID2D3D", "TightConvIHit0", "ConvIHit1", "ConvIHit0Chg",
      "MultiIsoM", "MultiIsoT", "MultiIsoVT", "MultiIsoEmu", "LeptonMvaM", "LeptonMvaVT",
      "CutBasedVetoNoIso", "CutBasedLooseNoIso", "CutBasedMediumNoIso", "CutBasedTightNoIso",
-     "CutBasedMediumMini", "CutBasedTightMini", "CutBasedTTZ", "CutBasedIllia", "CutBasedStopsDilepton",
+     "CutBasedVetoNoIso94X", "CutBasedLooseNoIso94X", "CutBasedMediumNoIso94X", "CutBasedTightNoIso94X",
+     "CutBasedMediumMini", "CutBasedTightMini", "CutBasedMediumMini94X", "CutBasedTightMini94X", "CutBasedStopsDilepton",
      "LeptonMvaVTIDEmuTightIP2DSIP3D8miniIso04", "LeptonMvaMIDEmuTightIP2DSIP3D8miniIso04"]
 
 
@@ -75,6 +76,7 @@ def addSusyIDs(process, options):
         dxy            = cms.InputTag("eleVarHelper:dxy"),
         dz             = cms.InputTag("eleVarHelper:dz"),
         leptonMvas     = cms.InputTag("electronMVATTH"),
+        rho            = cms.InputTag("fixedGridRhoFastjetAll"),
     )
 
 
