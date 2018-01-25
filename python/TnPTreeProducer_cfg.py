@@ -296,12 +296,12 @@ if not options['useAOD'] :
 
 # Add SUSY variables to the "variables", add SUSY IDs to the "flags"
 if options['addSUSY'] :
-    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_miniIsoChg', cms.string("userFloat('miniIsoChg')") )
-    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_miniIsoAll', cms.string("userFloat('miniIsoAll')") )
-    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_ptRatio', cms.string("userFloat('ptRatio')") )
-    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_ptRel', cms.string("userFloat('ptRel')") )
-    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_MVATTH', cms.InputTag("electronMVATTH") )   
-    setattr( tnpVars.CommonStuffForGsfElectronProbe.variables , 'el_sip3d', cms.InputTag("susyEleVarHelper:sip3d") )
+    setattr( process.tnpEleIDs.variables , 'el_miniIsoChg', cms.string("userFloat('miniIsoChg')") )
+    setattr( process.tnpEleIDs.variables , 'el_miniIsoAll', cms.string("userFloat('miniIsoAll')") )
+    setattr( process.tnpEleIDs.variables , 'el_ptRatio', cms.string("userFloat('ptRatio')") )
+    setattr( process.tnpEleIDs.variables , 'el_ptRel', cms.string("userFloat('ptRel')") )
+    setattr( process.tnpEleIDs.variables , 'el_MVATTH', cms.InputTag("electronMVATTH") )   
+    setattr( process.tnpEleIDs.variables , 'el_sip3d', cms.InputTag("susyEleVarHelper:sip3d") )
     def addFlag(name):
         setattr( process.tnpEleIDs.flags, 'passing'+name, cms.InputTag('probes'+name ) )
     from EgammaAnalysis.TnPTreeProducer.electronsExtrasSUSY_cff  import workingPoints
