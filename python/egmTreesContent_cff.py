@@ -79,11 +79,11 @@ EleProbeVariablesToStore = cms.PSet(
     el_trkIso        = cms.string("trackIso"),
     el_dr03TkSumPt   = cms.string("dr03TkSumPt"),
 
-    #miniIsolation
-    el_miniIsoChg    = cms.InputTag("probeEleMiniIso:h+-DR020-BarVeto000-EndVeto001-kt1000-Min005"),
-    el_miniIsoNeu    = cms.InputTag("probeEleMiniIso:h0-DR020-BarVeto000-EndVeto000-kt1000-Min005"),
-    el_miniIsoPho    = cms.InputTag("probeEleMiniIso:gamma-DR020-BarVeto000-EndVeto008-kt1000-Min005"),
-    el_miniIsoEffA   = cms.InputTag("probeEleMiniIsoEffArea:EA-DR020-kt1000-Min005"),
+
+
+    #added for VHbbEIso
+    el_sumPUPt       = cms.string("pfIsolationVariables().sumPUPt"),
+    el_reliso03      = cms.string("(pfIsolationVariables().sumChargedHadronPt + max(pfIsolationVariables().sumNeutralHadronEt + pfIsolationVariables().sumPhotonEt - 0.5 * pfIsolationVariables().sumPUPt,0.0)) / pt() "),
 
     # tracker
     el_tk_pt        = cms.string("gsfTrack().ptMode"),

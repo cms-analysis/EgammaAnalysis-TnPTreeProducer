@@ -109,7 +109,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     chi2Vals.push_back(probe->gsfTrack()->normalizedChi2());
     dzVals.push_back(probe->gsfTrack()->dz(vtx->position()));
     dxyVals.push_back(probe->gsfTrack()->dxy(vtx->position()));
-    mhVals.push_back(float(probe->gsfTrack()->hitPattern().numberOfHits(reco::HitPattern::MISSING_INNER_HITS)));
+    mhVals.push_back(float(probe->gsfTrack()->hitPattern().numberOfLostHits(reco::HitPattern::MISSING_INNER_HITS)));
 
     float l1e = 999999.;    
     float l1et = 999999.;
