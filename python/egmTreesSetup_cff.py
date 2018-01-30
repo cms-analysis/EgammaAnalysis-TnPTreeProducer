@@ -13,6 +13,7 @@ def setTagsProbes(process, options):
     hltObjects     = 'slimmedPatTrigger' # 'selectedPatTrigger' FOR 2016
     genParticles   = 'prunedGenParticles'
     SCEleMatcher   = 'PatElectronMatchedCandidateProducer' 
+
     if (options['useAOD']):
         eleHLTProducer = 'GsfElectronTriggerCandProducer'
         gamHLTProducer = 'PhotonTriggerCandProducer'
@@ -124,11 +125,9 @@ def setTagsProbes(process, options):
     ######################## probe passing ID ##########################
     import EgammaAnalysis.TnPTreeProducer.egmElectronIDModules_cff as egmEleID
     import EgammaAnalysis.TnPTreeProducer.egmPhotonIDModules_cff   as egmPhoID
-    import EgammaAnalysis.TnPTreeProducer.egmElectronMiniIsoModules_cff   as egmEleMiniIso
     egmEleID.setIDs(process, options)
     egmPhoID.setIDs(process, options)
-    egmEleMiniIso.addMiniIso(process, options)
-    
+
 ###################################################################################
 ################  --- SEQUENCES
 ###################################################################################      
@@ -145,6 +144,13 @@ def setSequences(process, options):
             )
         process.init_sequence += process.enCalib_sequence
 
+    if options['addSUSY'] : process.init_sequence += process.susy_sequence
+    process.init_sequence += process.egmGsfElectronIDSequence
+    process.init_sequence += process.eleVarHelper 
+    if options['addSUSY'] : process.init_sequence += process.susy_sequence_requiresVID
+
+
+
     process.sc_sequence  = cms.Sequence( )
     process.ele_sequence = cms.Sequence( )
     process.pho_sequence = cms.Sequence( )
@@ -152,11 +158,12 @@ def setSequences(process, options):
     
     process.tag_sequence = cms.Sequence(
         process.goodElectrons             +
-        process.egmGsfElectronIDSequence  +
         process.tagEleCutBasedTight       +
         process.tagEle 
         )
-        
+
+
+
     if options['useAOD'] : process.sc_sequence += process.sc_sequenceAOD
     else :                 process.sc_sequence += process.sc_sequenceMiniAOD
     process.sc_sequence += process.probeSC
