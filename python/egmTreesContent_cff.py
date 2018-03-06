@@ -39,6 +39,7 @@ EleProbeVariablesToStore = cms.PSet(
     el_sc_phi        = cms.string("superCluster.phi"),    
     el_sc_abseta     = cms.string("abs(-log(tan(superCluster.position.theta/2)))"),
     el_seed_e        = cms.string("superCluster.seed.energy"), 
+    el_ecalEnergy    = cms.string("ecalEnergy()"),
 #    el_xseed_e       = cms.string("superCluster.seed.seed.energy"), 
 
     #id based
@@ -60,9 +61,11 @@ EleProbeVariablesToStore = cms.PSet(
     el_e5x5          = cms.string("showerShape().e5x5"),
     el_r9            = cms.string("showerShape().r9"),
     el_sieie         = cms.string("showerShape().sigmaIetaIeta"),
-    
-    el_hoe           = cms.string("hcalOverEcalBc"),
-    el_eoverp        = cms.string("(superCluster().rawEnergy+superCluster().preshowerEnergy)/gsfTrack().pMode()"),
+
+    el_hoe           = cms.string("hadronicOverEm()"),    
+    el_hoe_bc           = cms.string("hcalOverEcalBc"),
+    el_eoverp_wES        = cms.string("(superCluster().rawEnergy+superCluster().preshowerEnergy)/gsfTrack().pMode()"),
+    el_1overEminus1overP        = cms.string("abs(1-eSuperClusterOverP())/ecalEnergy()"),
 
     # mva id
     el_nonTrigMVA    = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15NonTrig25nsV1Values"),
