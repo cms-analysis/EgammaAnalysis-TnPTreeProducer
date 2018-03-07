@@ -56,9 +56,9 @@ def setIDs(process, options):
     process.probePhoCutBasedLoose94X  = process.probePhoCutBasedLoose.clone()
     process.probePhoCutBasedMedium94X = process.probePhoCutBasedLoose.clone()
     process.probePhoCutBasedTight94X  = process.probePhoCutBasedLoose.clone()
-    process.probePhoCutBasedLoose94X.selection  = cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Fall17-94X-loose"  )
-    process.probePhoCutBasedMedium94X.selection = cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Fall17-94X-medium" )
-    process.probePhoCutBasedTight94X.selection  = cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Fall17-94X-tight"  )
+    process.probePhoCutBasedLoose94X.selection  = cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Fall17-94X-V1-loose"  )
+    process.probePhoCutBasedMedium94X.selection = cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Fall17-94X-V1-medium" )
+    process.probePhoCutBasedTight94X.selection  = cms.InputTag("egmPhotonIDs:cutBasedPhotonID-Fall17-94X-V1-tight"  )
 
 
     process.probePhoMVA = process.probePhoCutBasedLoose.clone()

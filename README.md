@@ -16,3 +16,5 @@ git remote add username-push git@github.com:username/EgammaAnalysis-TnPTreeProdu
 
 3. push commits to fork and then standard pull request process
 git push username-push branchname
+
+4. submit jobs

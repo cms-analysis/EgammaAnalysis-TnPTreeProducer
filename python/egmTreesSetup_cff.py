@@ -184,8 +184,10 @@ def setSequences(process, options):
         process.probeEleCutBasedLoose94X  +
         process.probeEleCutBasedMedium94X +
         process.probeEleCutBasedTight94X  +
+        process.probeEleMVA94XwpLnoiso        +
         process.probeEleMVA94Xwp90noiso        +
         process.probeEleMVA94Xwp80noiso        +
+        process.probeEleMVA94XwpLiso        +
         process.probeEleMVA94Xwp90iso        +
         process.probeEleMVA94Xwp80iso        +
         process.probeEle 
