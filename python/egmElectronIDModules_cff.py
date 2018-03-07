@@ -20,8 +20,7 @@ def setIDs(process, options):
     my_id_modules = [
         'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Summer16_80X_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.heepElectronID_HEEPV60_cff',
-        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring15_25ns_nonTrig_V1_cff',
-        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring16_GeneralPurpose_V1_cff',
+         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring16_GeneralPurpose_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V1_cff',
@@ -41,7 +40,7 @@ def setIDs(process, options):
     process.probeEleCutBasedVeto = cms.EDProducer(eleProducer,
                                                       input     = cms.InputTag("goodElectrons"),
                                                       cut       = cms.string(options['ELECTRON_CUTS']),
-                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Spring15-25ns-V1-standalone-veto"),
+                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
                                                       id_cut    = cms.bool(True)
                                                   )
     
@@ -76,9 +75,9 @@ def setIDs(process, options):
     process.probeEleCutBasedLoose  = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedMedium = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedTight  = process.probeEleCutBasedVeto.clone()
-    process.probeEleCutBasedLoose.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Spring15-25ns-V1-standalone-loose")
-    process.probeEleCutBasedMedium.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Spring15-25ns-V1-standalone-medium")
-    process.probeEleCutBasedTight.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Spring15-25ns-V1-standalone-tight")
+    process.probeEleCutBasedLoose.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-loose" )
+    process.probeEleCutBasedMedium.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-medium")
+    process.probeEleCutBasedTight.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-tight" )
 
     process.probeEleCutBasedVeto80X   = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedLoose80X  = process.probeEleCutBasedVeto.clone()
@@ -98,16 +97,20 @@ def setIDs(process, options):
     process.probeEleCutBasedLoose94X  = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedMedium94X = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedTight94X  = process.probeEleCutBasedVeto.clone()
+    process.probeEleMVA94XwpLnoiso        = process.probeEleCutBasedVeto.clone()
     process.probeEleMVA94Xwp90noiso        = process.probeEleCutBasedVeto.clone()
     process.probeEleMVA94Xwp80noiso        = process.probeEleCutBasedVeto.clone()
+    process.probeEleMVA94XwpLiso        = process.probeEleCutBasedVeto.clone()
     process.probeEleMVA94Xwp90iso        = process.probeEleCutBasedVeto.clone()
     process.probeEleMVA94Xwp80iso        = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedVeto94X.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-veto"  )
     process.probeEleCutBasedLoose94X.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-loose" )
     process.probeEleCutBasedMedium94X.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-medium")
     process.probeEleCutBasedTight94X.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-tight" )
+    process.probeEleMVA94XwpLnoiso.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wpLoose" )
     process.probeEleMVA94Xwp90noiso.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp90" )
     process.probeEleMVA94Xwp80noiso.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-wp80" )
+    process.probeEleMVA94XwpLiso.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wpLoose" )
     process.probeEleMVA94Xwp90iso.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp90" )
     process.probeEleMVA94Xwp80iso.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-wp80" )
 

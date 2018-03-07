@@ -68,10 +68,12 @@ EleProbeVariablesToStore = cms.PSet(
     el_1overEminus1overP        = cms.string("abs(1-eSuperClusterOverP())/ecalEnergy()"),
 
     # mva id
-    el_nonTrigMVA    = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15NonTrig25nsV1Values"),
+
     el_nonTrigMVA80X = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16GeneralPurposeV1Values"),
     el_hzzMVA80X     = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16HZZV1Values"),
-    el_trigMVA       = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15Trig25nsV1Values"),
+    el_noIsoMVA94X     = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV1Values"),
+    el_IsoMVA94X     = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV1Values"),
+
      
     #isolation
     el_chIso         = cms.string("pfIsolationVariables().sumChargedHadronPt"),
@@ -128,8 +130,9 @@ PhoProbeVariablesToStore = cms.PSet(
     ph_chWorIso = cms.InputTag("photonIDValueMapProducer:phoWorstChargedIsolation"), 
 
 #pho mva
-    ph_mva          = cms.InputTag("photonMVAValueMapProducer:PhotonMVAEstimatorRun2Spring15NonTrig25nsV2p1Values"),
+
     ph_mva80X       = cms.InputTag("photonMVAValueMapProducer:PhotonMVAEstimatorRun2Spring16NonTrigV1Values"),
+    ph_mva94X       = cms.InputTag("photonMVAValueMapProducer:PhotonMVAEstimatorRunIIFall17v1p1Values"),
 )
 
 
@@ -142,7 +145,7 @@ TagVariablesToStore = cms.PSet(
     Ele_pt     = cms.string("pt"),
     Ele_et     = cms.string("et"),
     Ele_e      = cms.string("energy"),
-    Ele_q      = cms.string("charge"),
+    Ele_qesign      = cms.string("charge*energy"),
     
     ## super cluster quantities
     sc_e      = cms.string("superCluster.energy"),
@@ -155,6 +158,8 @@ TagVariablesToStore = cms.PSet(
     Ele_dxy           = cms.InputTag("eleVarHelper:dxy"),
     Ele_nonTrigMVA    = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15NonTrig25nsV1Values"),
     Ele_trigMVA       = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15Trig25nsV1Values"),
+    Ele_noIsoMVA   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV1Values"), 
+    Ele_IsoMVA   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV1Values"),
 
     )
 
