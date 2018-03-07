@@ -145,7 +145,7 @@ TagVariablesToStore = cms.PSet(
     Ele_pt     = cms.string("pt"),
     Ele_et     = cms.string("et"),
     Ele_e      = cms.string("energy"),
-    Ele_qesign      = cms.string("charge*energy"),
+    Ele_q      = cms.string("charge"),
     
     ## super cluster quantities
     sc_e      = cms.string("superCluster.energy"),
