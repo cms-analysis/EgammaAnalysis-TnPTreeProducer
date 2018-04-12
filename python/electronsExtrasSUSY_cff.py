@@ -48,36 +48,37 @@ def addSusyIDs(process, options):
     process.slimmedElectronsWithUserData.userIntFromBools = cms.PSet() # Removed
     process.slimmedElectronsWithUserData.userInts = cms.PSet() # Removed
 
-    # Run the ttH MVA, modify src and take MVA directly from VID (VID must run before this producer)
-    process.electronMVATTH.src = cms.InputTag("slimmedElectronsWithUserData")
-    process.electronMVATTH.variables = cms.PSet(
-        LepGood_pt = cms.string("pt"),
-        LepGood_eta = cms.string("eta"),
-        LepGood_jetNDauChargedMVASel = cms.string("userFloat('jetNDauChargedMVASel')"),
-        LepGood_miniRelIsoCharged = cms.string("userFloat('miniIsoChg')/pt"),
-        LepGood_miniRelIsoNeutral = cms.string("(userFloat('miniIsoAll')-userFloat('miniIsoChg'))/pt"),
-        LepGood_jetPtRelv2 = cms.string("userFloat('ptRel')"),
-        LepGood_jetPtRatio = cms.string("min(userFloat('ptRatio'),1.5)"),
-        LepGood_jetBTagCSV = cms.string("?userCand('jetForLepJetVar').isNonnull()?max(userCand('jetForLepJetVar').bDiscriminator('pfCombinedInclusiveSecondaryVertexV2BJetTags'),0.0):-99.0"),
-        LepGood_sip3d = cms.string("abs(dB('PV3D')/edB('PV3D'))"),
-        LepGood_dxy = cms.string("log(abs(dB('PV2D')))"),
-        LepGood_dz = cms.string("log(abs(dB('PVDZ')))"),
-        LepGood_mvaIdSpring16HZZ = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16HZZV1Values"),
-    )
 
-    # At the end of this, everything we need is either a userfloat or in a producer linked with slimmedElectronsWithUserData
+    # Run the ttH MVA
+    # Cannot take EGMMVA directly from VID, because the TTHMVA producer only loads userFloat. Need to first put the EGMMVA in the object as a userFloat
+    process.slimmedElectronsWithUserDataWithVID = process.slimmedElectronsWithUserData.clone()
+    process.slimmedElectronsWithUserDataWithVID.src = cms.InputTag("slimmedElectronsWithUserData")
+    process.slimmedElectronsWithUserDataWithVID.userCands = cms.PSet() # Removed
+    process.slimmedElectronsWithUserDataWithVID.userFloats = cms.PSet(
+        mvaSpring16HZZ = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16HZZV1Values"),
+        )
+
+    process.electronMVATTH.src = cms.InputTag("slimmedElectronsWithUserDataWithVID")
+
+    # At the end of this, everything we need is either a userfloat or in a producer linked with slimmedElectronsWithUserData or slimmedElectronsWithUserDataWithVID
 
     # Next, we'll call Tom's MyElectronVariableHelper, which will calculate all the needed IDs. Alternatively, we could hack these into the fitter, since all the needed variables exist...
     # ... if the fitter can edit the probe requirements both at the numerator and the denominator, then all the work can be done there, starting from the loosest Tag/Probe combination!
 
     process.susyEleVarHelper = cms.EDProducer("SusyElectronVariableHelper",
         probes         = cms.InputTag("slimmedElectronsWithUserData"),
+        probesWithLepMVA = cms.InputTag("slimmedElectronsWithUserDataWithVID"),        
         mvas           = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15NonTrig25nsV1Values"),
         dxy            = cms.InputTag("eleVarHelper:dxy"),
         dz             = cms.InputTag("eleVarHelper:dz"),
         leptonMvas     = cms.InputTag("electronMVATTH"),
         rho            = cms.InputTag("fixedGridRhoFastjetAll"),
     )
+
+    # Notes on the order of processes:
+    # VID needs to run on the collection used to make goodElectrons (slimmedElectronsWithUserData) --> This means we can never add VID results to the collection making goodElectrons...
+    # The DataEmbedder (slimmedElectronsWithUserData) breaks the references, so we need to run VID and EleVarHelper after it --> Again, can never add VID results as userFloats
+    # Solution: make a temp electron collection with VID, use it to calculate the TTHMVA, and then teach the SusyElectronVariableHelper to load 2 electron collections, taking MVATTH from the temp one and adding it as a susyEleVarHelper variable. That way, the susyEleVarHelper re-establishes the link between TTHMVA and the main electron collection
 
 
 
@@ -88,6 +89,7 @@ def addSusyIDs(process, options):
         )
 
     process.susy_sequence_requiresVID = cms.Sequence(
+        process.slimmedElectronsWithUserDataWithVID + 
         process.electronMVATTH + 
         process.susyEleVarHelper
         )
