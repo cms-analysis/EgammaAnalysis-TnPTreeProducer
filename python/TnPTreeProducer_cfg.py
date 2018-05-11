@@ -334,7 +334,10 @@ process.outpath = cms.EndPath(process.out)
 if (not options['DEBUG']):
     process.outpath.remove(process.out)
 
+process.evtCounter = cms.EDAnalyzer('SimpleEventCounter')
+
 process.p = cms.Path(
+        process.evtCounter        +
         process.hltFilter         +
         process.cand_sequence     + 
         process.tnpPairs_sequence +
