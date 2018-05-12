@@ -61,14 +61,7 @@ def setIDs(process, options):
     #10 GsfEleConversionVetoCut
     #11 GsfEleMissingHitsCut
     
-    #process.probeEleCutBasedVeto = cms.EDProducer("PatElectronNm1Selector",
-    #                                                    input     = cms.InputTag("goodElectrons"),
-    #                                                    cut       = cms.string(options['ELECTRON_CUTS']),
-    #                                                    selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Spring15-25ns-V1-standalone-veto"),
-    #                                                    #cutIndicesToMask = cms.vuint32(2, 3),
-    #                                                    cutNamesToMask = cms.vstring("GsfEleDEtaInCut_0", "GsfEleDPhiInCut_0")
-    #                                                    )
-    
+
     process.probeEleHLTsafe = process.probeEleCutBasedVeto.clone()
     process.probeEleHLTsafe.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronHLTPreselection-Summer16-V1")
 
@@ -119,7 +112,7 @@ def setIDs(process, options):
     process.tagEleCutBasedTight = cms.EDProducer(eleProducer,
                                                      input     = cms.InputTag("goodElectrons"),
                                                      cut       = cms.string(options['ELECTRON_TAG_CUTS']),
-                                                     selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Spring15-25ns-V1-standalone-veto"),
+                                                     selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-tight"),
                                                      id_cut    = cms.bool(True)
                                                 )    
     process.tagEleCutBasedTight.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-tight")
