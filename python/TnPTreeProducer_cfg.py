@@ -195,10 +195,10 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 process.source = cms.Source("PoolSource",
                             fileNames = options['INPUT_FILE_NAME'],
                             )
-#process.maxEvents = cms.untracked.PSet( input = options['MAXEVENTS'])
-process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(options['MAXEVENTS'] )
-)
+process.maxEvents = cms.untracked.PSet( input = options['MAXEVENTS'])
+#process.maxEvents = cms.untracked.PSet(
+#    input = cms.untracked.int32(options['MAXEVENTS'] )
+#)
 
 
 if options['DoTrigger'] : print "  -- Producing HLT (trigger ele) efficiency tree -- "
