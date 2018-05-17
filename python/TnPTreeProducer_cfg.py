@@ -9,7 +9,8 @@ process = cms.Process("tnpEGM")
 ###################################################################
 varOptions = VarParsing('analysis')
 varOptions.register(
-    "isMC", True,
+    #"isMC", True,
+    "isMC", False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Compute MC efficiencies"
@@ -37,7 +38,8 @@ varOptions.register(
     )
 
 varOptions.register(
-    "doRECO", False,
+    #"doRECO", False,
+    "doRECO", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Include tree for Reco SF"
@@ -52,7 +54,8 @@ varOptions.register(
     )
 
 varOptions.register(
-    "isAOD", False,
+    #"isAOD", False,
+    "isAOD", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "switch to run other AOD (for RECO SFs)"
@@ -67,7 +70,8 @@ varOptions.register(
     )
 
 varOptions.register(
-    "GT","auto",
+    #"GT","auto",
+    "GT","101X_dataRun2_Prompt_v9",
     VarParsing.multiplicity.singleton,
     VarParsing.varType.string,
     "Global Tag to be used"
@@ -101,7 +105,8 @@ options['SUPERCLUSTER_CUTS']    = "abs(eta)<2.5 &&  et>5.0"
 options['PHOTON_CUTS']          = "(abs(-log(tan(superCluster.position.theta/2)))<=2.5) && pt> 10"
 options['ELECTRON_TAG_CUTS']    = "(abs(-log(tan(superCluster.position.theta/2)))<=2.1) && !(1.4442<=abs(-log(tan(superClusterPosition.theta/2)))<=1.566) && pt >= 30.0"
 
-options['MAXEVENTS']            = cms.untracked.int32(varOptions.maxEvents) 
+#options['MAXEVENTS']            = cms.untracked.int32(varOptions.maxEvents) 
+options['MAXEVENTS']            = 2000
 options['DoTrigger']            = cms.bool( varOptions.doTrigger )
 options['DoRECO']               = cms.bool( varOptions.doRECO    )
 options['DoEleID']              = cms.bool( varOptions.doEleID   )
@@ -129,6 +134,7 @@ if (varOptions.isMC):
 #     options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter") #FOR 2016
     options['TnPPATHS']            = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")
     options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
+    #options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
     options['TnPHLTProbeFilters']  = cms.vstring()
     options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
     options['GLOBALTAG']           = 'auto:run2_mc'
@@ -136,6 +142,7 @@ else:
     options['OUTPUT_FILE_NAME']    = "TnPTree_data.root"
     options['TnPPATHS']            = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")
     options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
+    #options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
     options['TnPHLTProbeFilters']  = cms.vstring()
     options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
     options['GLOBALTAG']           = 'auto:run2_data'
@@ -149,10 +156,13 @@ if varOptions.GT != "auto" :
 ###################################################################
 from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_Preliminary2018 as inputs
 if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_23Sep2016 as inputs #switch to 2017 samples if want to cmsRun on AOD
+#if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_empty as inputs #switch to 2017 samples if want to cmsRun on AOD
     
 options['INPUT_FILE_NAME'] = inputs['data']
 if varOptions.isMC:  options['INPUT_FILE_NAME'] =  inputs['mc']
 
+#for file in open("file.list").readlines():
+#    inputs['data'].append(file.strip())
 
 ###################################################################
 ## import TnP tree maker pythons and configure for AODs
@@ -185,7 +195,11 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 process.source = cms.Source("PoolSource",
                             fileNames = options['INPUT_FILE_NAME'],
                             )
-process.maxEvents = cms.untracked.PSet( input = options['MAXEVENTS'])
+#process.maxEvents = cms.untracked.PSet( input = options['MAXEVENTS'])
+process.maxEvents = cms.untracked.PSet(
+    input = cms.untracked.int32(options['MAXEVENTS'] )
+)
+
 
 if options['DoTrigger'] : print "  -- Producing HLT (trigger ele) efficiency tree -- "
 if options['DoRECO']    : print "  -- Producing RECO SF tree        -- "
@@ -234,7 +248,12 @@ process.tnpEleReco = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     tagProbePairs = cms.InputTag("tnpPairingEleRec"),
                                     probeMatches  = cms.InputTag("genProbeSC"),
                                     allProbes     = cms.InputTag("probeSC"),
-                                    flags         = cms.PSet(passingRECO   = cms.InputTag("probeSCEle", "superclusters") ),
+                                    flags         = cms.PSet(
+        passingRECO   = cms.InputTag("probeSCEle", "superclusters"),
+        passingRECOEcalDriven   = cms.InputTag("probeSCEle", "superclustersEcalDriven"),
+        passingRECOTrackDriven   = cms.InputTag("probeSCEle", "superclustersTrackDriven")
+        ),
+
                                     )
 
 process.tnpEleIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
