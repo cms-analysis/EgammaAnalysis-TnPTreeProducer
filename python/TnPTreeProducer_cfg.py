@@ -9,8 +9,7 @@ process = cms.Process("tnpEGM")
 ###################################################################
 varOptions = VarParsing('analysis')
 varOptions.register(
-    #"isMC", True,
-    "isMC", False,
+    "isMC", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Compute MC efficiencies"
@@ -38,8 +37,8 @@ varOptions.register(
     )
 
 varOptions.register(
-    #"doRECO", False,
-    "doRECO", True,
+    "doRECO", False,
+    #"doRECO", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Include tree for Reco SF"
