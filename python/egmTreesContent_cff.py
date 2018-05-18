@@ -95,6 +95,7 @@ EleProbeVariablesToStore = cms.PSet(
     el_fbrem         = cms.string("fbrem"),
     el_chisq         = cms.InputTag("eleVarHelper:chi2"),
     el_mHits         = cms.InputTag("eleVarHelper:missinghits"),
+    el_gsfHits         = cms.InputTag("eleVarHelper:gsfhits"),
     el_dz            = cms.InputTag("eleVarHelper:dz"),
     el_dxy           = cms.InputTag("eleVarHelper:dxy"),
     el_3charge       = cms.string("chargeInfo().isGsfCtfScPixConsistent"),
