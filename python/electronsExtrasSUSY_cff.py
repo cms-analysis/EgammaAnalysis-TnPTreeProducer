@@ -34,6 +34,8 @@ def addSusyIDs(process, options):
     process.slimmedElectronsWithUserData = slimmedElectronsWithUserData
     process.electronMVATTH = electronMVATTH
 
+    ptRatioRelForEle.srcJet = cms.InputTag("slimmedJets")
+
     # Make a new electron collection, with additional variables that are used for the LeptonMVA below
     process.slimmedElectronsWithUserData.src = cms.InputTag(options['ELECTRON_COLL'])
     process.slimmedElectronsWithUserData.userFloats = cms.PSet(
@@ -41,6 +43,7 @@ def addSusyIDs(process, options):
         miniIsoAll = cms.InputTag("isoForEle:miniIsoAll"),
         PFIsoChg = cms.InputTag("isoForEle:PFIsoChg"),
         PFIsoAll = cms.InputTag("isoForEle:PFIsoAll"),
+        PFIsoAll04 = cms.InputTag("isoForEle:PFIsoAll04"),
         ptRatio = cms.InputTag("ptRatioRelForEle:ptRatio"),
         ptRel = cms.InputTag("ptRatioRelForEle:ptRel"),
         jetNDauChargedMVASel = cms.InputTag("ptRatioRelForEle:jetNDauChargedMVASel"),
@@ -50,12 +53,13 @@ def addSusyIDs(process, options):
 
 
     # Run the ttH MVA
-    # Cannot take EGMMVA directly from VID, because the TTHMVA producer only loads userFloat. Need to first put the EGMMVA in the object as a userFloat
+    # Cannot take EGMMVA directly from VID, because the TTHMVA producer only loads userFloat. Need to first put the EGMMVA in the object as a userFloats, with the names the TTHMVA expects
     process.slimmedElectronsWithUserDataWithVID = process.slimmedElectronsWithUserData.clone()
     process.slimmedElectronsWithUserDataWithVID.src = cms.InputTag("slimmedElectronsWithUserData")
     process.slimmedElectronsWithUserDataWithVID.userCands = cms.PSet() # Removed
     process.slimmedElectronsWithUserDataWithVID.userFloats = cms.PSet(
         mvaSpring16HZZ = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16HZZV1Values"),
+        mvaFall17noIso = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV1Values"),
         )
 
     process.electronMVATTH.src = cms.InputTag("slimmedElectronsWithUserDataWithVID")
