@@ -9,5 +9,11 @@
   <use   name="CommonTools/Utils"/>
   <use  name="CommonTools/UtilAlgos"/>
   <use   name="RecoEgamma/EgammaHLTAlgos"/>
+  <use   name="TrackingTools/IPTools"/>
+  <use   name="DataFormats/GeometryCommonDetAlgo"/>
+  <use   name="TrackingTools/Records"/>
+  <use   name="TrackingTools/TransientTrack"/>
+  <use   name="DataFormats/EgammaCandidates"/>
+<use name="RecoEgamma/EgammaTools"/>
 <flags EDM_PLUGIN="1"/>
 </library>

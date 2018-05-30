@@ -103,7 +103,8 @@ def setTagsProbes(process, options):
     
         
     ########################### TnP pairs ############################
-    masscut = cms.string("50<mass<130")         
+    # masscut = cms.string("50<mass<130")         
+    masscut = cms.string("0<mass<200")
     process.tnpPairingEleHLT   = cms.EDProducer("CandViewShallowCloneCombiner",
                                         decay = cms.string("tagEle@+ probeEle@-"), 
                                         checkCharge = cms.bool(True),
@@ -190,6 +191,13 @@ def setSequences(process, options):
         process.probeEleMVA94XwpLiso        +
         process.probeEleMVA94Xwp90iso        +
         process.probeEleMVA94Xwp80iso        +
+        process.probeEleMVA94XwpLnoisoV2        +
+        process.probeEleMVA94Xwp90noisoV2        +
+        process.probeEleMVA94Xwp80noisoV2        +
+        process.probeEleMVA94XwpLisoV2        +
+        process.probeEleMVA94Xwp90isoV2        +
+        process.probeEleMVA94Xwp80isoV2        +
+        process.probeEleMVA94XwpHZZisoV2        +
         process.probeEle 
         )
     if not options['useAOD'] : process.ele_sequence += process.probeEleHLTsafe
