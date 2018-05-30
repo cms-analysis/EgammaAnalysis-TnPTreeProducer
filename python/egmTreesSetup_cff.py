@@ -103,8 +103,7 @@ def setTagsProbes(process, options):
     
         
     ########################### TnP pairs ############################
-    # masscut = cms.string("50<mass<130")         
-    masscut = cms.string("0<mass<200")
+    masscut = cms.string("50<mass<130")         
     process.tnpPairingEleHLT   = cms.EDProducer("CandViewShallowCloneCombiner",
                                         decay = cms.string("tagEle@+ probeEle@-"), 
                                         checkCharge = cms.bool(True),
