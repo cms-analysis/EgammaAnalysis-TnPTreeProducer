@@ -13,6 +13,7 @@ ZVariablesToStore = cms.PSet(
 
 SCProbeVariablesToStore = cms.PSet(
     sc_eta    = cms.string("eta"),
+    sc_phi    = cms.string("phi"),
     sc_abseta = cms.string("abs(eta)"),
     sc_pt     = cms.string("pt"),
     sc_et     = cms.string("et"),
