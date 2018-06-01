@@ -58,6 +58,7 @@ ElectronVariableHelper<T>::ElectronVariableHelper(const edm::ParameterSet & iCon
   produces<edm::ValueMap<float> >("dz");
   produces<edm::ValueMap<float> >("dxy");
   produces<edm::ValueMap<float> >("missinghits");
+  produces<edm::ValueMap<float> >("gsfhits");
   produces<edm::ValueMap<float> >("l1e");
   produces<edm::ValueMap<float> >("l1et");
   produces<edm::ValueMap<float> >("l1eta");
@@ -96,11 +97,14 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
   std::vector<float> dzVals;
   std::vector<float> dxyVals;
   std::vector<float> mhVals;
+
   std::vector<float> l1EVals;
   std::vector<float> l1EtVals;
   std::vector<float> l1EtaVals;
   std::vector<float> l1PhiVals;
   std::vector<float> pfPtVals;
+
+  std::vector<float> gsfhVals;
 
   typename std::vector<T>::const_iterator probe, endprobes = probes->end();
 
@@ -109,8 +113,9 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     chi2Vals.push_back(probe->gsfTrack()->normalizedChi2());
     dzVals.push_back(probe->gsfTrack()->dz(vtx->position()));
     dxyVals.push_back(probe->gsfTrack()->dxy(vtx->position()));
-    mhVals.push_back(float(probe->gsfTrack()->hitPattern().numberOfHits(reco::HitPattern::MISSING_INNER_HITS)));
-
+    mhVals.push_back(float(probe->gsfTrack()->hitPattern().numberOfLostHits(reco::HitPattern::MISSING_INNER_HITS)));
+    
+    gsfhVals.push_back(float(probe->gsfTrack()->hitPattern().trackerLayersWithMeasurement()));
     float l1e = 999999.;    
     float l1et = 999999.;
     float l1eta = 999999.;
@@ -169,6 +174,12 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
   mhFiller.insert(probes, mhVals.begin(), mhVals.end());
   mhFiller.fill();
   iEvent.put(std::move(mhValMap), "missinghits");
+
+  std::unique_ptr<edm::ValueMap<float> > gsfhValMap(new edm::ValueMap<float>());
+  edm::ValueMap<float>::Filler gsfhFiller(*gsfhValMap);
+  gsfhFiller.insert(probes, gsfhVals.begin(), gsfhVals.end());
+  gsfhFiller.fill();
+  iEvent.put(std::move(gsfhValMap), "gsfhits");
 
   std::unique_ptr<edm::ValueMap<float> > l1EValMap(new edm::ValueMap<float>());
   edm::ValueMap<float>::Filler l1EFill(*l1EValMap);

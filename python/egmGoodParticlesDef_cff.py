@@ -56,16 +56,20 @@ def setGoodParticlesMiniAOD(process, options):
 
     if options['UseCalibEn']:  calibrateEGM( process, options )
 
-    
+
+    ########################### Extra variables for SUSY IDs ############
+    if options['addSUSY']: 
+        import EgammaAnalysis.TnPTreeProducer.electronsExtrasSUSY_cff  as eleSusyID
+        eleSusyID.addSusyIDs( process, options )
+        options['ELECTRON_COLL']        = "slimmedElectronsWithUserData"
+
     process.eleVarHelper = cms.EDProducer("PatElectronVariableHelper",
                                           probes           = cms.InputTag(options['ELECTRON_COLL']),
                                           l1EGColl         = cms.InputTag('caloStage2Digis:EGamma'),
                                           vertexCollection = cms.InputTag("offlineSlimmedPrimaryVertices"),
                                           #pfCandColl       = cms.InputTag("packedPFCandidates"),
                                           )
-    
 
-            
     ####################  Electron collection
     process.goodElectrons = cms.EDFilter("PATElectronRefSelector",
                                          src = cms.InputTag( options['ELECTRON_COLL'] ),
@@ -96,7 +100,7 @@ def setGoodParticlesMiniAOD(process, options):
         process.superClusterCands +
         process.goodSuperClusters 
         )
-    
+
 ###################################################################################
 ################  --- GOOD particles AOD
 ################################################################################### 
