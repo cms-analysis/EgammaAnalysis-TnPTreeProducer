@@ -29,10 +29,27 @@ def addSusyIDs(process, options):
     from PhysicsTools.NanoAOD.electrons_cff import slimmedElectronsWithUserData
     from PhysicsTools.NanoAOD.electrons_cff import electronMVATTH
 
+    doJEC = True
+    if (doJEC):
+        from PhysicsTools.NanoAOD.jets_cff import updatedJets
+        from PhysicsTools.NanoAOD.jets_cff import jetCorrFactors # is this needed?
+        jetCorrFactors.src ='slimmedJets'
+        updatedJets.jetSource ='slimmedJets'
+        process.updatedJets = updatedJets
+        process.jetCorrFactors = jetCorrFactors
+    else:
+        ptRatioRelForEle.srcJet = cms.InputTag("slimmedJets")
+
     process.isoForEle = isoForEle 
     process.ptRatioRelForEle = ptRatioRelForEle
     process.slimmedElectronsWithUserData = slimmedElectronsWithUserData
     process.electronMVATTH = electronMVATTH
+
+    # Also save the raw ptRatio, with the JECs from the miniAOD
+    ptRatioRelForEleUncorr = ptRatioRelForEle.clone()
+    ptRatioRelForEleUncorr.srcJet = cms.InputTag("slimmedJets")
+    process.ptRatioRelForEleUncorr = ptRatioRelForEleUncorr
+
 
     # Make a new electron collection, with additional variables that are used for the LeptonMVA below
     process.slimmedElectronsWithUserData.src = cms.InputTag(options['ELECTRON_COLL'])
@@ -41,7 +58,9 @@ def addSusyIDs(process, options):
         miniIsoAll = cms.InputTag("isoForEle:miniIsoAll"),
         PFIsoChg = cms.InputTag("isoForEle:PFIsoChg"),
         PFIsoAll = cms.InputTag("isoForEle:PFIsoAll"),
+        PFIsoAll04 = cms.InputTag("isoForEle:PFIsoAll04"),
         ptRatio = cms.InputTag("ptRatioRelForEle:ptRatio"),
+        ptRatioUncorr = cms.InputTag("ptRatioRelForEleUncorr:ptRatio"),
         ptRel = cms.InputTag("ptRatioRelForEle:ptRel"),
         jetNDauChargedMVASel = cms.InputTag("ptRatioRelForEle:jetNDauChargedMVASel"),
         )
@@ -50,12 +69,13 @@ def addSusyIDs(process, options):
 
 
     # Run the ttH MVA
-    # Cannot take EGMMVA directly from VID, because the TTHMVA producer only loads userFloat. Need to first put the EGMMVA in the object as a userFloat
+    # Cannot take EGMMVA directly from VID, because the TTHMVA producer only loads userFloat. Need to first put the EGMMVA in the object as a userFloats, with the names the TTHMVA expects
     process.slimmedElectronsWithUserDataWithVID = process.slimmedElectronsWithUserData.clone()
     process.slimmedElectronsWithUserDataWithVID.src = cms.InputTag("slimmedElectronsWithUserData")
     process.slimmedElectronsWithUserDataWithVID.userCands = cms.PSet() # Removed
     process.slimmedElectronsWithUserDataWithVID.userFloats = cms.PSet(
         mvaSpring16HZZ = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16HZZV1Values"),
+        mvaFall17noIso = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV1Values"),
         )
 
     process.electronMVATTH.src = cms.InputTag("slimmedElectronsWithUserDataWithVID")
@@ -82,13 +102,16 @@ def addSusyIDs(process, options):
     # The DataEmbedder (slimmedElectronsWithUserData) breaks the references, so we need to run VID and EleVarHelper after it --> Again, can never add VID results as userFloats
     # Solution: make a temp electron collection with VID, use it to calculate the TTHMVA, and then teach the SusyElectronVariableHelper to load 2 electron collections, taking MVATTH from the temp one and adding it as a susyEleVarHelper variable. That way, the susyEleVarHelper re-establishes the link between TTHMVA and the main electron collection
 
+    process.susy_sequence = cms.Sequence()
 
+    if (doJEC) :
+        process.susy_sequence += process.jetCorrFactors
+        process.susy_sequence += process.updatedJets
+        process.susy_sequence += process.ptRatioRelForEleUncorr
 
-    process.susy_sequence = cms.Sequence(
-        process.isoForEle +
-        process.ptRatioRelForEle + 
-        process.slimmedElectronsWithUserData 
-        )
+    process.susy_sequence += process.isoForEle
+    process.susy_sequence += process.ptRatioRelForEle
+    process.susy_sequence += process.slimmedElectronsWithUserData
 
     process.susy_sequence_requiresVID = cms.Sequence(
         process.slimmedElectronsWithUserDataWithVID + 
