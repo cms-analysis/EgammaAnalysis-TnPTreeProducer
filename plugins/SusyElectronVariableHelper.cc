@@ -218,6 +218,7 @@ public:
 private:
   edm::EDGetTokenT<std::vector<pat::Electron>> probesToken_;
   edm::EDGetTokenT<edm::View<reco::Candidate>> probesViewToken_;
+  edm::EDGetTokenT<edm::View<reco::Candidate>> probes2ViewToken_;
   edm::EDGetTokenT<edm::ValueMap<float>> mvaToken_;
   edm::EDGetTokenT<edm::ValueMap<float>> dxyToken_;
   edm::EDGetTokenT<edm::ValueMap<float>> dzToken_;
@@ -230,6 +231,7 @@ private:
 SusyElectronVariableHelper::SusyElectronVariableHelper(const edm::ParameterSet & iConfig) :
   probesToken_(        consumes<std::vector<pat::Electron>>(iConfig.getParameter<edm::InputTag>("probes"))),
   probesViewToken_(    consumes<edm::View<reco::Candidate>>(iConfig.getParameter<edm::InputTag>("probes"))),
+  probes2ViewToken_(   consumes<edm::View<reco::Candidate>>(iConfig.getParameter<edm::InputTag>("probesWithLepMVA"))),
   mvaToken_(           consumes<edm::ValueMap<float>>(      iConfig.getParameter<edm::InputTag>("mvas"))),
   dxyToken_(           consumes<edm::ValueMap<float>>(      iConfig.getParameter<edm::InputTag>("dxy"))),
   dzToken_(            consumes<edm::ValueMap<float>>(      iConfig.getParameter<edm::InputTag>("dz"))),
@@ -237,6 +239,7 @@ SusyElectronVariableHelper::SusyElectronVariableHelper(const edm::ParameterSet &
   rhoToken_(           consumes<double>(                    iConfig.getParameter<edm::InputTag>("rho"))) {
 
     produces<edm::ValueMap<float> >("sip3d");
+    produces<edm::ValueMap<float> >("electronMVATTH");
 
     workingPoints = {"ConvVeto", "MVAVLooseFO", "MVAVLoose", "Mini", "Mini2", "Mini4",
 		     "MVAVLooseMini", "MVAVLooseMini2", "MVAVLooseMini4", "MVATight", "MVAWP80", "MVAWP90",
@@ -269,6 +272,7 @@ void SusyElectronVariableHelper::produce(edm::Event & iEvent, const edm::EventSe
   // read input
   edm::Handle<std::vector<pat::Electron>> probes;      iEvent.getByToken(probesToken_,         probes);
   edm::Handle<edm::View<reco::Candidate>> probes_view; iEvent.getByToken(probesViewToken_,     probes_view);
+  edm::Handle<edm::View<reco::Candidate>> probes2_view; iEvent.getByToken(probes2ViewToken_,   probes2_view);
   edm::Handle<edm::ValueMap<float>> mvas;              iEvent.getByToken(mvaToken_,            mvas);
   edm::Handle<edm::ValueMap<float>> dxys;              iEvent.getByToken(dxyToken_,            dxys);
   edm::Handle<edm::ValueMap<float>> dzs;               iEvent.getByToken(dzToken_,             dzs);
@@ -277,6 +281,7 @@ void SusyElectronVariableHelper::produce(edm::Event & iEvent, const edm::EventSe
 
   // prepare vector for output
   std::vector<float> sip3dValues;
+  std::vector<float> leptonMvaValues;
 
 
   std::map<TString, std::vector<bool>> passWorkingPoints;
@@ -287,6 +292,8 @@ void SusyElectronVariableHelper::produce(edm::Event & iEvent, const edm::EventSe
   size_t i = 0;
   for(const auto &probe: *probes){
     edm::RefToBase<reco::Candidate> pp = probes_view->refAt(i);
+    edm::RefToBase<reco::Candidate> ppLepMVA = probes2_view->refAt(i); // LeptonMVA were added with reference to a different collection. Here we assume that the order or electrons is the same in the two collections (slimmedElectronsWithUserData and slimmedElectronsWithUserDataWithVID), which should be true since they are just clones
+
 
     float ip3d             = probe.dB(pat::Electron::PV3D);
     float ip3d_err         = probe.edB(pat::Electron::PV3D);
@@ -298,10 +305,11 @@ void SusyElectronVariableHelper::produce(edm::Event & iEvent, const edm::EventSe
     float jetPtRatio       = probe.userFloat("ptRatio");
     float jetPtRel         = probe.userFloat("ptRel");
     int   missingInnerHits   = probe.gsfTrack()->hitPattern().numberOfAllHits(reco::HitPattern::MISSING_INNER_HITS);
-    float leptonMva        = (*leptonMvas)[pp];
+    float leptonMva        = (*leptonMvas)[ppLepMVA];
 
 
     sip3dValues.push_back(sip3d);
+    leptonMvaValues.push_back(leptonMva);    
 
     passWorkingPoints["ConvVeto"].push_back(      probe.passConversionVeto());
     passWorkingPoints["MVAVLooseFO"].push_back(   PassMVAVLooseFO(mva, fabs(probe.superCluster()->eta())));
@@ -359,6 +367,7 @@ void SusyElectronVariableHelper::produce(edm::Event & iEvent, const edm::EventSe
   }
 
   Store(iEvent, probes, sip3dValues, "sip3d");
+  Store(iEvent, probes, leptonMvaValues, "electronMVATTH");
 
   for(TString wp : workingPoints){
     Store(iEvent, probes, passWorkingPoints[wp], ("pass" + wp).Data());
