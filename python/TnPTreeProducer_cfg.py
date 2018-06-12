@@ -38,8 +38,8 @@ varOptions.register(
     )
 
 varOptions.register(
-    #"doRECO", False,
-    "doRECO", True,
+    "doRECO", False,
+   # "doRECO", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Include tree for Reco SF"
@@ -54,8 +54,8 @@ varOptions.register(
     )
 
 varOptions.register(
-    #"isAOD", False,
-    "isAOD", True,
+    "isAOD", False,
+ #   "isAOD", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "switch to run other AOD (for RECO SFs)"
@@ -117,7 +117,7 @@ options['DEBUG']                = cms.bool(False)
 options['isMC']                 = cms.bool(False)
 options['UseCalibEn']           = varOptions.calibEn
 
-options['addSUSY']               = cms.bool(True)
+options['addSUSY']               = cms.bool(False)
 if options['useAOD']: 
     options['addSUSY']               = cms.bool(False)
 
@@ -277,12 +277,21 @@ process.tnpEleIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                         passingLoose94X   = cms.InputTag("probeEleCutBasedLoose94X" ),
                                         passingMedium94X  = cms.InputTag("probeEleCutBasedMedium94X"),
                                         passingTight94X   = cms.InputTag("probeEleCutBasedTight94X" ),
+
                                         passingMVA94XwpLnoiso = cms.InputTag("probeEleMVA94XwpLnoiso" ),
                                         passingMVA94Xwp90noiso = cms.InputTag("probeEleMVA94Xwp90noiso" ),
                                         passingMVA94Xwp80noiso = cms.InputTag("probeEleMVA94Xwp80noiso" ),
                                         passingMVA94XwpLiso = cms.InputTag("probeEleMVA94XwpLiso" ),
                                         passingMVA94Xwp90iso = cms.InputTag("probeEleMVA94Xwp90iso" ),
                                         passingMVA94Xwp80iso = cms.InputTag("probeEleMVA94Xwp80iso" ),
+                                        passingMVA94XwpLnoisoV2 = cms.InputTag("probeEleMVA94XwpLnoisoV2" ),
+                                        passingMVA94Xwp90noisoV2 = cms.InputTag("probeEleMVA94Xwp90noisoV2" ),
+                                        passingMVA94Xwp80noisoV2 = cms.InputTag("probeEleMVA94Xwp80noisoV2" ),
+                                        passingMVA94XwpLisoV2 = cms.InputTag("probeEleMVA94XwpLisoV2" ),
+                                        passingMVA94Xwp90isoV2 = cms.InputTag("probeEleMVA94Xwp90isoV2" ),
+                                        passingMVA94Xwp80isoV2 = cms.InputTag("probeEleMVA94Xwp80isoV2" ),
+
+                                        passingMVA94XwpHZZisoV2 = cms.InputTag("probeEleMVA94XwpHZZisoV2" ),
                                         )
                                     )
 
