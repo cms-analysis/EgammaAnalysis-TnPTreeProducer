@@ -2,20 +2,20 @@ from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 import sys
 config = config()
 
-submitVersion = "Moriond18_V1"
+submitVersion ="2018Data_V1"
 doEleTree = 'doEleID=True'
 doPhoTree = 'doPhoID=True'
 #doHLTTree = 'doTrigger=False'
 #calibEn   = 'useCalibEn=False'
 
-mainOutputDir = '/store/group/phys_egamma/soffi/TnP/ntuples_01162018/%s' % submitVersion
+mainOutputDir = '/store/group/phys_egamma/soffi/TnP/ntuples_05122018/%s' % submitVersion
 
 config.General.transferLogs = False
 
 config.JobType.pluginName  = 'Analysis'
 
 # Name of the CMSSW configuration file
-config.JobType.psetName  = '/afs/cern.ch/user/s/soffi/scratch0/TEST/CMSSW-10-0-0-pre3/src/EgammaAnalysis/TnPTreeProducer/python/TnPTreeProducer_cfg.py'
+config.JobType.psetName  = '/afs/cern.ch/work/s/soffi/EGM-WORK/CMSSW-1011-2018DataTnP/src/EgammaAnalysis/TnPTreeProducer/python/TnPTreeProducer_cfg.py'
 #config.Data.allowNonValidInputDataset = False
 config.JobType.sendExternalFolder     = True
 
@@ -50,53 +50,21 @@ if __name__ == '__main__':
     ##### submit MC
     config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'mc')
     config.Data.splitting     = 'FileBased'
-    config.Data.unitsPerJob   = 8
-    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=94X_mc2017_realistic_v10']
-
+    config.Data.unitsPerJob   = 4
+    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=100X_upgrade2018_realistic_v10']
 
     config.General.requestName  = 'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8'
-    config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAOD-RECOSIMstep_94X_mc2017_realistic_v10-v1/MINIAODSIM'
+    config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISpring18MiniAOD-100X_upgrade2018_realistic_v10-v2/MINIAODSIM'
     submit(config)
-    config.General.requestName  = 'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8-ext1'
-    config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAOD-RECOSIMstep_94X_mc2017_realistic_v10_ext1-v1/MINIAODSIM'
-    submit(config)
+
 
     ##### now submit DATA
     config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'data')
     config.Data.splitting     = 'LumiBased'
-    config.Data.lumiMask      = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/PromptReco/Cert_294927-306462_13TeV_PromptReco_Collisions17_JSON.txt'
+    config.Data.lumiMask      = '/afs/cern.ch/user/s/soffi/public/json_DCSONLY.txt'
     config.Data.unitsPerJob   = 100
-    config.JobType.pyCfgParams  = ['isMC=False',doEleTree,doPhoTree,'GT=94X_dataRun2_ReReco17_forValidation']
+    config.JobType.pyCfgParams  = ['isMC=False',doEleTree,doPhoTree,'GT=101X_dataRun2_Prompt_v9']
  
-    config.General.requestName  = '17Nov2017_RunB'
-    config.Data.inputDataset    = '/SingleElectron/Run2017B-17Nov2017-v1/MINIAOD'
-  #  submit(config)    
-    config.General.requestName  = '17Nov2017_RunC'
-    config.Data.inputDataset    = ''
-  #  submit(config)    
-    config.General.requestName  = '17Nov2017_RunD'
-    config.Data.inputDataset    = '/SingleElectron/Run2017D-17Nov2017-v1/MINIAOD'
-   # submit(config)    
-    config.General.requestName  = '17Nov2017_RunE'
-    config.Data.inputDataset    = '/SingleElectron/Run2017E-17Nov2017-v1/MINIAOD'
- #   submit(config)    
-    config.General.requestName  = '17Nov2017_RunF'
-    config.Data.inputDataset    = '/SingleElectron/Run2017F-17Nov2017-v1/MINIAOD'
-    #submit(config)    
-
-
-
-
-
-#/SingleElectron/Run2017A-PromptReco-v2/MINIAOD
-#/SingleElectron/Run2017A-PromptReco-v3/MINIAOD
-#/SingleElectron/Run2017B-PromptReco-v1/MINIAOD
-#/SingleElectron/Run2017B-PromptReco-v2/MINIAOD
-#/SingleElectron/Run2017C-PromptReco-v1/MINIAOD
-#/SingleElectron/Run2017C-PromptReco-v2/MINIAOD
-#/SingleElectron/Run2017C-PromptReco-v3/MINIAOD
-#/SingleElectron/Run2017D-PromptReco-v1/MINIAOD
-#/SingleElectron/Run2017E-PromptReco-v1/MINIAOD
-
-
-
+    config.General.requestName  = 'Prompt2018_RunA'
+    config.Data.inputDataset    = '/EGamma/Run2018A-PromptReco-v1/MINIAOD'
+    submit(config)    

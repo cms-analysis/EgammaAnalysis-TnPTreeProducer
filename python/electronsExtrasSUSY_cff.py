@@ -68,7 +68,9 @@ def addSusyIDs(process, options):
     process.susyEleVarHelper = cms.EDProducer("SusyElectronVariableHelper",
         probes         = cms.InputTag("slimmedElectronsWithUserData"),
         probesWithLepMVA = cms.InputTag("slimmedElectronsWithUserDataWithVID"),        
-        mvas           = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring15NonTrig25nsV1Values"),
+
+        mvas           = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16GeneralPurposeV1Values"),
+
         dxy            = cms.InputTag("eleVarHelper:dxy"),
         dz             = cms.InputTag("eleVarHelper:dz"),
         leptonMvas     = cms.InputTag("electronMVATTH"),
