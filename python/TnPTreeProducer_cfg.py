@@ -38,8 +38,8 @@ varOptions.register(
     )
 
 varOptions.register(
-    #"doRECO", False,
-    "doRECO", True,
+    "doRECO", False,
+   # "doRECO", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Include tree for Reco SF"
@@ -54,8 +54,8 @@ varOptions.register(
     )
 
 varOptions.register(
-    #"isAOD", False,
-    "isAOD", True,
+    "isAOD", False,
+ #   "isAOD", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "switch to run other AOD (for RECO SFs)"

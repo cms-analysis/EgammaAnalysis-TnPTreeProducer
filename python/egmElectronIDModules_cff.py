@@ -24,8 +24,8 @@ def setIDs(process, options):
         'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V1_cff',
-        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V2_cff',
-        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V2_cff',
+#        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V2_cff',
+#        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V2_cff',
        ]
 
     ### add only miniAOD supported IDs
@@ -120,13 +120,13 @@ def setIDs(process, options):
     process.probeEleMVA94Xwp80isoV2        = process.probeEleCutBasedVeto.clone()
     process.probeEleMVA94XwpHZZisoV2        = process.probeEleCutBasedVeto.clone()
 
-    process.probeEleMVA94XwpLnoisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wpLoose" )
-    process.probeEleMVA94Xwp90noisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wp90" )
-    process.probeEleMVA94Xwp80noisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wp80" )
-    process.probeEleMVA94XwpLisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpLoose" )
-    process.probeEleMVA94Xwp90isoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wp90" )
-    process.probeEleMVA94Xwp80isoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wp80" )
-    process.probeEleMVA94XwpHZZisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpHZZ" )
+#    process.probeEleMVA94XwpLnoisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wpLoose" )
+#    process.probeEleMVA94Xwp90noisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wp90" )
+#    process.probeEleMVA94Xwp80noisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wp80" )
+#    process.probeEleMVA94XwpLisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpLoose" )
+#    process.probeEleMVA94Xwp90isoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wp90" )
+#    process.probeEleMVA94Xwp80isoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wp80" )
+#    process.probeEleMVA94XwpHZZisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpHZZ" )
 
 
     
