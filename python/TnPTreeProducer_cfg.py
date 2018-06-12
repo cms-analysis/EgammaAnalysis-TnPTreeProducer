@@ -77,7 +77,13 @@ varOptions.register(
     "Global Tag to be used"
     )
 
-
+varOptions.register(
+    "includeSUSY", True,
+ #   "isAOD", True,                                                                                                                                                                                                                                                           
+    VarParsing.multiplicity.singleton,
+    VarParsing.varType.bool,
+    "add also the variables used by SUSY"
+    )
 
 varOptions.parseArguments()
 
@@ -117,7 +123,7 @@ options['DEBUG']                = cms.bool(False)
 options['isMC']                 = cms.bool(False)
 options['UseCalibEn']           = varOptions.calibEn
 
-options['addSUSY']               = cms.bool(False)
+options['addSUSY']               = varOptions.includeSUSY
 if options['useAOD']: 
     options['addSUSY']               = cms.bool(False)
 
@@ -200,7 +206,7 @@ process.maxEvents = cms.untracked.PSet( input = options['MAXEVENTS'])
 #    input = cms.untracked.int32(options['MAXEVENTS'] )
 #)
 
-
+if options['addSUSY']    : print "  -- Including variables for SUSY       -- "
 if options['DoTrigger'] : print "  -- Producing HLT (trigger ele) efficiency tree -- "
 if options['DoRECO']    : print "  -- Producing RECO SF tree        -- "
 if options['DoEleID']   : print "  -- Producing electron SF tree    -- "
