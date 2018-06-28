@@ -95,6 +95,13 @@ void MiniAODTriggerCandProducer<reco::GsfElectron, trigger::TriggerObject>::prod
       for (size_t f=1; f<filterNames_.size(); f++) {
       	if (filterNames_[f] != "") {
       	  unsigned int moduleFilterIndex = trEv->filterIndex(filterNames_[f]);
+	  for (int i=0;i<trEv->sizeFilters(); i++) {
+	    if (trEv->filterLabel(i) == filterNames_[f]) {
+	      moduleFilterIndex = i;
+	      break;
+	    }//if (trEv->filterLabel(i) == filterNames_[f])
+	  }//for (int i=0;i<trEv->sizeFilters(); i++)
+
       	  if (moduleFilterIndex+1 > trEv->sizeFilters()) 
       	    saveObj = false;
       	  else {
