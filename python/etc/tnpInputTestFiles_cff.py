@@ -10,6 +10,16 @@ filesMiniAOD_Preliminary2018 = {
         '/store/data/Run2018A/EGamma/MINIAOD/PromptReco-v1/000/315/252/00000/40343760-464B-E811-ACC9-02163E00B0CB.root',
         )
 }
+
+filesAOD_Preliminary2018 = {
+    'mc' :  cms.untracked.vstring(
+        '/store/mc/RunIISpring18DRPremix/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/100X_upgrade2018_realistic_v10-v2/100000/968B1BAD-332F-E811-8178-FA163E9F7460.root',
+#        '/store/mc/RunIISpring18DRPremix/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/100X_upgrade2018_realistic_v10-v2/90001/FE8F7D45-133E-E811-891E-FA163EA4957D.root',
+        ),
+    'data' :  cms.untracked.vstring(
+        '/store/data/Run2018B/EGamma/AOD/PromptReco-v1/000/317/864/00000/C269C719-EC71-E811-9C7E-FA163EF55202.root',
+        )
+}
  
 filesMiniAOD_Preliminary2017 = {
     'mc' :  cms.untracked.vstring(

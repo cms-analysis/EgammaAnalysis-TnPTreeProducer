@@ -45,22 +45,22 @@
 // This will improve performance in multithreaded jobs.
 
 class SimpleEventCounter : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
-   public:
-      explicit SimpleEventCounter(const edm::ParameterSet&);
-      ~SimpleEventCounter();
+public:
+  explicit SimpleEventCounter(const edm::ParameterSet&);
+  ~SimpleEventCounter();
 
-      static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
+  static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
 
 
-   private:
-      virtual void beginJob() override;
-      virtual void analyze(const edm::Event&, const edm::EventSetup&) override;
-      virtual void endJob() override;
+private:
+  virtual void beginJob() override;
+  virtual void analyze(const edm::Event&, const edm::EventSetup&) override;
+  virtual void endJob() override;
 
-      // ----------member data ---------------------------
-      edm::Service<TFileService> fs_;
-      // to keep track of the sum of weights
-      TH1F *h_sumW;
+  // ----------member data ---------------------------
+  edm::Service<TFileService> fs_;
+  // to keep track of the sum of weights
+  TH1F *h_sumW;
 };
 
 //
@@ -77,8 +77,8 @@ class SimpleEventCounter : public edm::one::EDAnalyzer<edm::one::SharedResources
 SimpleEventCounter::SimpleEventCounter(const edm::ParameterSet& iConfig)
 
 {
-   //now do what ever initialization is needed
-   usesResource("TFileService");
+  //now do what ever initialization is needed
+  usesResource("TFileService");
 
 }
 
@@ -86,8 +86,8 @@ SimpleEventCounter::SimpleEventCounter(const edm::ParameterSet& iConfig)
 SimpleEventCounter::~SimpleEventCounter()
 {
  
-   // do anything here that needs to be done at desctruction time
-   // (e.g. close files, deallocate resources etc.)
+  // do anything here that needs to be done at desctruction time
+  // (e.g. close files, deallocate resources etc.)
 
 }
 
@@ -100,22 +100,22 @@ SimpleEventCounter::~SimpleEventCounter()
 void
 SimpleEventCounter::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
-   using namespace edm;
+  using namespace edm;
 
 
 
 #ifdef THIS_IS_AN_EVENT_EXAMPLE
-   Handle<ExampleData> pIn;
-   iEvent.getByLabel("example",pIn);
+  Handle<ExampleData> pIn;
+  iEvent.getByLabel("example",pIn);
 #endif
    
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
-   ESHandle<SetupData> pSetup;
-   iSetup.get<SetupRecord>().get(pSetup);
+  ESHandle<SetupData> pSetup;
+  iSetup.get<SetupRecord>().get(pSetup);
 #endif
 
-   // To keep track of the sum of weights
-     h_sumW->Fill(0.5);
+  // To keep track of the sum of weights
+  h_sumW->Fill(0.5);
 
 }
 
