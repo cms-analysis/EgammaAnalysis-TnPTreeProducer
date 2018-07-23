@@ -48,6 +48,9 @@ electronCollectionToken_(consumes<TRefVector>(params.getUntrackedParameter<edm::
 {
   produces<edm::RefVector<reco::RecoEcalCandidateCollection> >("superclusters");
   produces<TRefVector>("electrons");
+
+  produces<edm::RefVector<reco::RecoEcalCandidateCollection> >("superclustersEcalDriven");
+  produces<edm::RefVector<reco::RecoEcalCandidateCollection> >("superclustersTrackDriven");
 }
 
 template <class T>
@@ -61,6 +64,10 @@ void ElectronMatchedCandidateProducer<T>::produce(edm::Event &event,
   std::unique_ptr<edm::RefVector<reco::RecoEcalCandidateCollection> > outCol (new edm::RefVector<reco::RecoEcalCandidateCollection>);
   std::unique_ptr<TRefVector> outCol2 (new TRefVector);
   
+
+  std::unique_ptr<edm::RefVector<reco::RecoEcalCandidateCollection> > outCol_ecalD (new edm::RefVector<reco::RecoEcalCandidateCollection>);
+  std::unique_ptr<edm::RefVector<reco::RecoEcalCandidateCollection> > outCol_trackD (new edm::RefVector<reco::RecoEcalCandidateCollection>);
+
   // Read electrons
   edm::Handle<TRefVector> electrons;
   event.getByToken(electronCollectionToken_, electrons);
@@ -84,6 +91,17 @@ void ElectronMatchedCandidateProducer<T>::produce(edm::Event &event,
 	  outCol->push_back(ref);
 	  outCol2->push_back((*electrons)[elec]);
 	  matched = true;
+
+	  ///added by SJ
+	  if( (*electrons)[elec]->ecalDrivenSeed() ){
+	    outCol_ecalD->push_back(ref);
+	  }
+
+	  ///added by SJ
+	  if( (*electrons)[elec]->trackerDrivenSeed() ){
+	    outCol_trackD->push_back(ref);
+	  }
+
 	}
       } 
     } 
@@ -111,6 +129,10 @@ void ElectronMatchedCandidateProducer<T>::produce(edm::Event &event,
   */
   event.put(std::move(outCol ), "superclusters");
   event.put(std::move(outCol2), "electrons");
+
+  event.put(std::move(outCol_ecalD ), "superclustersEcalDriven");
+  event.put(std::move(outCol_trackD ), "superclustersTrackDriven");
+
 }
 
 #endif
