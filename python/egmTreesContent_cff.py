@@ -87,6 +87,7 @@ EleProbeVariablesToStore = cms.PSet(
     el_phoIso        = cms.string("pfIsolationVariables().sumPhotonEt"),
     el_neuIso        = cms.string("pfIsolationVariables().sumNeutralHadronEt"),
     el_ecalIso       = cms.string("ecalPFClusterIso"),
+    el_dr03EcalRecHitSumEt       = cms.string("dr03EcalRecHitSumEt"),
     el_hcalIso       = cms.string("hcalPFClusterIso"),
     el_trkIso        = cms.string("trackIso"),
     el_dr03TkSumPt   = cms.string("dr03TkSumPt"),
