@@ -20,12 +20,13 @@ def setIDs(process, options):
     my_id_modules = [
         'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Summer16_80X_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.heepElectronID_HEEPV60_cff',
-         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring16_GeneralPurpose_V1_cff',
+        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring16_GeneralPurpose_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V1_cff',
-#        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V2_cff',
-#        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V2_cff',
+        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V2_cff',
+        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V2_cff',
+        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V2_cff'
        ]
 
     ### add only miniAOD supported IDs
@@ -120,23 +121,33 @@ def setIDs(process, options):
     process.probeEleMVA94Xwp80isoV2        = process.probeEleCutBasedVeto.clone()
     process.probeEleMVA94XwpHZZisoV2        = process.probeEleCutBasedVeto.clone()
 
-#    process.probeEleMVA94XwpLnoisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wpLoose" )
-#    process.probeEleMVA94Xwp90noisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wp90" )
-#    process.probeEleMVA94Xwp80noisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wp80" )
-#    process.probeEleMVA94XwpLisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpLoose" )
-#    process.probeEleMVA94Xwp90isoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wp90" )
-#    process.probeEleMVA94Xwp80isoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wp80" )
-#    process.probeEleMVA94XwpHZZisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpHZZ" )
+    process.probeEleMVA94XwpLnoisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wpLoose" )
+    process.probeEleMVA94Xwp90noisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wp90" )
+    process.probeEleMVA94Xwp80noisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-wp80" )
+    process.probeEleMVA94XwpLisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpLoose" )
+    process.probeEleMVA94Xwp90isoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wp90" )
+    process.probeEleMVA94Xwp80isoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wp80" )
+    process.probeEleMVA94XwpHZZisoV2.selection        = cms.InputTag("egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpHZZ" )
 
+
+    process.probeEleCutBasedVeto94XV2   = process.probeEleCutBasedVeto.clone()
+    process.probeEleCutBasedLoose94XV2  = process.probeEleCutBasedVeto.clone()
+    process.probeEleCutBasedMedium94XV2 = process.probeEleCutBasedVeto.clone()
+    process.probeEleCutBasedTight94XV2  = process.probeEleCutBasedVeto.clone()
+
+    process.probeEleCutBasedVeto94XV2.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
+    process.probeEleCutBasedLoose94XV2.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
+    process.probeEleCutBasedMedium94XV2.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
+    process.probeEleCutBasedTight94XV2.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
 
     
     process.tagEleCutBasedTight = cms.EDProducer(eleProducer,
                                                      input     = cms.InputTag("goodElectrons"),
                                                      cut       = cms.string(options['ELECTRON_TAG_CUTS']),
-                                                     selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-tight"),
+                                                     selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"),
                                                      id_cut    = cms.bool(True)
                                                 )    
-    process.tagEleCutBasedTight.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-tight")
+    process.tagEleCutBasedTight.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight")
 
     if options['addSUSY'] :
 

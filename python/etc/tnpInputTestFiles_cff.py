@@ -15,13 +15,22 @@ filesMiniAOD_Preliminary2018 = {
 
 filesAOD_Preliminary2018 = {
     'mc' :  cms.untracked.vstring(
-        '/store/mc/RunIISpring18DRPremix/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/100X_upgrade2018_realistic_v10-v2/100000/968B1BAD-332F-E811-8178-FA163E9F7460.root',
 #        '/store/mc/RunIISpring18DRPremix/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/100X_upgrade2018_realistic_v10-v2/90001/FE8F7D45-133E-E811-891E-FA163EA4957D.root',
         ),
     'data' :  cms.untracked.vstring(
         '/store/data/Run2018B/EGamma/AOD/PromptReco-v1/000/317/864/00000/C269C719-EC71-E811-9C7E-FA163EF55202.root',
         )
 }
+
+filesAOD_Preliminary2017 = {
+    'mc' :  cms.untracked.vstring(
+        '/store/mc/RunIIFall17DRPremix/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/AODSIM/PU2017RECOPF_94X_mc2017_realistic_v11-v1/50000/D42B8057-9F67-E811-9656-549F3525C4EC.root'
+        ),
+    'data' :  cms.untracked.vstring(
+        '/store/data/Run2017F/SingleElectron/AOD/17Nov2017-v1/50000/005B2A56-96E0-E711-B727-0CC47A4D7690.root',
+        )
+}
+
  
 filesMiniAOD_Preliminary2017 = {
     'mc' :  cms.untracked.vstring(

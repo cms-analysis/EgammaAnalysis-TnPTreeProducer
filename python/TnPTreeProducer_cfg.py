@@ -8,8 +8,8 @@ process = cms.Process("tnpEGM")
 ## argument line options
 ###################################################################
 varOptions = VarParsing('analysis')
+
 varOptions.register(
-    #"isMC", True,
     "isMC", False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
@@ -39,7 +39,6 @@ varOptions.register(
 
 varOptions.register(
     "doRECO", False,
-   # "doRECO", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Include tree for Reco SF"
@@ -49,16 +48,7 @@ varOptions.register(
     "calibEn", False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
-
     "use EGM smearer to calibrate photon and electron energy"
-    )
-
-varOptions.register(
-    "isAOD", False,
- #   "isAOD", True,
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.bool,
-    "switch to run other AOD (for RECO SFs)"
     )
 
 #### HLTname is HLT2 in reHLT samples
@@ -71,18 +61,26 @@ varOptions.register(
 
 varOptions.register(
     #"GT","auto",
-    "GT","101X_dataRun2_Prompt_v9",
+    #"GT","101X_dataRun2_Prompt_v9",
+    "GT","94X_dataRun2_ReReco_EOY17_v6",
     VarParsing.multiplicity.singleton,
     VarParsing.varType.string,
     "Global Tag to be used"
     )
 
 varOptions.register(
-    "includeSUSY", True,
- #   "isAOD", True,                                                                                                                                                                                                                                                           
+    "includeSUSY", False,
+#    "isAOD", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "add also the variables used by SUSY"
+    )
+
+varOptions.register(
+    "isAOD", True,
+    VarParsing.multiplicity.singleton,
+    VarParsing.varType.bool,
+    "use AOD"
     )
 
 varOptions.parseArguments()
@@ -162,7 +160,8 @@ if varOptions.GT != "auto" :
 ###################################################################
 from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_Preliminary2018 as inputs
 #if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_23Sep2016 as inputs #switch to 2017 samples if want to cmsRun on AOD
-if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_Preliminary2018 as inputs #switch to 2017 samples if want to cmsRun on AOD
+#if options['useAOD'] : 
+from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_Preliminary2017 as inputs #switch to 2017 samples if want to cmsRun on AOD
 #if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_empty as inputs #switch to 2017 samples if want to cmsRun on AOD
     
 options['INPUT_FILE_NAME'] = inputs['data']
@@ -285,6 +284,11 @@ process.tnpEleIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                         passingMedium94X  = cms.InputTag("probeEleCutBasedMedium94X"),
                                         passingTight94X   = cms.InputTag("probeEleCutBasedTight94X" ),
 
+                                        passingVeto94XV2    = cms.InputTag("probeEleCutBasedVeto94XV2"  ),
+                                        passingLoose94XV2   = cms.InputTag("probeEleCutBasedLoose94XV2" ),
+                                        passingMedium94XV2  = cms.InputTag("probeEleCutBasedMedium94XV2"),
+                                        passingTight94XV2   = cms.InputTag("probeEleCutBasedTight94XV2" ),
+
                                         passingMVA94XwpLnoiso = cms.InputTag("probeEleMVA94XwpLnoiso" ),
                                         passingMVA94Xwp90noiso = cms.InputTag("probeEleMVA94Xwp90noiso" ),
                                         passingMVA94Xwp80noiso = cms.InputTag("probeEleMVA94Xwp80noiso" ),
@@ -321,6 +325,11 @@ process.tnpPhoIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                          passingLoose94X   = cms.InputTag("probePhoCutBasedLoose94X"),
                                          passingMedium94X  = cms.InputTag("probePhoCutBasedMedium94X"),
                                          passingTight94X   = cms.InputTag("probePhoCutBasedTight94X"),
+
+                                         passingLoose100XV2   = cms.InputTag("probePhoCutBasedLoose100XV2"),
+                                         passingMedium100XV2  = cms.InputTag("probePhoCutBasedMedium100XV2"),
+                                         passingTight100XV2   = cms.InputTag("probePhoCutBasedTight100XV2"),
+
                                          passingMVA94Xwp90 = cms.InputTag("probePhoMVA94Xwp90"),
                                          passingMVA94Xwp80 = cms.InputTag("probePhoMVA94Xwp80"),
                                         )
