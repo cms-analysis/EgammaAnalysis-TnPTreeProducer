@@ -223,6 +223,32 @@ def setSequences(process, options):
         process.probePhoCutBasedLoose100XV2  +
         process.probePhoCutBasedMedium100XV2 +
         process.probePhoCutBasedTight100XV2  +
+        process.probePhoCutBasedLoose100XV2MinPtCut  +
+        process.probePhoCutBasedMedium100XV2MinPtCut +
+        process.probePhoCutBasedTight100XV2MinPtCut  +
+        process.probePhoCutBasedLoose100XV2PhoSCEtaMultiRangeCut  +
+        process.probePhoCutBasedMedium100XV2PhoSCEtaMultiRangeCut +
+        process.probePhoCutBasedTight100XV2PhoSCEtaMultiRangeCut  +
+        process.probePhoCutBasedLoose100XV2PhoSingleTowerHadOverEmCut  +
+        process.probePhoCutBasedMedium100XV2PhoSingleTowerHadOverEmCut +
+        process.probePhoCutBasedTight100XV2PhoSingleTowerHadOverEmCut  +
+
+        process.probePhoCutBasedLoose100XV2PhoFull5x5SigmaIEtaIEtaCut  +
+        process.probePhoCutBasedMedium100XV2PhoFull5x5SigmaIEtaIEtaCut +
+        process.probePhoCutBasedTight100XV2PhoFull5x5SigmaIEtaIEtaCut  +
+
+        process.probePhoCutBasedLoose100XV2PhoAnyPFIsoWithEACut  +
+        process.probePhoCutBasedMedium100XV2PhoAnyPFIsoWithEACut +
+        process.probePhoCutBasedTight100XV2PhoAnyPFIsoWithEACut  +
+
+        process.probePhoCutBasedLoose100XV2PhoAnyPFIsoWithEAAndQuadScalingCut  +
+        process.probePhoCutBasedMedium100XV2PhoAnyPFIsoWithEAAndQuadScalingCut +
+        process.probePhoCutBasedTight100XV2PhoAnyPFIsoWithEAAndQuadScalingCut  +
+
+        process.probePhoCutBasedLoose100XV2PhoAnyPFIsoWithEACut1  +
+        process.probePhoCutBasedMedium100XV2PhoAnyPFIsoWithEACut1 +
+        process.probePhoCutBasedTight100XV2PhoAnyPFIsoWithEACut1  +
+
         process.probePhoMVA94Xwp90       +
         process.probePhoMVA94Xwp80       +
         process.probePhoMVA94XV2wp90       +

@@ -78,6 +78,7 @@ void Nm1Selector<T>::produce(edm::Event & event, const edm::EventSetup & setup) 
   // read the selection map from the Event
   edm::Handle<edm::ValueMap<vid::CutFlowResult> > cutflow;
   event.getByToken(token_selection, cutflow);
+
   
   for (unsigned int i = 0; i < h_inputs->size(); ++i) {
 
@@ -93,17 +94,27 @@ void Nm1Selector<T>::produce(edm::Event & event, const edm::EventSetup & setup) 
 	//std::cout << pass << std::endl;
 	//int ncuts = maskedCutFlowData.cutFlowSize();
 	//for(int icut = 0; icut<ncuts; icut++) {
-	//	std::cout << icut << " " << maskedCutFlowData.getNameAtIndex(icut).c_str() 
-	//		  << (int)maskedCutFlowData.isCutMasked(icut) << " " 
+	// std::cout << icut << " " << maskedCutFlowData.getNameAtIndex(icut).c_str() << " " << 
+	//		   (int)maskedCutFlowData.isCutMasked(icut) << " " 
 	//		  << maskedCutFlowData.getValueCutUpon(icut) << " " 
 	//		  << (int)maskedCutFlowData.getCutResultByIndex(icut) << std::endl;
-	//}
+	//	}
       } else {
 	vid::CutFlowResult maskedCutFlowData = fullCutFlowData.getCutFlowResultMasking(cutNamesToMask_);
 	if (maskedCutFlowData.cutFlowPassed())
 	  pass = true;
+	//	std::cout << pass << std::endl;
+        //int ncuts1 = maskedCutFlowData.cutFlowSize();
+        //for(int icut = 0; icut<ncuts1; icut++) {
+	// std::cout << icut << " " << maskedCutFlowData.getNameAtIndex(icut).c_str()
+	//	    << (int)maskedCutFlowData.isCutMasked(icut) << " "
+	//	    << maskedCutFlowData.getValueCutUpon(icut) << " "
+	//	    << (int)maskedCutFlowData.getCutResultByIndex(icut) << std::endl;
+	// }
+
       }
     }
+
 
     if (pass)
       candidates->push_back(ptr);

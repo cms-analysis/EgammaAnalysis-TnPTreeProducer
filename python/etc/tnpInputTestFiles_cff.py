@@ -15,11 +15,11 @@ filesMiniAOD_Preliminary2018 = {
 
 filesAOD_Preliminary2018 = {
     'mc' :  cms.untracked.vstring(
-#        '/store/mc/RunIISpring18DRPremix/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/100X_upgrade2018_realistic_v10-v2/90001/FE8F7D45-133E-E811-891E-FA163EA4957D.root',
+        '/store/mc/RunIISpring18DRPremix/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/AODSIM/100X_upgrade2018_realistic_v10-v2/90001/FE8F7D45-133E-E811-891E-FA163EA4957D.root',
         ),
-    'data' :  cms.untracked.vstring(
-        '/store/data/Run2018B/EGamma/AOD/PromptReco-v1/000/317/864/00000/C269C719-EC71-E811-9C7E-FA163EF55202.root',
-        )
+#    'data' :  cms.untracked.vstring(
+#        '/store/data/Run2018B/EGamma/AOD/PromptReco-v1/000/317/864/00000/C269C719-EC71-E811-9C7E-FA163EF55202.root',
+#        )
 }
 
 filesAOD_Preliminary2017 = {

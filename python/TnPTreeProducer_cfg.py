@@ -61,9 +61,9 @@ varOptions.register(
 
 varOptions.register(
     #"GT","auto",
-    #"GT","101X_dataRun2_Prompt_v9",
+    "GT","101X_dataRun2_Prompt_v9",
     #"GT","94X_dataRun2_ReReco_EOY17_v6",
-    "GT","80X_dataRun2_2016LegacyRepro_v4",
+    #"GT","80X_dataRun2_2016LegacyRepro_v4",
     VarParsing.multiplicity.singleton,
     VarParsing.varType.string,
     "Global Tag to be used"
@@ -335,6 +335,34 @@ process.tnpPhoIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                          passingLoose100XV2   = cms.InputTag("probePhoCutBasedLoose100XV2"),
                                          passingMedium100XV2  = cms.InputTag("probePhoCutBasedMedium100XV2"),
                                          passingTight100XV2   = cms.InputTag("probePhoCutBasedTight100XV2"),
+
+                                         passingLoose100XV2MinPtCut   = cms.InputTag("probePhoCutBasedLoose100XV2MinPtCut"),
+                                         passingMedium100XV2MinPtCut  = cms.InputTag("probePhoCutBasedMedium100XV2MinPtCut"),
+                                         passingTight100XV2MinPtCut   = cms.InputTag("probePhoCutBasedTight100XV2MinPtCut"),
+
+                                         passingLoose100XV2PhoSCEtaMultiRangeCut   = cms.InputTag("probePhoCutBasedLoose100XV2PhoSCEtaMultiRangeCut"),
+                                         passingMedium100XV2PhoSCEtaMultiRangeCut  = cms.InputTag("probePhoCutBasedMedium100XV2PhoSCEtaMultiRangeCut"),
+                                         passingTight100XV2PhoSCEtaMultiRangeCut   = cms.InputTag("probePhoCutBasedTight100XV2PhoSCEtaMultiRangeCut"),
+
+                                         passingLoose100XV2PhoSingleTowerHadOverEmCut   = cms.InputTag("probePhoCutBasedLoose100XV2PhoSingleTowerHadOverEmCut"),
+                                         passingMedium100XV2PhoSingleTowerHadOverEmCut  = cms.InputTag("probePhoCutBasedMedium100XV2PhoSingleTowerHadOverEmCut"),
+                                         passingTight100XV2PhoSingleTowerHadOverEmCut   = cms.InputTag("probePhoCutBasedTight100XV2PhoSingleTowerHadOverEmCut"),
+
+                                         passingLoose100XV2PhoFull5x5SigmaIEtaIEtaCut   = cms.InputTag("probePhoCutBasedLoose100XV2PhoFull5x5SigmaIEtaIEtaCut"),
+                                         passingMedium100XV2PhoFull5x5SigmaIEtaIEtaCut  = cms.InputTag("probePhoCutBasedMedium100XV2PhoFull5x5SigmaIEtaIEtaCut"),
+                                         passingTight100XV2PhoFull5x5SigmaIEtaIEtaCut   = cms.InputTag("probePhoCutBasedTight100XV2PhoFull5x5SigmaIEtaIEtaCut"),
+
+                                         passingLoose100XV2PhoAnyPFIsoWithEACut   = cms.InputTag("probePhoCutBasedLoose100XV2PhoAnyPFIsoWithEACut"),
+                                         passingMedium100XV2PhoAnyPFIsoWithEACut  = cms.InputTag("probePhoCutBasedMedium100XV2PhoAnyPFIsoWithEACut"),
+                                         passingTight100XV2PhoAnyPFIsoWithEACut   = cms.InputTag("probePhoCutBasedTight100XV2PhoAnyPFIsoWithEACut"),
+
+                                         passingLoose100XV2PhoAnyPFIsoWithEAAndQuadScalingCut   = cms.InputTag("probePhoCutBasedLoose100XV2PhoAnyPFIsoWithEAAndQuadScalingCut"),
+                                         passingMedium100XV2PhoAnyPFIsoWithEAAndQuadScalingCut  = cms.InputTag("probePhoCutBasedMedium100XV2PhoAnyPFIsoWithEAAndQuadScalingCut"),
+                                         passingTight100XV2PhoAnyPFIsoWithEAAndQuadScalingCut   = cms.InputTag("probePhoCutBasedTight100XV2PhoAnyPFIsoWithEAAndQuadScalingCut"),
+
+                                         passingLoose100XV2PhoAnyPFIsoWithEACut1   = cms.InputTag("probePhoCutBasedLoose100XV2PhoAnyPFIsoWithEACut1"),
+                                         passingMedium100XV2PhoAnyPFIsoWithEACut1  = cms.InputTag("probePhoCutBasedMedium100XV2PhoAnyPFIsoWithEACut1"),
+                                         passingTight100XV2PhoAnyPFIsoWithEACut1   = cms.InputTag("probePhoCutBasedTight100XV2PhoAnyPFIsoWithEACut1"),
 
                                          passingMVA94Xwp90 = cms.InputTag("probePhoMVA94Xwp90"),
                                          passingMVA94Xwp80 = cms.InputTag("probePhoMVA94Xwp80"),
