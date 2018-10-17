@@ -10,10 +10,13 @@ def setIDs(process, options):
 
     dataFormat = DataFormat.MiniAOD
     eleProducer = "PatElectronSelectorByValueMap"
+    PatElectronNm1Selector = "PatElectronNm1Selector"
+    
     if (options['useAOD']):
         dataFormat = DataFormat.AOD
         eleProducer = "GsfElectronSelectorByValueMap"
-        
+        PatElectronNm1Selector = "PatElectronNm1Selector"
+
     switchOnVIDElectronIdProducer(process, dataFormat)
 
     # define which IDs we want to produce
@@ -46,24 +49,76 @@ def setIDs(process, options):
                                                       selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
                                                       id_cut    = cms.bool(True)
                                                   )
-    
-    ######################################################################################
-    ## MODULES FOR N-1 CUT BASED STUDIES
-    ######################################################################################
-    # List of cuts
-    #0 MinPtCut
-    #1 GsfEleSCEtaMultiRangeCut
-    #2 GsfEleDEtaInCut
-    #3 GsfEleDPhiInCut
-    #4 GsfEleFull5x5SigmaIEtaIEtaCut
-    #5 GsfEleHadronicOverEMCut
-    #6 GsfEleDxyCut 
-    #7 GsfEleDzCut
-    #8 GsfEleEInverseMinusPInverseCut
-    #9 GsfEleEffAreaPFIsoCut
-    #10 GsfEleConversionVetoCut
-    #11 GsfEleMissingHitsCut
-    
+
+    process.probeEleCutBasedVetoMinPtCut = cms.EDProducer(PatElectronNm1Selector,
+                                                      input     = cms.InputTag("goodElectrons"),
+                                                      cut       = cms.string(options['ELECTRON_CUTS']),
+                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
+                                                      cutNamesToMask = cms.vstring("GsfEleSCEtaMultiRangeCut_0", "GsfEleDEtaInSeedCut_0", "GsfEleDPhiInCut_0", "GsfEleFull5x5SigmaIEtaIEtaCut_0", "GsfEleHadronicOverEMEnergyScaledCut_0", "GsfEleEInverseMinusPInverseCut_0", "GsfEleRelPFIsoScaledCut_0", "GsfEleConversionVetoCut_0", "GsfEleMissingHitsCut_0")
+                                                  )
+
+    process.probeEleCutBasedVetoGsfEleSCEtaMultiRangeCut = cms.EDProducer(PatElectronNm1Selector,
+                                                      input     = cms.InputTag("goodElectrons"),
+                                                      cut       = cms.string(options['ELECTRON_CUTS']),
+                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
+                                                      cutNamesToMask = cms.vstring("MinPtCut_0", "GsfEleDEtaInSeedCut_0", "GsfEleDPhiInCut_0", "GsfEleFull5x5SigmaIEtaIEtaCut_0", "GsfEleHadronicOverEMEnergyScaledCut_0", "GsfEleEInverseMinusPInverseCut_0", "GsfEleRelPFIsoScaledCut_0", "GsfEleConversionVetoCut_0", "GsfEleMissingHitsCut_0")
+                                                  )
+
+    process.probeEleCutBasedVetoGsfEleDEtaInSeedCut = cms.EDProducer(PatElectronNm1Selector,
+                                                      input     = cms.InputTag("goodElectrons"),
+                                                      cut       = cms.string(options['ELECTRON_CUTS']),
+                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
+                                                      cutNamesToMask = cms.vstring("MinPtCut_0", "GsfEleSCEtaMultiRangeCut_0", "GsfEleDPhiInCut_0", "GsfEleFull5x5SigmaIEtaIEtaCut_0", "GsfEleHadronicOverEMEnergyScaledCut_0", "GsfEleEInverseMinusPInverseCut_0", "GsfEleRelPFIsoScaledCut_0", "GsfEleConversionVetoCut_0", "GsfEleMissingHitsCut_0")
+                                                  )
+
+    process.probeEleCutBasedVetoGsfEleDPhiInCut = cms.EDProducer(PatElectronNm1Selector,
+                                                      input     = cms.InputTag("goodElectrons"),
+                                                      cut       = cms.string(options['ELECTRON_CUTS']),
+                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
+                                                      cutNamesToMask = cms.vstring("MinPtCut_0", "GsfEleSCEtaMultiRangeCut_0", "GsfEleDEtaInSeedCut_0", "GsfEleFull5x5SigmaIEtaIEtaCut_0", "GsfEleHadronicOverEMEnergyScaledCut_0", "GsfEleEInverseMinusPInverseCut_0", "GsfEleRelPFIsoScaledCut_0", "GsfEleConversionVetoCut_0", "GsfEleMissingHitsCut_0")
+                                                  )
+
+    process.probeEleCutBasedVetoGsfEleFull5x5SigmaIEtaIEtaCut = cms.EDProducer(PatElectronNm1Selector,
+                                                      input     = cms.InputTag("goodElectrons"),
+                                                      cut       = cms.string(options['ELECTRON_CUTS']),
+                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
+                                                      cutNamesToMask = cms.vstring("MinPtCut_0", "GsfEleSCEtaMultiRangeCut_0", "GsfEleDEtaInSeedCut_0", "GsfEleDPhiInCut_0", "GsfEleHadronicOverEMEnergyScaledCut_0", "GsfEleEInverseMinusPInverseCut_0", "GsfEleRelPFIsoScaledCut_0", "GsfEleConversionVetoCut_0", "GsfEleMissingHitsCut_0")
+                                                  )
+
+    process.probeEleCutBasedVetoGsfEleHadronicOverEMEnergyScaledCut = cms.EDProducer(PatElectronNm1Selector,
+                                                      input     = cms.InputTag("goodElectrons"),
+                                                      cut       = cms.string(options['ELECTRON_CUTS']),
+                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
+                                                      cutNamesToMask = cms.vstring("MinPtCut_0", "GsfEleSCEtaMultiRangeCut_0", "GsfEleDEtaInSeedCut_0", "GsfEleDPhiInCut_0", "GsfEleFull5x5SigmaIEtaIEtaCut_0", "GsfEleEInverseMinusPInverseCut_0", "GsfEleRelPFIsoScaledCut_0", "GsfEleConversionVetoCut_0", "GsfEleMissingHitsCut_0")
+                                                  )
+
+    process.probeEleCutBasedVetoGsfEleEInverseMinusPInverseCut = cms.EDProducer(PatElectronNm1Selector,
+                                                      input     = cms.InputTag("goodElectrons"),
+                                                      cut       = cms.string(options['ELECTRON_CUTS']),
+                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
+                                                      cutNamesToMask = cms.vstring("MinPtCut_0", "GsfEleSCEtaMultiRangeCut_0", "GsfEleDEtaInSeedCut_0", "GsfEleDPhiInCut_0", "GsfEleFull5x5SigmaIEtaIEtaCut_0", "GsfEleHadronicOverEMEnergyScaledCut_0", "GsfEleRelPFIsoScaledCut_0", "GsfEleConversionVetoCut_0", "GsfEleMissingHitsCut_0")
+                                                  )
+
+    process.probeEleCutBasedVetoGsfEleRelPFIsoScaledCut = cms.EDProducer(PatElectronNm1Selector,
+                                                      input     = cms.InputTag("goodElectrons"),
+                                                      cut       = cms.string(options['ELECTRON_CUTS']),
+                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
+                                                      cutNamesToMask = cms.vstring("MinPtCut_0", "GsfEleSCEtaMultiRangeCut_0", "GsfEleDEtaInSeedCut_0", "GsfEleDPhiInCut_0", "GsfEleFull5x5SigmaIEtaIEtaCut_0", "GsfEleHadronicOverEMEnergyScaledCut_0", "GsfEleEInverseMinusPInverseCut_0", "GsfEleConversionVetoCut_0", "GsfEleMissingHitsCut_0")
+                                                  )
+
+    process.probeEleCutBasedVetoGsfEleConversionVetoCut = cms.EDProducer(PatElectronNm1Selector,
+                                                      input     = cms.InputTag("goodElectrons"),
+                                                      cut       = cms.string(options['ELECTRON_CUTS']),
+                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
+                                                      cutNamesToMask = cms.vstring("MinPtCut_0", "GsfEleSCEtaMultiRangeCut_0", "GsfEleDEtaInSeedCut_0", "GsfEleDPhiInCut_0", "GsfEleFull5x5SigmaIEtaIEtaCut_0", "GsfEleHadronicOverEMEnergyScaledCut_0", "GsfEleEInverseMinusPInverseCut_0", "GsfEleRelPFIsoScaledCut_0", "GsfEleMissingHitsCut_0")
+                                                  )
+
+    process.probeEleCutBasedVetoGsfEleMissingHitsCut = cms.EDProducer(PatElectronNm1Selector,
+                                                      input     = cms.InputTag("goodElectrons"),
+                                                      cut       = cms.string(options['ELECTRON_CUTS']),
+                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto"),
+                                                      cutNamesToMask = cms.vstring("MinPtCut_0", "GsfEleSCEtaMultiRangeCut_0", "GsfEleDEtaInSeedCut_0", "GsfEleDPhiInCut_0", "GsfEleFull5x5SigmaIEtaIEtaCut_0", "GsfEleHadronicOverEMEnergyScaledCut_0", "GsfEleEInverseMinusPInverseCut_0", "GsfEleRelPFIsoScaledCut_0", "GsfEleConversionVetoCut_0")
+                                                  )
 
     process.probeEleHLTsafe = process.probeEleCutBasedVeto.clone()
     process.probeEleHLTsafe.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronHLTPreselection-Summer16-V1")
@@ -134,11 +189,100 @@ def setIDs(process, options):
     process.probeEleCutBasedLoose94XV2  = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedMedium94XV2 = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedTight94XV2  = process.probeEleCutBasedVeto.clone()
-
     process.probeEleCutBasedVeto94XV2.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
     process.probeEleCutBasedLoose94XV2.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
     process.probeEleCutBasedMedium94XV2.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
     process.probeEleCutBasedTight94XV2.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
+
+    process.probeEleCutBasedVeto94XV2MinPtCut   = process.probeEleCutBasedVetoMinPtCut.clone()
+    process.probeEleCutBasedLoose94XV2MinPtCut  = process.probeEleCutBasedVetoMinPtCut.clone()
+    process.probeEleCutBasedMedium94XV2MinPtCut = process.probeEleCutBasedVetoMinPtCut.clone()
+    process.probeEleCutBasedTight94XV2MinPtCut  = process.probeEleCutBasedVetoMinPtCut.clone()
+    process.probeEleCutBasedVeto94XV2MinPtCut.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
+    process.probeEleCutBasedLoose94XV2MinPtCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
+    process.probeEleCutBasedMedium94XV2MinPtCut.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
+    process.probeEleCutBasedTight94XV2MinPtCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
+
+    process.probeEleCutBasedVeto94XV2GsfEleSCEtaMultiRangeCut   = process.probeEleCutBasedVetoGsfEleSCEtaMultiRangeCut.clone()
+    process.probeEleCutBasedLoose94XV2GsfEleSCEtaMultiRangeCut  = process.probeEleCutBasedVetoGsfEleSCEtaMultiRangeCut.clone()
+    process.probeEleCutBasedMedium94XV2GsfEleSCEtaMultiRangeCut = process.probeEleCutBasedVetoGsfEleSCEtaMultiRangeCut.clone()
+    process.probeEleCutBasedTight94XV2GsfEleSCEtaMultiRangeCut  = process.probeEleCutBasedVetoGsfEleSCEtaMultiRangeCut.clone()
+    process.probeEleCutBasedVeto94XV2GsfEleSCEtaMultiRangeCut.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
+    process.probeEleCutBasedLoose94XV2GsfEleSCEtaMultiRangeCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
+    process.probeEleCutBasedMedium94XV2GsfEleSCEtaMultiRangeCut.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
+    process.probeEleCutBasedTight94XV2GsfEleSCEtaMultiRangeCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
+
+    process.probeEleCutBasedVeto94XV2GsfEleDEtaInSeedCut   = process.probeEleCutBasedVetoGsfEleDEtaInSeedCut.clone()
+    process.probeEleCutBasedLoose94XV2GsfEleDEtaInSeedCut  = process.probeEleCutBasedVetoGsfEleDEtaInSeedCut.clone()
+    process.probeEleCutBasedMedium94XV2GsfEleDEtaInSeedCut = process.probeEleCutBasedVetoGsfEleDEtaInSeedCut.clone()
+    process.probeEleCutBasedTight94XV2GsfEleDEtaInSeedCut  = process.probeEleCutBasedVetoGsfEleDEtaInSeedCut.clone()
+    process.probeEleCutBasedVeto94XV2GsfEleDEtaInSeedCut.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
+    process.probeEleCutBasedLoose94XV2GsfEleDEtaInSeedCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
+    process.probeEleCutBasedMedium94XV2GsfEleDEtaInSeedCut.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
+    process.probeEleCutBasedTight94XV2GsfEleDEtaInSeedCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
+
+    process.probeEleCutBasedVeto94XV2GsfEleDPhiInCut   = process.probeEleCutBasedVetoGsfEleDPhiInCut.clone()
+    process.probeEleCutBasedLoose94XV2GsfEleDPhiInCut  = process.probeEleCutBasedVetoGsfEleDPhiInCut.clone()
+    process.probeEleCutBasedMedium94XV2GsfEleDPhiInCut = process.probeEleCutBasedVetoGsfEleDPhiInCut.clone()
+    process.probeEleCutBasedTight94XV2GsfEleDPhiInCut  = process.probeEleCutBasedVetoGsfEleDPhiInCut.clone()
+    process.probeEleCutBasedVeto94XV2GsfEleDPhiInCut.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
+    process.probeEleCutBasedLoose94XV2GsfEleDPhiInCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
+    process.probeEleCutBasedMedium94XV2GsfEleDPhiInCut.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
+    process.probeEleCutBasedTight94XV2GsfEleDPhiInCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
+
+    process.probeEleCutBasedVeto94XV2GsfEleFull5x5SigmaIEtaIEtaCut   = process.probeEleCutBasedVetoGsfEleFull5x5SigmaIEtaIEtaCut.clone()
+    process.probeEleCutBasedLoose94XV2GsfEleFull5x5SigmaIEtaIEtaCut  = process.probeEleCutBasedVetoGsfEleFull5x5SigmaIEtaIEtaCut.clone()
+    process.probeEleCutBasedMedium94XV2GsfEleFull5x5SigmaIEtaIEtaCut = process.probeEleCutBasedVetoGsfEleFull5x5SigmaIEtaIEtaCut.clone()
+    process.probeEleCutBasedTight94XV2GsfEleFull5x5SigmaIEtaIEtaCut  = process.probeEleCutBasedVetoGsfEleFull5x5SigmaIEtaIEtaCut.clone()
+    process.probeEleCutBasedVeto94XV2GsfEleFull5x5SigmaIEtaIEtaCut.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
+    process.probeEleCutBasedLoose94XV2GsfEleFull5x5SigmaIEtaIEtaCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
+    process.probeEleCutBasedMedium94XV2GsfEleFull5x5SigmaIEtaIEtaCut.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
+    process.probeEleCutBasedTight94XV2GsfEleFull5x5SigmaIEtaIEtaCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
+
+    process.probeEleCutBasedVeto94XV2GsfEleHadronicOverEMEnergyScaledCut   = process.probeEleCutBasedVetoGsfEleHadronicOverEMEnergyScaledCut.clone()
+    process.probeEleCutBasedLoose94XV2GsfEleHadronicOverEMEnergyScaledCut  = process.probeEleCutBasedVetoGsfEleHadronicOverEMEnergyScaledCut.clone()
+    process.probeEleCutBasedMedium94XV2GsfEleHadronicOverEMEnergyScaledCut = process.probeEleCutBasedVetoGsfEleHadronicOverEMEnergyScaledCut.clone()
+    process.probeEleCutBasedTight94XV2GsfEleHadronicOverEMEnergyScaledCut  = process.probeEleCutBasedVetoGsfEleHadronicOverEMEnergyScaledCut.clone()
+    process.probeEleCutBasedVeto94XV2GsfEleHadronicOverEMEnergyScaledCut.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
+    process.probeEleCutBasedLoose94XV2GsfEleHadronicOverEMEnergyScaledCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
+    process.probeEleCutBasedMedium94XV2GsfEleHadronicOverEMEnergyScaledCut.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
+    process.probeEleCutBasedTight94XV2GsfEleHadronicOverEMEnergyScaledCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
+
+    process.probeEleCutBasedVeto94XV2GsfEleEInverseMinusPInverseCut   = process.probeEleCutBasedVetoGsfEleEInverseMinusPInverseCut.clone()
+    process.probeEleCutBasedLoose94XV2GsfEleEInverseMinusPInverseCut  = process.probeEleCutBasedVetoGsfEleEInverseMinusPInverseCut.clone()
+    process.probeEleCutBasedMedium94XV2GsfEleEInverseMinusPInverseCut = process.probeEleCutBasedVetoGsfEleEInverseMinusPInverseCut.clone()
+    process.probeEleCutBasedTight94XV2GsfEleEInverseMinusPInverseCut  = process.probeEleCutBasedVetoGsfEleEInverseMinusPInverseCut.clone()
+    process.probeEleCutBasedVeto94XV2GsfEleEInverseMinusPInverseCut.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
+    process.probeEleCutBasedLoose94XV2GsfEleEInverseMinusPInverseCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
+    process.probeEleCutBasedMedium94XV2GsfEleEInverseMinusPInverseCut.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
+    process.probeEleCutBasedTight94XV2GsfEleEInverseMinusPInverseCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
+
+    process.probeEleCutBasedVeto94XV2GsfEleRelPFIsoScaledCut   = process.probeEleCutBasedVetoGsfEleRelPFIsoScaledCut.clone()
+    process.probeEleCutBasedLoose94XV2GsfEleRelPFIsoScaledCut  = process.probeEleCutBasedVetoGsfEleRelPFIsoScaledCut.clone()
+    process.probeEleCutBasedMedium94XV2GsfEleRelPFIsoScaledCut = process.probeEleCutBasedVetoGsfEleRelPFIsoScaledCut.clone()
+    process.probeEleCutBasedTight94XV2GsfEleRelPFIsoScaledCut  = process.probeEleCutBasedVetoGsfEleRelPFIsoScaledCut.clone()
+    process.probeEleCutBasedVeto94XV2GsfEleRelPFIsoScaledCut.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
+    process.probeEleCutBasedLoose94XV2GsfEleRelPFIsoScaledCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
+    process.probeEleCutBasedMedium94XV2GsfEleRelPFIsoScaledCut.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
+    process.probeEleCutBasedTight94XV2GsfEleRelPFIsoScaledCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
+
+    process.probeEleCutBasedVeto94XV2GsfEleConversionVetoCut   = process.probeEleCutBasedVetoGsfEleConversionVetoCut.clone()
+    process.probeEleCutBasedLoose94XV2GsfEleConversionVetoCut  = process.probeEleCutBasedVetoGsfEleConversionVetoCut.clone()
+    process.probeEleCutBasedMedium94XV2GsfEleConversionVetoCut = process.probeEleCutBasedVetoGsfEleConversionVetoCut.clone()
+    process.probeEleCutBasedTight94XV2GsfEleConversionVetoCut  = process.probeEleCutBasedVetoGsfEleConversionVetoCut.clone()
+    process.probeEleCutBasedVeto94XV2GsfEleConversionVetoCut.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
+    process.probeEleCutBasedLoose94XV2GsfEleConversionVetoCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
+    process.probeEleCutBasedMedium94XV2GsfEleConversionVetoCut.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
+    process.probeEleCutBasedTight94XV2GsfEleConversionVetoCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
+
+    process.probeEleCutBasedVeto94XV2GsfEleMissingHitsCut   = process.probeEleCutBasedVetoGsfEleMissingHitsCut.clone()
+    process.probeEleCutBasedLoose94XV2GsfEleMissingHitsCut  = process.probeEleCutBasedVetoGsfEleMissingHitsCut.clone()
+    process.probeEleCutBasedMedium94XV2GsfEleMissingHitsCut = process.probeEleCutBasedVetoGsfEleMissingHitsCut.clone()
+    process.probeEleCutBasedTight94XV2GsfEleMissingHitsCut  = process.probeEleCutBasedVetoGsfEleMissingHitsCut.clone()
+    process.probeEleCutBasedVeto94XV2GsfEleMissingHitsCut.selection   = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-veto"  )
+    process.probeEleCutBasedLoose94XV2GsfEleMissingHitsCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-loose"  )
+    process.probeEleCutBasedMedium94XV2GsfEleMissingHitsCut.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-medium"  )
+    process.probeEleCutBasedTight94XV2GsfEleMissingHitsCut.selection  = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"  )
 
     
     process.tagEleCutBasedTight = cms.EDProducer(eleProducer,
