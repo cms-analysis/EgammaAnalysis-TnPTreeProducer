@@ -61,7 +61,8 @@ varOptions.register(
 
 varOptions.register(
     #"GT","auto",
-    "GT","101X_dataRun2_Prompt_v9",
+    "GT","101X_dataRun2_Prompt_v11",
+    #"GT","102X_upgrade2018_realistic_v12",
     #"GT","94X_dataRun2_ReReco_EOY17_v6",
     #"GT","80X_dataRun2_2016LegacyRepro_v4",
     VarParsing.multiplicity.singleton,
@@ -78,7 +79,7 @@ varOptions.register(
     )
 
 varOptions.register(
-    "isAOD", True,
+    "isAOD", False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "use AOD"
@@ -100,9 +101,9 @@ options['HLTProcessName']       = varOptions.HLTname
 options['ELECTRON_COLL']        = "slimmedElectrons"
 options['PHOTON_COLL']          = "slimmedPhotons"
 options['SUPERCLUSTER_COLL']    = "reducedEgamma:reducedSuperClusters" ### not used in AOD
-if options['useAOD']:
-    options['ELECTRON_COLL']    = "gedGsfElectrons"
-    options['PHOTON_COLL'  ]    = "gedPhotons"
+#if options['useAOD']:
+#    options['ELECTRON_COLL']    = "gedGsfElectrons"
+#    options['PHOTON_COLL'  ]    = "gedPhotons"
 
 
 options['ELECTRON_CUTS']        = "ecalEnergy*sin(superClusterPosition.theta)>5.0 &&  (abs(-log(tan(superClusterPosition.theta/2)))<2.5)"
@@ -141,7 +142,7 @@ if (varOptions.isMC):
     options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
     #options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
     options['TnPHLTProbeFilters']  = cms.vstring()
-#    options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
+    options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
     options['GLOBALTAG']           = 'auto:run2_mc'
 else:
     options['OUTPUT_FILE_NAME']    = "TnPTree_data.root"
@@ -152,7 +153,7 @@ else:
     #options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
     options['TnPHLTProbeFilters']  = cms.vstring()
     options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
-    options['GLOBALTAG']           = 'auto:run2_data'
+    options['GLOBALTAG']           = '101X_dataRun2_Prompt_v11'
 
 if varOptions.GT != "auto" :
     options['GLOBALTAG'] = varOptions.GT

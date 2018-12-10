@@ -12,6 +12,7 @@
 #include "DataFormats/Common/interface/Handle.h"
 
 #include "DataFormats/PatCandidates/interface/VIDCutFlowResult.h"
+#include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
 
 #include "CommonTools/Utils/interface/StringCutObjectSelector.h"
 #include "DataFormats/PatCandidates/interface/Electron.h"
@@ -129,3 +130,9 @@ DEFINE_FWK_MODULE(PatElectronNm1Selector);
 
 typedef Nm1Selector<pat::Photon> PatPhotonNm1Selector;
 DEFINE_FWK_MODULE(PatPhotonNm1Selector);
+
+//typedef Nm1Selector<Gsf::Electron> GsfElectronNm1Selector;
+//DEFINE_FWK_MODULE(GsfElectronNm1Selector);
+
+//typedef Nm1Selector<Gsf::Photon> GsfPhotonNm1Selector;
+//DEFINE_FWK_MODULE(GsfPhotonNm1Selector);

@@ -43,7 +43,7 @@ doPhoTree = 'doPhoID=True'
 doHLTTree = 'doTrigger=False'
 calibEn   = 'useCalibEn=False'
 
-mainOutputDir = '/store/group/phys_egamma/swmukher/ecal_noise/%s' % submitVersion
+mainOutputDir = '/store/group/phys_egamma/swmukher/rereco2018/%s' % submitVersion
 
 config.General.requestName = ''
 config.General.transferLogs = False
@@ -85,37 +85,54 @@ if __name__ == '__main__':
 
     ##### submit MC
 
-    config.Data.splitting     = 'FileBased'
-    config.Data.unitsPerJob   = 5
-    config.Data.inputDataset    = '/RelValZEE_13/CMSSW_10_2_5-PU25ns_102X_upgrade2018_realistic_v12_Can30fb_v1_HS_rsb-v1/MINIAODSIM'
-    config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'mc')
-    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=102X_upgrade2018_realistic_v12']
-    config.General.requestName  = 'RelValZEE_13_CMSSW_10_2_5-PU25ns_102X_upgrade2018_realistic_v12_Can30fb_v1_HS_rsb'
-    submit(config)
+#    config.Data.splitting     = 'FileBased'
+#    config.Data.unitsPerJob   = 5
+#    config.Data.inputDataset    = '/RelValZEE_13/CMSSW_10_2_5-PU25ns_102X_upgrade2018_realistic_v12_Can30fb_v1_HS_rsb-v1/MINIAODSIM'
+#    config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'mc')
+#    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=102X_upgrade2018_realistic_v12']
+#    config.General.requestName  = 'RelValZEE_13_CMSSW_10_2_5-PU25ns_102X_upgrade2018_realistic_v12_Can30fb_v1_HS_rsb'
+#    submit(config)
+
 
     config.Data.splitting     = 'FileBased'
     config.Data.unitsPerJob   = 5
-    config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall18MiniAOD-102X_upgrade2018_realistic_v12_ext1-v1/MINIAODSIM'
+    config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM'
     config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'mc')
     config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=102X_upgrade2018_realistic_v12']
-    config.General.requestName  = 'DYJetsToLL_M-50_TuneCP5_13TeV_RunIIFall18MiniAOD-102X_upgrade2018'
+    config.General.requestName  = 'DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8_update2'
     submit(config)
 
-    config.Data.splitting     = 'FileBased'
-    config.Data.unitsPerJob   = 5
-    config.Data.inputDataset    = '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIFall18MiniAOD-102X_upgrade2018_realistic_v12-v1/MINIAODSIM'
-    config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'mc')
-    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=102X_upgrade2018_realistic_v12']
-    config.General.requestName  = 'DYToEE_M-50_NNPDF31_TuneCP5_13TeV_RunIIFall18MiniAOD-102X_upgrade2018'
-    submit(config)
+#    config.Data.splitting     = 'FileBased'
+#    config.Data.unitsPerJob   = 5
+#    config.Data.inputDataset    = '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM'
+#    config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'mc')
+#    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=102X_upgrade2018_realistic_v12']
+#    config.General.requestName  = 'DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8_update2'
+#    submit(config)
 
-    config.Data.splitting     = 'FileBased'
-    config.Data.unitsPerJob   = 5
-    config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall18MiniAOD-102X_upgrade2018_realistic_v12_ext1-v1/MINIAODSIM'
-    config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'mc')
-    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=102X_upgrade2018_realistic_v12']
-    config.General.requestName  = 'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX_RunIIFall18MiniAOD-102X_upgrade2018'
-    submit(config)
+#    config.Data.splitting     = 'FileBased'
+#    config.Data.unitsPerJob   = 5
+#    config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall18MiniAOD-102X_upgrade2018_realistic_v12_ext1-v1/MINIAODSIM'
+#    config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'mc')
+#    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=102X_upgrade2018_realistic_v12']
+#    config.General.requestName  = 'DYJetsToLL_M-50_TuneCP5_13TeV_RunIIFall18MiniAOD-102X_upgrade2018'
+#    submit(config)
+
+#    config.Data.splitting     = 'FileBased'
+#    config.Data.unitsPerJob   = 5
+#    config.Data.inputDataset    = '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIFall18MiniAOD-102X_upgrade2018_realistic_v12-v1/MINIAODSIM'
+#    config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'mc')
+#    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=102X_upgrade2018_realistic_v12']
+#    config.General.requestName  = 'DYToEE_M-50_NNPDF31_TuneCP5_13TeV_RunIIFall18MiniAOD-102X_upgrade2018'
+#    submit(config)
+
+#    config.Data.splitting     = 'FileBased'
+#    config.Data.unitsPerJob   = 5
+#    config.Data.inputDataset    = '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall18MiniAOD-102X_upgrade2018_realistic_v12_ext1-v1/MINIAODSIM'
+#    config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'mc')
+#    config.JobType.pyCfgParams  = ['isMC=True',doEleTree,doPhoTree,'GT=102X_upgrade2018_realistic_v12']
+#    config.General.requestName  = 'DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX_RunIIFall18MiniAOD-102X_upgrade2018'
+#    submit(config)
 
 
 
@@ -131,9 +148,37 @@ if __name__ == '__main__':
     ##### now submit DATA
 #    config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'data')
 #    config.Data.splitting     = 'LumiBased'
-#    config.Data.lumiMask      = 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions18/13TeV/PromptReco/Cert_314472-324209_13TeV_PromptReco_Collisions18_JSON.txt'
-#    config.Data.unitsPerJob   = 100
+#    config.Data.lumiMask      = 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions18/13TeV/PromptReco/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt'
+#    config.Data.unitsPerJob   = 80
 #    config.JobType.pyCfgParams  = ['isMC=False',doEleTree,doPhoTree,'GT=101X_dataRun2_Prompt_v11']
+
+#    config.General.requestName  = 'Run2018A-22Jun2018-v1'
+#    config.Data.inputDataset    = '/EGamma/Run2018A-22Jun2018-v1/MINIAOD'
+#    submit(config)    
+
+#    config.General.requestName  = 'Run2018B-26Sep2018-v1'
+#    config.Data.inputDataset    = '/EGamma/Run2018B-26Sep2018-v1/MINIAOD'
+#    submit(config)    
+
+#    config.General.requestName  = 'Run2018C-17Sep2018-v1'
+#    config.Data.inputDataset    = '/EGamma/Run2018C-17Sep2018-v1/MINIAOD'
+#    submit(config)    
+
+#    config.General.requestName  = 'Run2018B-17Sep2018-v1'
+#    config.Data.inputDataset    = '/EGamma/Run2018B-17Sep2018-v1/MINIAOD'
+#    submit(config)    
+
+#    config.General.requestName  = 'Run2018A-17Sep2018-v2'
+#    config.Data.inputDataset    = '/EGamma/Run2018A-17Sep2018-v2/MINIAOD'
+#    submit(config)    
+
+#    config.General.requestName  = 'Run2018D_prompt_v1'
+#    config.Data.inputDataset    = '/EGamma/Run2018D-PromptReco-v1/MINIAOD'
+#    submit(config)    
+
+#    config.General.requestName  = 'Run2018D_prompt_v2'
+#    config.Data.inputDataset    = '/EGamma/Run2018D-PromptReco-v2/MINIAOD'
+#    submit(config)    
  
 
 #    config.General.requestName  = 'Prompt2018_RunA_v1'
@@ -168,12 +213,5 @@ if __name__ == '__main__':
 #    config.Data.inputDataset    = '/EGamma/Run2018C-PromptReco-v3/MINIAOD'
 #    submit(config)    
 
-#    config.General.requestName  = 'Prompt2018_RunD_v1'
-#    config.Data.inputDataset    = '/EGamma/Run2018D-PromptReco-v1/MINIAOD'
-#    submit(config)    
-
-#    config.General.requestName  = 'Prompt2018_RunD_v2'
-#    config.Data.inputDataset    = '/EGamma/Run2018D-PromptReco-v2/MINIAOD'
-#    submit(config)    
 
 

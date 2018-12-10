@@ -5,11 +5,15 @@ filesMiniAOD_Preliminary2018 = {
     'mc' :  cms.untracked.vstring(
 #        '/store/mc/RunIISpring18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/100X_upgrade2018_realistic_v10-v2/100000/6815ED2D-7530-E811-90C0-FA163E27991E.root',
 #        '/store/mc/RunIISpring18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/100X_upgrade2018_realistic_v10-v2/100000/801BEA3C-9C2F-E811-AFA4-02163E015DB8.root',
-        '/store/mc/RunIISpring18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/100X_upgrade2018_realistic_v10-v2/100000/6815ED2D-7530-E811-90C0-FA163E27991E.root'
+#        '/store/mc/RunIISpring18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/100X_upgrade2018_realistic_v10-v2/100000/6815ED2D-7530-E811-90C0-FA163E27991E.root'
+        '/store/relval/CMSSW_10_2_5/RelValZEE_13/MINIAODSIM/PU25ns_102X_upgrade2018_realistic_v12_Can30fb_v1_HS_rsb-v1/10000/12D80735-7226-134A-B33E-DEC1F061C9F5.root'
         ),
 
     'data' : cms.untracked.vstring(
-        '/store/data/Run2018A/EGamma/MINIAOD/PromptReco-v1/000/315/252/00000/40343760-464B-E811-ACC9-02163E00B0CB.root',
+        #'/store/data/Run2018A/EGamma/MINIAOD/PromptReco-v1/000/315/252/00000/40343760-464B-E811-ACC9-02163E00B0CB.root',
+        '/store/data/Run2018D/EGamma/MINIAOD/PromptReco-v2/000/320/500/00000/0225B398-F895-E811-A82F-FA163EE8C7E8.root',
+        '/store/data/Run2018D/EGamma/MINIAOD/PromptReco-v2/000/324/420/00000/44AB86DD-CF58-4845-9FAC-63D20958C491.root',
+        
         )
 }
 
