@@ -128,17 +128,18 @@ if options['useAOD']:
 #options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
 options['TnPPATHS']             = cms.vstring("HLT_Ele32_WPTight_Gsf_v*")
 options['TnPHLTTagFilters']     = cms.vstring("hltEle32WPTightGsfTrackIsoFilter")
+options['TnPHLTProbeFilters']   = cms.vstring()
+options['HLTFILTERSTOMEASURE']  = {"passHltEle32WPTightGsf" :                    cms.vstring("hltEle32WPTightGsfTrackIsoFilter"),
+                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
+                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg2" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter"),
+                                  } # Some examples, you can add multiple filters (or OR's of filters, note the vstring) here, each of them will be added to the tuple
 
 if (varOptions.isMC):
     options['isMC']                = cms.bool(True)
     options['OUTPUT_FILE_NAME']    = "TnPTree_mc_aod.root" if varOptions.isAOD else "TnPTree_mc.root"
-    options['TnPHLTProbeFilters']  = cms.vstring()
-    options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
     options['GLOBALTAG']           = 'auto:run2_mc'
 else:
     options['OUTPUT_FILE_NAME']    = "TnPTree_data.root"
-    options['TnPHLTProbeFilters']  = cms.vstring()
-    options['HLTFILTERTOMEASURE']  = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter")
     options['GLOBALTAG']           = '102X_dataRun2_v11'
 
 if varOptions.GT != "auto" :
@@ -221,12 +222,15 @@ process.tnpEleTrig = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     probeMatches  = cms.InputTag("genProbeEle"),
                                     allProbes     = cms.InputTag("probeEle"),
                                     flags = cms.PSet(
-                                        passingHLT        = cms.InputTag("probeElePassHLT"),
                                         passingLoose94X   = cms.InputTag("probeEleCutBasedLoose94X" ),
                                         passingMedium94X  = cms.InputTag("probeEleCutBasedMedium94X"),
                                         passingTight94X   = cms.InputTag("probeEleCutBasedTight94X" ),
                                         ),
                                     )
+for flag in options['HLTFILTERSTOMEASURE']:
+  setattr(process.tnpEleTrig.flags, flag, cms.InputTag(flag))
+
+
 
 process.tnpEleReco = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     tnpVars.mcTruthCommonStuff, tnpVars.CommonStuffForSuperClusterProbe, 

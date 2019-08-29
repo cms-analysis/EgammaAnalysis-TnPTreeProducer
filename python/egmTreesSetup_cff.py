@@ -44,8 +44,10 @@ def setTagsProbes(process, options):
     ################# PROBE ELECTRONs passHLT #######################
     process.probeElePassHLT              = process.tagEle.clone()
     process.probeElePassHLT.inputs       = cms.InputTag("probeEle")  
-    process.probeElePassHLT.filterNames  = cms.vstring(options['HLTFILTERTOMEASURE'])
     process.probeElePassHLT.isAND        = cms.bool(False)
+
+    for flag, filterNames in options['HLTFILTERSTOMEASURE'].iteritems():
+      setattr(process, flag, process.probeElePassHLT.clone(filterNames=filterNames))
 
     ###################### PROBE PHOTONs ############################
     process.probePho  = cms.EDProducer( gamHLTProducer,
@@ -308,7 +310,9 @@ def setSequences(process, options):
         process.probePho                
         )
 
-    process.hlt_sequence = cms.Sequence( process.probeElePassHLT )
+    process.hlt_sequence = cms.Sequence()
+    for flag in options['HLTFILTERSTOMEASURE']:
+        process.hlt_sequence += getattr(process, flag)
 
     if options['isMC'] :
         process.tag_sequence += process.genEle + process.genTagEle 
