@@ -195,10 +195,13 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
 
     // Conversion vertex fit
     reco::ConversionRef convRef = ConversionTools::matchedConversion(*probe, conversions, beamSpot->position());
+//  reco::Conversion const* conv = ConversionTools::matchedConversion(*probe, *conversions, beamSpot->position()); // change above line to this when moving to 106X or later
 
     float convVtxFitProb = -1.;
     if(!convRef.isNull()) {
         const reco::Vertex &vtx = convRef.get()->conversionVertex();
+//  if(conv){ // change above two lines for this when moving to 106X or later
+//      const reco::Vertex &vtx = conv->conversionVertex();
         if (vtx.isValid()) {
             convVtxFitProb = TMath::Prob( vtx.chi2(),  vtx.ndof());
         }
