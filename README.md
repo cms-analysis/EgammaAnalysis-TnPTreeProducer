@@ -19,6 +19,7 @@ You can find the cmsRun executable in EgammaAnalysis/TnPTreeProducer/python:
 cmsRun TnPTreeProducer_cfg.py isMC=True doTrigger=True 
 ```
 Check TnPTreeProducer\_cfg.py for all available options. Update the code if you need to implement custom-made recipes.
+Test files can be defined in python/etc/tnpInputTestFiles_cff.py
 
 ### 3. Submit jobs
 Check in EgammaAnalysis/TnPTreeProducer/scripts/crab for scripts to submit your jobs using crab
