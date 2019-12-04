@@ -6,10 +6,10 @@ submitVersion = "RECOSFs_2016"
 
 doEleTree = 'doEleID=False'
 doPhoTree = 'doPhoID=False'
-doHLTTree = 'doTrigger=False'
+doHLTTree = 'doTrigger=True'
 doRECO    = 'doRECO=True'
 
-mainOutputDir = '/store/group/phys_egamma/tnp/80X/RecoSF/%s' % submitVersion
+#mainOutputDir = '/store/group/phys_egamma/tnp/80X/RecoSF/%s' % submitVersion
 
 config.General.transferLogs = False
 
