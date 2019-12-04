@@ -10,28 +10,28 @@ process = cms.Process("tnpEGM")
 varOptions = VarParsing('analysis')
 
 varOptions.register(
-    "isMC", False,
+    "isMC", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Compute MC efficiencies"
     )
 
 varOptions.register(
-    "doEleID", True,
+    "doEleID", False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Include tree for photon ID SF"
     )
 
 varOptions.register(
-    "doPhoID", True,
+    "doPhoID", False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Include tree for photon ID SF"
     )
 
 varOptions.register(
-    "doTrigger", False,
+    "doTrigger", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Include tree for Trigger SF"
@@ -178,7 +178,7 @@ tnpSetup.setupTreeMaker(process,options)
 ###################################################################
 ## Init and Load
 ###################################################################
-process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
+process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(False) )
 
 process.MessageLogger.cerr.threshold = ''
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
