@@ -58,7 +58,7 @@ MiniAODL1Stage2CandProducer<T>::MiniAODL1Stage2CandProducer(const edm::Parameter
   minET_(iConfig.getParameter<double>("minET")),
   dRMatch_(iConfig.getParameter<double>("dRmatch"))
 {
-   std::cout << "!!!!!!!!!!!!!!!!!!!!" << std::endl;
+ 
   if(iConfig.exists("dRmatchEE"))
     dRMatchEE_ = (iConfig.getParameter<double>("dRmatchEE"));
   else
@@ -74,26 +74,25 @@ MiniAODL1Stage2CandProducer<T>::~MiniAODL1Stage2CandProducer()
 template <class T>
 void MiniAODL1Stage2CandProducer<T>::produce(edm::Event &iEvent, const edm::EventSetup &eventSetup) {
 
-  cout <<"1" <<endl;
   edm::Handle<l1t::EGammaBxCollection> l1ObjectsH;
   edm::Handle<TRefVector> inputs;
 
   iEvent.getByToken(l1ObjectsToken_, l1ObjectsH);
   iEvent.getByToken(inputs_, inputs);
-  cout <<"2" <<endl;
-   //Merge L1 objects and sort by et                                                                                                                                  
+ 
+   //Merge L1 objects and sort by et
   std::vector<l1t::EGamma> mergedL1;
   for(auto it=l1ObjectsH->begin(0); it!=l1ObjectsH->end(0); it++){
     mergedL1.push_back(*it);
     // std::cout << "L1: "  << endl;
   }
-  cout <<"3" <<endl;
+ 
   std::sort(mergedL1.begin(), mergedL1.end(), ptComparator);
 
   // Create the output collection                                                                                                                                    
   // std::auto_ptr<TRefVector> outColRef(new TRefVector);
   std::unique_ptr<TRefVector> outColRef(new TRefVector);
-  cout <<"4" <<endl;
+ 
   for (size_t i=0; i<inputs->size(); i++) {
     TRef ref = (*inputs)[i];
     int index = -1;
@@ -102,7 +101,7 @@ void MiniAODL1Stage2CandProducer<T>::produce(edm::Event &iEvent, const edm::Even
       outColRef->push_back(ref);
     }
   }
-  cout <<"5" <<endl;
+  
   //iEvent.put(outColRef);
   iEvent.put(std::move(outColRef));
 }
@@ -111,13 +110,13 @@ template <class T>
 bool MiniAODL1Stage2CandProducer<T>::l1OfflineMatching(const std::vector<l1t::EGamma>& l1Objects,
 						       math::XYZTLorentzVector refP4, float dRmin, float dRminEE, int& index) {
 
-  cout <<"a" <<endl;
+ 
   index = 0;
   //for (auto it=l1Objects.begin(0); it != l1Objects.end(0); it++) { //bx 0 only considered 
   for (auto it=l1Objects.begin(); it != l1Objects.end(); it++) {
     if (it->et() < minET_)
       continue;
-     cout <<"b" <<endl;
+   
     float dR = deltaR(refP4, it->p4());
     if(fabs(refP4.eta()) < 1.5)
       if (dR < dRmin)
@@ -128,7 +127,7 @@ bool MiniAODL1Stage2CandProducer<T>::l1OfflineMatching(const std::vector<l1t::EG
   }
 
   return false;
-  cout <<"c" <<endl;
+  
 }
 
 

@@ -50,24 +50,36 @@ def setTagsProbes(process, options):
     process.goodElectronProbesL1 = cms.EDProducer("PatElectronL1Stage2CandProducer",
     #process.goodElectronProbesL1 = cms.EDProducer("GsfElectronL1Stage2CandProducer",
                                                 inputs = cms.InputTag("goodElectrons"),
-                                                #isoObjects = cms.InputTag("l1extraParticles:Isolated"),
-                                                #nonIsoObjects = cms.InputTag("l1extraParticles:NonIsolated"),
-                                                #objects = cms.InputTag("hltCaloStage2Digis:EGamma"),
                                                 objects = cms.InputTag("caloStage2Digis:EGamma"),
-                                                minET = cms.double(23), #lead eff only
-                                                #minET = cms.double(14), #sublead eff only
-                                                #minET = cms.double(0.), #test on how L1 efficiency with the whole big OR changes vs time
-                                                dRmatch = cms.double(0.2), #defined to match L1 online matching to hlt (0.261)
-                                                dRmatchEE = cms.double(0.2), #defined to match L1 online matching to hlt (should probably be tightened for stage2)
+                                                minET = cms.double(0.), #lead eff only
+                                                dRmatch = cms.double(0.2), #match L1 online to hlt in EB
+                                                dRmatchEE = cms.double(0.2), #match L1 online to hlt in EE
                                                 isolatedOnly = cms.bool(False)
     )
 
-    
+    process.goodElectronProbesL1Leg1 = process.goodElectronProbesL1.clone()
+    process.goodElectronProbesL1Leg1.minET = cms.double(25)
+
+    #process.goodElectronProbesL1Leg2 = process.goodElectronProbesL1.clone()
+    #process.goodElectronProbesL1Leg2.minET = cms.double(14)
+
     process.probeEle             = process.tagEle.clone()
     process.probeEle.filterNames = cms.vstring(options['TnPHLTProbeFilters'])
-    process.probeEle.inputs      = cms.InputTag("goodElectronProbesL1")  
+    process.probeEle.inputs      = cms.InputTag("goodElectrons")  
 
-   
+    process.probeEleLeg1             = process.tagEle.clone()
+    process.probeEleLeg1.filterNames = cms.vstring(options['TnPHLTProbeFilters'])
+    process.probeEleLeg1.inputs      = cms.InputTag("goodElectronProbesL1Leg1")
+
+    #process.probeEleLeg2             = process.tagEle.clone()
+    #process.probeEleLeg2.filterNames = cms.vstring(options['TnPHLTProbeFilters'])
+    #process.probeEleLeg2.inputs      = cms.InputTag("goodElectronProbesL1Leg2")  
+
+
+    # process.probeEle             = process.tagEle.clone()
+    # process.probeEle.filterNames = cms.vstring(options['TnPHLTProbeFilters'])
+    # process.probeEle.inputs      = cms.InputTag("goodElectrons")  
+
     ################# PROBE ELECTRONs passHLT #######################
 
     
@@ -75,9 +87,26 @@ def setTagsProbes(process, options):
     process.probeElePassHLT.inputs       = cms.InputTag("probeEle")  
     process.probeElePassHLT.isAND        = cms.bool(False)
 
+    process.probeElePassHLTLeg1              = process.tagEle.clone()
+    process.probeElePassHLTLeg1.inputs       = cms.InputTag("probeEleLeg1")  
+    process.probeElePassHLTLeg1.isAND        = cms.bool(False)
+
+    #process.probeElePassHLTLeg2              = process.tagEle.clone()
+    #process.probeElePassHLTLeg2.inputs       = cms.InputTag("probeEleLeg2")  
+    #process.probeElePassHLTLeg2.isAND        = cms.bool(False)
+
     for flag, filterNames in options['HLTFILTERSTOMEASURE'].iteritems():
-        setattr(process, flag, process.probeElePassHLT.clone(filterNames=filterNames))
-        
+        if flag == "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1":
+            setattr(process, flag, process.probeElePassHLTLeg1.clone(filterNames=filterNames,))
+        #elif flag == "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg2":
+            #setattr(process, flag, process.probeElePassHLTLeg2.clone(filterNames=filterNames,))
+        else:
+            setattr(process, flag, process.probeElePassHLT.clone(filterNames=filterNames)) 
+
+    # for flag, filterNames in options['HLTFILTERSTOMEASURE'].iteritems():
+    #   setattr(process, flag, process.probeElePassHLT.clone(filterNames=filterNames)) 
+
+
     ###################### PROBE PHOTONs ############################
     process.probePho  = cms.EDProducer( gamHLTProducer,
                                         filterNames = options['TnPHLTProbeFilters'],
@@ -284,7 +313,12 @@ def setSequences(process, options):
         process.probeEleMVA94Xwp90isoV2        +
         process.probeEleMVA94Xwp80isoV2        +
         process.probeEleMVA94XwpHZZisoV2        +
-        process.probeEle 
+        process.goodElectronProbesL1          +
+        process.goodElectronProbesL1Leg1          +
+        #process.goodElectronProbesL1Leg2          +
+        process.probeEleLeg1                    +
+        #process.probeEleLeg2                    +
+        process.probeEle
         )
     if not options['useAOD'] : process.ele_sequence += process.probeEleHLTsafe
 
