@@ -80,6 +80,20 @@ varOptions.register(
     "use AOD"
     )
 
+varOptions.register(
+    "leg1Threshold", 0,
+    VarParsing.multiplicity.singleton,
+    VarParsing.varType.int,
+    "Threshold for L1 seed leg1"
+    )
+
+varOptions.register(
+    "leg2Threshold", 0,
+    VarParsing.multiplicity.singleton,
+    VarParsing.varType.int,
+    "Threshold for L1 seed leg2"
+    )
+
 varOptions.parseArguments()
 
 
@@ -133,6 +147,9 @@ options['HLTFILTERSTOMEASURE']  = {"passHltEle32WPTightGsf" :                   
                                    "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
                                    "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg2" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter"),
                                   } # Some examples, you can add multiple filters (or OR's of filters, note the vstring) here, each of them will be added to the tuple
+
+options['leg1Threshold'] = varOptions.leg1Threshold
+options['leg2Threshold'] = varOptions.leg2Threshold
 
 if (varOptions.isMC):
     options['isMC']                = cms.bool(True)
