@@ -12,7 +12,7 @@ from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = config()
 
-config.General.requestName            = '' 
+config.General.requestName            = ''
 config.General.transferLogs           = False
 config.JobType.pluginName             = 'Analysis'
 
@@ -26,31 +26,53 @@ config.Data.allowNonValidInputDataset = True
 config.Site.storageSite               = 'T2_CH_CERN'
 
 
-  
 if __name__ == '__main__':
 
   import urllib, os, glob
   def download(url, destination):
+    print 'Downloading from %s' % url
     try:    os.makedirs(destination)
     except: pass
-    urllib.urlretrieve(url, os.path.join(destination, url.split('/')[-1])) 
+    urllib.urlretrieve(url, os.path.join(destination, url.split('/')[-1]))
+
+  from FWCore.PythonUtilities.LumiList import LumiList
+  def subtractLumis(json, jsonToSubtract):
+    print 'Subtracting %s from %s' % (jsonToSubtract, json)
+    lumis = LumiList(filename = json) - LumiList(filename = jsonToSubtract)
+    lumis.writeJSON(fileName=json)
+
+  def mergeLumis(json, jsonToMerge):
+    print 'Merging %s into %s' % (jsonToMerge, json)
+    lumis = LumiList(filename = json) + LumiList(filename = jsonToMerge)
+    lumis.writeJSON(fileName=json)
 
   def getSeedsForDoubleEle(year): # note: only getting DoubleEle seeds here
     prescalePage = 'https://tomc.web.cern.ch/tomc/triggerPrescales/%s/' % year
     hltTrigger   = 'HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL'
     dirToStore   = os.path.join('prescaleInformation', year, hltTrigger)
-    download(prescalePage + hltTrigger + '.php', dirToStore) 
+    download(prescalePage + hltTrigger + '.php', dirToStore)
     with open(os.path.join(dirToStore, hltTrigger + '.php')) as f:
       for line in f:
-        if 'prescale1' in line and 'L1_DoubleEG' in line: 
+        if 'prescale1' in line and 'L1_DoubleEG' in line:
           download(prescalePage + line.split('>')[0].split('=')[-1], dirToStore)
-          #print prescalePage + line.split('>')[0].split('=')[-1]
 
+    jsonForThresholds = {}
     for json in glob.glob(os.path.join(dirToStore, '*.json')):
       leg1 = int(json.split('L1_DoubleEG_')[-1].split('_')[0].replace('LooseIso', ''))
       leg2 = int(json.split('L1_DoubleEG_')[-1].split('_')[1].replace('LooseIso', ''))
-      yield leg1, leg2, json
-      #print leg1, leg2, json.split('L1_DoubleEG_')[-1].split('_prescale')[0]
+      if (leg1, leg2) in jsonForThresholds: mergeLumis(jsonForThresholds[(leg1, leg2)], json) # this theshold pair already exists, so we merge them into the existing one
+      else:                                 jsonForThresholds[(leg1, leg2)] = json
+
+    thresholdsToSubtract = []
+    for thresholds in sorted(jsonForThresholds.keys()):  # sorting from low to high thresholds
+      print
+      print 'Preparing json for thresholds %s' % str(thresholds)
+      json = jsonForThresholds[thresholds]
+      for t in thresholdsToSubtract:
+        subtractLumis(json, jsonForThresholds[t])
+      yield thresholds[0], thresholds[1], json
+      thresholdsToSubtract.append(thresholds)
+
 
 
   from CRABAPI.RawCommand import crabCommand
@@ -69,7 +91,7 @@ if __name__ == '__main__':
     config.Data.splitting       = 'LumiBased'
     config.Data.lumiMask        = json
     config.Data.unitsPerJob     = 100
-    config.JobType.pyCfgParams  = defaultArgs + ['leg1Threshold=%s' % leg1threshold, 'leg2Threshold=%s' % 0] 
+    config.JobType.pyCfgParams  = defaultArgs + ['leg1Threshold=%s' % leg1threshold, 'leg2Threshold=%s' % 0]
 
     try:
       crabCommand('submit', config = config)
@@ -79,14 +101,14 @@ if __name__ == '__main__':
       print "Failed submitting task: %s" % (cle)
 
   for leg1, leg2, json in getSeedsForDoubleEle('2018'):
-    #print leg1, leg2, json
+    print 'Submitting for (%s, %s)' % (leg1, leg2)
     # Crab fails on this on second iteration, of course with only a very cryptic error message
     # Not sure how to workaround this
-    submit(config, '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', leg1, leg2, json)
+  #  submit(config, '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', leg1, leg2, json)
     #submit(config, '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', leg1, leg2, json)
     #submit(config, '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', leg1, leg2, json)
     #submit(config, '/EGamma/Run2018D-PromptReco-v2/MINIAOD', leg1, leg2, json)
 
 
 
-   
+
