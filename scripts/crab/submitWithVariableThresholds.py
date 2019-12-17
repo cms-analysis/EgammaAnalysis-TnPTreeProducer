@@ -70,6 +70,7 @@ if __name__ == '__main__':
       json = jsonForThresholds[thresholds]
       for t in thresholdsToSubtract:
         subtractLumis(json, jsonForThresholds[t])
+      if not len(LumiList(filename = json)): continue
       yield thresholds[0], thresholds[1], json
       thresholdsToSubtract.append(thresholds)
 
