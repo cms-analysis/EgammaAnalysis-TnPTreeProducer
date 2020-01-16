@@ -70,7 +70,9 @@ if __name__ == '__main__':
       json = jsonForThresholds[thresholds]
       for t in thresholdsToSubtract:
         subtractLumis(json, jsonForThresholds[t])
-      if not len(LumiList(filename = json)): continue
+      if not len(LumiList(filename = json)):
+        print "empty json"
+        continue
       yield thresholds[0], thresholds[1], json
       thresholdsToSubtract.append(thresholds)
 
@@ -86,7 +88,7 @@ if __name__ == '__main__':
 
   def submit(config, sample, leg1threshold, leg2threshold, json):
     print  sample.split('/')[-2] + '_%s' % json.split('L1_DoubleEG_')[-1].split('_prescale')[0]
-    config.General.requestName  = sample.split('/')[-2] + '_%s' % json.split('L1_DoubleEG_')[-1].split('_prescale')[0]
+    config.General.requestName  = sample.split('/')[-2] + '_%s' % json.split('L1_DoubleEG_')[-1].split('_prescale')[0]+'_retry'
     config.Data.inputDataset    = sample
     config.Data.outLFNDirBase   = '%s/%s/' % (mainOutputDir,'data')
     config.Data.splitting       = 'LumiBased'
@@ -103,12 +105,13 @@ if __name__ == '__main__':
 
   for leg1, leg2, json in getSeedsForDoubleEle('2018'):
     print 'Submitting for (%s, %s)' % (leg1, leg2)
+    #print LumiList(filename = json)
     # Crab fails on this on second iteration, of course with only a very cryptic error message
     # Not sure how to workaround this
-  #  submit(config, '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', leg1, leg2, json)
+    #submit(config, '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', leg1, leg2, json)
     #submit(config, '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', leg1, leg2, json)
     #submit(config, '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', leg1, leg2, json)
-    #submit(config, '/EGamma/Run2018D-PromptReco-v2/MINIAOD', leg1, leg2, json)
+    submit(config, '/EGamma/Run2018D-PromptReco-v2/MINIAOD', leg1, leg2, json)
 
 
 
