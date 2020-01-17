@@ -66,13 +66,16 @@ def setTagsProbes(process, options):
     process.probeElePassHLT.inputs       = cms.InputTag("probeEle")  
     process.probeElePassHLT.isAND        = cms.bool(False)
 
-    #not needed
+    #probably not needed
     #process.probeElePassHLTL1matched              = process.tagEle.clone()
     #process.probeElePassHLTL1matched.inputs       = cms.InputTag("probeEleL1matched")  
     #process.probeElePassHLTL1matched.isAND        = cms.bool(False)
 
     for flag, filterNames in options['HLTFILTERSTOMEASURE'].iteritems():
         setattr(process, flag, process.probeElePassHLT.clone(filterNames=filterNames))
+        #probably not needed:
+        #setattr(process, flag + "L1matched", process.probeElePassHLTL1matched.clone(filterNames=filterNames))
+
         #setattr(process, flag, process.probeElePassHLTL1matched.clone(filterNames=filterNames)) #if I add this, I guess I'm introducing on all probes (not only the ones I called probeElepassHLTL1matched) the L1 matching requirement (but only in the numerator, so the efficiency goes down)
 
 
@@ -348,6 +351,7 @@ def setSequences(process, options):
     process.hlt_sequence = cms.Sequence()
     for flag in options['HLTFILTERSTOMEASURE']:
         process.hlt_sequence += getattr(process, flag)
+        #process.hlt_sequence += getattr(process, flag + "L1matched")
 
     if options['isMC'] :
         process.tag_sequence += process.genEle + process.genTagEle 

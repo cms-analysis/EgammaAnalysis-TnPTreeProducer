@@ -87,12 +87,6 @@ varOptions.register(
     "Threshold for L1 matched objects"
     )
 
-#varOptions.register(
-#    "leg2Threshold", 0,
-#    VarParsing.multiplicity.singleton,
-#    VarParsing.varType.int,
-#    "Threshold for L1 seed leg2"
-#    )
 
 varOptions.parseArguments()
 
