@@ -80,6 +80,13 @@ varOptions.register(
     "use AOD"
     )
 
+varOptions.register(
+    "era", "2018",
+    VarParsing.multiplicity.singleton,
+    VarParsing.varType.string,
+    "Data-taking era: 2016, 2017 or 2018"
+    )
+
 varOptions.parseArguments()
 
 
@@ -91,6 +98,7 @@ options = dict()
 options['useAOD']               = cms.bool(varOptions.isAOD)
 
 options['HLTProcessName']       = varOptions.HLTname
+options['era']                  = varOptions.era
 
 ### set input collections
 options['ELECTRON_COLL']        = "slimmedElectrons"
@@ -122,12 +130,21 @@ if options['useAOD']:
     options['addSUSY']               = cms.bool(False)
 
 
-#options['TnPPATHS']            = cms.vstring("HLT_Ele27_eta2p1_WPTight_Gsf_v*")                                       #For 2016
-#options['TnPHLTTagFilters']    = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter")
-#options['TnPPATHS']            = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")                                   #For 2017
-#options['TnPHLTTagFilters']    = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
-options['TnPPATHS']             = cms.vstring("HLT_Ele32_WPTight_Gsf_v*")
-options['TnPHLTTagFilters']     = cms.vstring("hltEle32WPTightGsfTrackIsoFilter")
+if options['era'] == '2016':
+  options['TnPPATHS']           = cms.vstring("HLT_Ele27_eta2p1_WPTight_Gsf_v*")
+  options['TnPHLTTagFilters']   = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter")
+  options['GLOBALTAG']          = 'auto:run2_mc' if varOptions.isMC else 'auto:run2_data'
+elif options['era'] == '2017':
+  options['TnPPATHS']           = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")
+  options['TnPHLTTagFilters']   = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
+  options['GLOBALTAG']          = 'auto:run2_mc' if varOptions.isMC else 'auto:run2_data'
+elif options['era'] == '2018':
+  options['TnPPATHS']           = cms.vstring("HLT_Ele32_WPTight_Gsf_v*")
+  options['TnPHLTTagFilters']   = cms.vstring("hltEle32WPTightGsfTrackIsoFilter")
+  options['GLOBALTAG']          = 'auto:run2_mc' if varOptions.isMC else '102X_dataRun2_v11'
+else:
+  print '%s is not a valid era' % options['era']
+
 options['TnPHLTProbeFilters']   = cms.vstring()
 options['HLTFILTERSTOMEASURE']  = {"passHltEle32WPTightGsf" :                    cms.vstring("hltEle32WPTightGsfTrackIsoFilter"),
                                    "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
@@ -137,10 +154,8 @@ options['HLTFILTERSTOMEASURE']  = {"passHltEle32WPTightGsf" :                   
 if (varOptions.isMC):
     options['isMC']                = cms.bool(True)
     options['OUTPUT_FILE_NAME']    = "TnPTree_mc_aod.root" if varOptions.isAOD else "TnPTree_mc.root"
-    options['GLOBALTAG']           = 'auto:run2_mc'
 else:
     options['OUTPUT_FILE_NAME']    = "TnPTree_data.root"
-    options['GLOBALTAG']           = '102X_dataRun2_v11'
 
 if varOptions.GT != "auto" :
     options['GLOBALTAG'] = varOptions.GT
@@ -149,8 +164,15 @@ if varOptions.GT != "auto" :
 ###################################################################
 ## Define input files for test local run
 ###################################################################
-from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_Preliminary2018 as inputs
-if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_Preliminary2018 as inputs #
+if options['era'] == '2016':
+  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_23Sep2016 as inputs
+  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_23Sep2016 as inputs
+if options['era'] == '2017':
+  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_Preliminary2017 as inputs
+  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_Preliminary2017 as inputs
+if options['era'] == '2018':
+  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_Preliminary2018 as inputs
+  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_Preliminary2018 as inputs
 
 options['INPUT_FILE_NAME'] = inputs['data']
 if varOptions.isMC:  options['INPUT_FILE_NAME'] =  inputs['mc']
@@ -173,7 +195,8 @@ process.GlobalTag = GlobalTag(process.GlobalTag, options['GLOBALTAG'] , '')
 import EgammaAnalysis.TnPTreeProducer.egmTreesSetup_cff as tnpSetup
 tnpSetup.setupTreeMaker(process,options)
 
-
+import EgammaAnalysis.TnPTreeProducer.pileupConfiguration_cff as pileUpSetup
+pileUpSetup.setPileUpConfiguration(process, options)
 
 ###################################################################
 ## Init and Load

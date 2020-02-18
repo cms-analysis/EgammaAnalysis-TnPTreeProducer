@@ -10,7 +10,7 @@ def setTagsProbes(process, options):
 
     eleHLTProducer = 'PatElectronTriggerCandProducer'
     gamHLTProducer = 'PatPhotonTriggerCandProducer'
-    hltObjects     = 'slimmedPatTrigger' # 'selectedPatTrigger' FOR 2016
+    hltObjects     = 'selectedPatTrigger' if options['era'] == '2016' else 'slimmedPatTrigger'
     genParticles   = 'prunedGenParticles'
     SCEleMatcher   = 'PatElectronMatchedCandidateProducer' 
 
@@ -320,12 +320,6 @@ def setSequences(process, options):
         process.pho_sequence += process.genProbePho
         process.sc_sequence  += process.genProbeSC
 
-    from EgammaAnalysis.TnPTreeProducer.pileupConfiguration_cfi import pileupProducer
-    process.pileupReweightingProducer = pileupProducer.clone()
-    if options['useAOD']: process.pileupReweightingProducer.pileupInfoTag = "addPileupInfo"
-
-    process.mc_sequence = cms.Sequence()
-    if options['isMC'] : process.mc_sequence = cms.Sequence( process.pileupReweightingProducer )
             
 ###################################################################################
 ################  --- tree Maker setup
@@ -336,7 +330,7 @@ def setupTreeMaker(process, options) :
     process.hltFilter.throw = cms.bool(True)
     process.hltFilter.HLTPaths = options['TnPPATHS']
     process.hltFilter.TriggerResultsTag = cms.InputTag("TriggerResults","",options['HLTProcessName'])
-    
+
     setTagsProbes( process, options )
     setSequences(  process, options )
 
