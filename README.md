@@ -2,21 +2,20 @@
 TnP package for EGM
 
 ## For regular users
-### 1. Install (for 2018 data/MC in CMSSW\_10\_2\_X)
+### 1. Install (CMSSW\_10\_2\_10 or higher, works for 2016, 2017 and 2018 data/MC)
 
 ```
-cmsrel CMSSW_10_2_5
-cd CMSSW_10_2_5/src
+cmsrel CMSSW_10_2_10
+cd CMSSW_10_2_10/src
 cmsenv
-git cms-merge-topic cms-egamma:EgammaID_1023
-git clone -b Nm1 https://github.com/swagata87/EgammaAnalysis-TnPTreeProducer EgammaAnalysis/TnPTreeProducer
+git clone -b RunIIfinal https://github.com/tomcornelis/EgammaAnalysis-TnPTreeProducer EgammaAnalysis/TnPTreeProducer
 scram b -j8
 ```
 
 ### 2. Try-out 
 You can find the cmsRun executable in EgammaAnalysis/TnPTreeProducer/python:
 ```
-cmsRun TnPTreeProducer_cfg.py isMC=True doTrigger=True 
+cmsRun TnPTreeProducer_cfg.py isMC=True doTrigger=True era=2018
 ```
 Check TnPTreeProducer\_cfg.py for all available options. Update the code if you need to implement custom-made recipes.
 Test files can be defined in python/etc/tnpInputTestFiles_cff.py
