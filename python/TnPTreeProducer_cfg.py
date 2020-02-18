@@ -244,16 +244,23 @@ process.tnpEleTrig = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     tagProbePairs = cms.InputTag("tnpPairingEleHLT"),
                                     probeMatches  = cms.InputTag("genProbeEle"),
                                     allProbes     = cms.InputTag("probeEle"),
-                                    flags = cms.PSet(
-                                        passingLoose94X   = cms.InputTag("probeEleCutBasedLoose94X" ),
-                                        passingMedium94X  = cms.InputTag("probeEleCutBasedMedium94X"),
-                                        passingTight94X   = cms.InputTag("probeEleCutBasedTight94X" ),
-                                        ),
+                                    flags         = cms.PSet(),
                                     )
 for flag in options['HLTFILTERSTOMEASURE']:
   setattr(process.tnpEleTrig.flags, flag, cms.InputTag(flag))
 
+# Id's to store in trigger tree
+listOfIdsToStore = []
+for wp in ['Veto', 'Loose', 'Medium', 'Tight']:
+  for cutBasedVersion in ['80X', '94X', '94XV2']:
+    listOfIdsToStore += ['CutBased%s%s' % (wp, cutBasedVersion)]
 
+for wp in ['wpLnoiso', 'wp80noiso', 'wp90noiso', 'wpLiso', 'wp80iso', 'wp90iso']:
+  listOfIdsToStore += ['MVA94X%s' % wp, 'MVA94X%sV2' % wp]
+
+for id in listOfIdsToStore:
+  setattr(process.tnpEleTrig.flags, 'passing' + id, cms.InputTag('probeEle' + id))
+# TODO: apply same code to tnpEleIDs?
 
 process.tnpEleReco = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     tnpVars.mcTruthCommonStuff, tnpVars.CommonStuffForSuperClusterProbe, 
@@ -274,10 +281,6 @@ process.tnpEleIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     probeMatches  = cms.InputTag("genProbeEle"),
                                     allProbes     = cms.InputTag("probeEle"),
                                     flags         = cms.PSet(
-#                                        passingVeto       = cms.InputTag("probeEleCutBasedVeto"  ),
-#                                        passingLoose      = cms.InputTag("probeEleCutBasedLoose" ),
-#                                        passingMedium     = cms.InputTag("probeEleCutBasedMedium"),
-        #                                        passingTight      = cms.InputTag("probeEleCutBasedTight" ),
                                         passingVeto80X    = cms.InputTag("probeEleCutBasedVeto80X"  ),
                                         passingLoose80X   = cms.InputTag("probeEleCutBasedLoose80X" ),
                                         passingMedium80X  = cms.InputTag("probeEleCutBasedMedium80X"),
@@ -368,10 +371,6 @@ process.tnpPhoIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     probeMatches  = cms.InputTag("genProbePho"),
                                     allProbes     = cms.InputTag("probePho"),
                                     flags         = cms.PSet(
-#                                        passingLoose      = cms.InputTag("probePhoCutBasedLoose"),
-#                                        passingMedium     = cms.InputTag("probePhoCutBasedMedium"),
-#                                        passingTight      = cms.InputTag("probePhoCutBasedTight"),
-#                                        passingMVA        = cms.InputTag("probePhoMVA"),
                                          passingLoose80X   = cms.InputTag("probePhoCutBasedLoose80X"),
                                          passingMedium80X  = cms.InputTag("probePhoCutBasedMedium80X"),
                                          passingTight80X   = cms.InputTag("probePhoCutBasedTight80X"),
