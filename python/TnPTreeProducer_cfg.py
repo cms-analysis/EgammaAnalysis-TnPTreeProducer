@@ -31,7 +31,7 @@ varOptions.register(
     )
 
 varOptions.register(
-    "doTrigger", False,
+    "doTrigger", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Include tree for Trigger SF"

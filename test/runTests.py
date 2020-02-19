@@ -9,8 +9,8 @@ def system(command):
 # Simply run a test for both data/MC for 2016, 2017 and 2018
 #
 for era in ['2016', '2017', '2018']:
-  system('source $VO_CMS_SW_DIR/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py doTrigger=True era=%s maxEvents=1000' % era)
-  system('source $VO_CMS_SW_DIR/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py doTrigger=True era=%s maxEvents=1000 isMC=True' % era)
+  system('source $VO_CMS_SW_DIR/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py era=%s maxEvents=1000' % era)
+  system('source $VO_CMS_SW_DIR/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py era=%s maxEvents=1000 isMC=True' % era)
 
   for dataset in ['data', 'mc']:
     shutil.move('TnPTree_%s.root' % dataset, 'TnPTree_%s_%s.root' % (dataset, era))
