@@ -34,6 +34,8 @@
 #include "DataFormats/EgammaCandidates/interface/Conversion.h"
 #include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
 
+#include "isolations.h"
+
 #include "TMath.h"
 
 typedef edm::View<reco::Candidate> CandView;
@@ -55,6 +57,7 @@ private:
   edm::EDGetTokenT<CandView> pfCandToken_;
   edm::EDGetTokenT<reco::ConversionCollection> conversionsToken_;
   edm::EDGetTokenT<reco::BeamSpot> beamSpotToken_;
+  edm::EDGetTokenT<pat::PackedCandidateCollection> pfCandidatesToken_;
 };
 
 template<class T>
@@ -63,13 +66,13 @@ ElectronVariableHelper<T>::ElectronVariableHelper(const edm::ParameterSet & iCon
   vtxToken_(consumes<reco::VertexCollection>(iConfig.getParameter<edm::InputTag>("vertexCollection"))),
   l1EGToken_(consumes<BXVector<l1t::EGamma> >(iConfig.getParameter<edm::InputTag>("l1EGColl"))),
   conversionsToken_(consumes<reco::ConversionCollection>(iConfig.getParameter<edm::InputTag>("conversions"))),
-  beamSpotToken_(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("beamSpot"))) {
+  beamSpotToken_(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("beamSpot"))),
+  pfCandidatesToken_(consumes<pat::PackedCandidateCollection>(edm::InputTag("packedPFCandidates"))) {
 
   produces<edm::ValueMap<float> >("dz");
   produces<edm::ValueMap<float> >("dxy");
   produces<edm::ValueMap<float> >("sip");
   produces<edm::ValueMap<float> >("missinghits");
-  produces<edm::ValueMap<float> >("gsfhits");
   produces<edm::ValueMap<float> >("l1e");
   produces<edm::ValueMap<float> >("l1et");
   produces<edm::ValueMap<float> >("l1eta");
@@ -80,6 +83,7 @@ ElectronVariableHelper<T>::ElectronVariableHelper(const edm::ParameterSet & iCon
   produces<edm::ValueMap<float> >("kfchi2");
   produces<edm::ValueMap<float> >("ioemiop");
   produces<edm::ValueMap<float> >("5x5circularity");
+  produces<edm::ValueMap<float> >("pfLeptonIsolation");
 
   if( iConfig.existsAs<edm::InputTag>("pfCandColl") ) {
     pfCandToken_ = consumes<CandView>(iConfig.getParameter<edm::InputTag>("pfCandColl"));
@@ -195,13 +199,10 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
 
     // Conversion vertex fit
     reco::ConversionRef convRef = ConversionTools::matchedConversion(*probe, conversions, beamSpot->position());
-//  reco::Conversion const* conv = ConversionTools::matchedConversion(*probe, *conversions, beamSpot->position()); // change above line to this when moving to 106X or later
 
     float convVtxFitProb = -1.;
     if(!convRef.isNull()) {
         const reco::Vertex &vtx = convRef.get()->conversionVertex();
-//  if(conv){ // change above two lines for this when moving to 106X or later
-//      const reco::Vertex &vtx = conv->conversionVertex();
         if (vtx.isValid()) {
             convVtxFitProb = TMath::Prob( vtx.chi2(),  vtx.ndof());
         }
@@ -235,11 +236,16 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     ioemiopVals.push_back(ele_IoEmIop);
   }
 
+  // PF lepton isolations
+  edm::Handle<pat::PackedCandidateCollection> pfCandidates;
+  iEvent.getByToken(pfCandidatesToken_, pfCandidates);
+  auto pfLeptonIsolations = computePfLeptonIsolations(*probes, *pfCandidates);
+  for(unsigned int i = 0; i < probes->size(); ++i) {
+      pfLeptonIsolations[i] /= (*probes)[i].pt();
+  }
+
 
   // convert into ValueMap and store
-
-  
-
   store("dz", dzVals, probes, iEvent);
   store("dxy", dxyVals, probes, iEvent);
   store("sip", sipVals, probes, iEvent);
@@ -254,7 +260,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
   store("kfchi2", kfchi2Vals, probes, iEvent);
   store("ioemiop", ioemiopVals, probes, iEvent);
   store("5x5circularity", ocVals, probes, iEvent);
-
+  store("pfLeptonIsolation", pfLeptonIsolations, probes, iEvent);
 
 }
 

@@ -35,6 +35,7 @@ def setIDs(process, options):
     ### add only miniAOD supported IDs
     if not options['useAOD'] :
         my_id_modules.append( 'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronHLTPreselecition_Summer16_V1_cff' )
+        my_id_modules.append( 'EgammaAnalysis.TnPTreeProducer.Identification.cutBasedDoubleElectronHLTPreselecition_Summer16_V1_cff')
                  
     for idmod in my_id_modules:
         setupAllVIDIdsInModule(process, idmod, setupVIDElectronSelection)
@@ -122,6 +123,9 @@ def setIDs(process, options):
 
     process.probeEleHLTsafe = process.probeEleCutBasedVeto.clone()
     process.probeEleHLTsafe.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronHLTPreselection-Summer16-V1")
+
+    process.probeDoubleEleHLTsafe = process.probeEleCutBasedVeto.clone()
+    process.probeDoubleEleHLTsafe.selection = cms.InputTag("egmGsfElectronIDs:cutBasedDoubleElectronHLTPreselection-Summer16-V1")
 
     process.probeEleCutBasedLoose  = process.probeEleCutBasedVeto.clone()
     process.probeEleCutBasedMedium = process.probeEleCutBasedVeto.clone()
