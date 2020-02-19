@@ -14,7 +14,7 @@ Setup argument parser
 parser = argparse.ArgumentParser(description="The program goes through the target and reference files and compare all of the branches in the given directory and tree. A branch is compared with another by going through all events and calculate the mean squared error of the values. Whether the resulting mean squared error tagges the branch as different from the reference can be controlled by the 'cut' argument. NOTE: It is assumed that the number of events of the given input ROOT files are identical!")
 parser.add_argument("filenameTarget", help="Path to the Tag-And-Probe ROOT file which is compared against the reference")
 parser.add_argument("filenameReference", help="Path to the Tag-And-Probe ROOT file which serves as reference")
-parser.add_argument("-d", "--directory", default="tpTree", help="Directory in the input ROOT files which contains the Tag-And-Probe tree")
+parser.add_argument("-d", "--directory", default="tnpEleTrig", help="Directory in the input ROOT files which contains the Tag-And-Probe tree")
 parser.add_argument("-t", "--tree", default="fitter_tree", help="Name of the tree holding the variables which shall be compared")
 parser.add_argument("-v", "--verbosity", default=0, action="count", help="Increase output verbosity by printing names of branches which do not differ")
 parser.add_argument("-c", "--cut", default=0, help="Branches with a difference below this cut will not be treated as different")

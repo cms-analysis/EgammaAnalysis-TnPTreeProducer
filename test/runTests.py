@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import subprocess
+import subprocess, shutil
 
 # System command and retrieval of its output
 def system(command):
@@ -9,11 +9,12 @@ def system(command):
 # Simply run a test for both data/MC for 2016, 2017 and 2018
 #
 for era in ['2016', '2017', '2018']:
-  system('eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py doTrigger=True era=%s maxEvents=1000' % era)
-  system('eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py doTrigger=True era=%s maxEvents=1000 isMC=True' % era)
-  system('mv TnPTree_data.root TnPTree_data_%s.root' % era)
-  system('mv TnPTree_mc.root TnPTree_mc_%s.root' % era)
+  system('source $VO_CMS_SW_DIR/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py doTrigger=True era=%s maxEvents=1000' % era)
+  system('source $VO_CMS_SW_DIR/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py doTrigger=True era=%s maxEvents=1000 isMC=True' % era)
 
-#
-# TODO: then use compareTrees script for quality check
-#
+  for dataset in ['data', 'mc']:
+    shutil.move('TnPTree_%s.root' % dataset, 'TnPTree_%s_%s.root' % (dataset, era))
+    for tree in ['tnpEleIDs', 'tnpPhoIDs', 'tnpEleTrig']:
+      print era, dataset, tree
+      print system('./compareTrees TnPTree_%s_%s.root TnPTree_%s_%s_ref.root' % (dataset, era, dataset, era))
+      print '\n\n\n\n\n'
