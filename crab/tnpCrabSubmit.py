@@ -7,7 +7,7 @@ import os
 #
 submitVersion = "test"
 
-defaultArgs   = ['doEleID=True','doPhoID=False','doTrigger=True', 'era=2018']
+defaultArgs   = ['doEleID=True','doPhoID=False','doTrigger=True']
 mainOutputDir = '/store/user/%s/tnpTuples/%s' % (os.environ['USER'], submitVersion)
 from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
@@ -27,6 +27,11 @@ config.Data.allowNonValidInputDataset = True
 config.Site.storageSite               = 'T2_CH_CERN'
 
 
+def getLumiMask(era):
+  if   era=='2016': return 'TO_BE_ADDED'
+  elif era=='2017': return 'TO_BE_ADDED'
+  elif era=='2018': return 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions18/13TeV/PromptReco/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt'
+
 if __name__ == '__main__':
   from CRABAPI.RawCommand import crabCommand
   from CRABClient.ClientExceptions import ClientException
@@ -36,15 +41,15 @@ if __name__ == '__main__':
   # That's why we need to set this parameter (here or above in the configuration file, it does not matter, we will not overwrite it).
   config.General.workArea = 'crab_%s' % submitVersion
 
-  def submit(config, sample, globalTag):
+  def submit(config, requestName, sample, era, globalTag):
     isMC                        = 'SIM' in sample
-    config.General.requestName  = sample.split('/')[-2]
+    config.General.requestName  = requestName
     config.Data.inputDataset    = sample
     config.Data.outLFNDirBase   = '%s/%s/' % (mainOutputDir, 'mc' if isMC else 'data')
     config.Data.splitting       = 'FileBased' if isMC else 'LumiBased'
-    config.Data.lumiMask        = None if isMC else 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions18/13TeV/PromptReco/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt'
+    config.Data.lumiMask        = None if isMC else getLumiMask(era) 
     config.Data.unitsPerJob     = 5 if isMC else 100
-    config.JobType.pyCfgParams  = defaultArgs + ['isMC=True' if isMC else 'isMC=False', 'GT=%' % globalTag]
+    config.JobType.pyCfgParams  = defaultArgs + ['isMC=True' if isMC else 'isMC=False', 'GT=%' % globalTag, 'era=%s' % era]
 
     try:
       crabCommand('submit', config = config)
@@ -54,12 +59,46 @@ if __name__ == '__main__':
       print "Failed submitting task: %s" % (cle)
 
   # If you would switch to AOD, don't forget to add 'isAOD=True' to the defaultArgs!
-  globalTag = '102X_dataRun2_Sep2018ABC_v2'
-  submit(config, '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', globalTag)
-  submit(config, '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', globalTag)
-  submit(config, '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', globalTag)
-  globalTag = '102X_dataRun2_Prompt_v13'
-  submit(config, '/EGamma/Run2018D-PromptReco-v2/MINIAOD', globalTag)
+  era       = '2016'
+  globalTag = '94X_dataRun2_v10'
+  submit(config, 'Run2016B', '/SingleElectron/Run2016B-07Aug17_ver2-v2/MINIAOD', era, globalTag)
+  submit(config, 'Run2016C', '/SingleElectron/Run2016C-07Aug17-v1/MINIAOD', era, globalTag)
+  submit(config, 'Run2016D', '/SingleElectron/Run2016D-07Aug17-v1/MINIAOD', era, globalTag)
+  submit(config, 'Run2016E', '/SingleElectron/Run2016E-07Aug17-v1/MINIAOD', era, globalTag)
+  submit(config, 'Run2016F', '/SingleElectron/Run2016F-07Aug17-v1/MINIAOD', era, globalTag)
+  submit(config, 'Run2016G', '/SingleElectron/Run2016G-07Aug17-v1/MINIAOD', era, globalTag)
+  submit(config, 'Run2016H', '/SingleElectron/Run2016H-07Aug17v1/MINIAOD', era, globalTag)
 
-  globalTag = '102X_upgrade2018_realistic_v18'
-  submit(config, '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', globalTag)
+  globalTag = '94X_mcRun2_asymptotic_v3'
+  submit(config, 'DY_NLO', '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv2-PUMoriond17_HCALDebug_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM', era, globalTag)
+  submit(config, 'DY_LO',  '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v2/MINIAODSIM', era, globalTag)
+
+
+  era       = '2017'
+  globalTag = '94X_dataRun2_v11'
+  submit(config, 'Run2017B', '/SingleElectron/Run2017B-31Mar2018-v1/MINIAOD', era, globalTag)
+  submit(config, 'Run2017C', '/SingleElectron/Run2017C-31Mar2018-v1/MINIAOD', era, globalTag)
+  submit(config, 'Run2017D', '/SingleElectron/Run2017D-31Mar2018-v1/MINIAOD', era, globalTag)
+  submit(config, 'Run2017E', '/SingleElectron/Run2017E-31Mar2018-v1/MINIAOD', era, globalTag)
+  submit(config, 'Run2017F', '/SingleElectron/Run2017F-31Mar2018-v1/MINIAOD', era, globalTag)
+
+  globalTag = '94X_mc2017_realistic_v17'
+  submit(config, 'DY1_LO',     '/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM', era, globalTag)
+  submit(config, 'DY1_LO_ext', '/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_v3_94X_mc2017_realistic_v14_ext1-v2/MINIAODSIM', era, globalTag)
+  submit(config, 'DY_NLO',     '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM',  era, globalTag)
+  submit(config, 'DY_NLO_ext', '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/MINIAODSIM', era, globalTag)
+ 
+
+
+  era       = '2018'
+  globalTag = '102X_dataRun2_v12'
+  submit(config, 'Run2018A', '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', era, globalTag)
+  submit(config, 'Run2018B', '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', era, globalTag)
+  submit(config, 'Run2018C', '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', era, globalTag)
+  globalTag = '102X_dataRun2_Prompt_v15'
+  submit(config, 'Run2018D', '/EGamma/Run2018D-PromptReco-v2/MINIAOD', era, globalTag)
+
+  globalTag = '102X_upgrade2018_realistic_v20'
+  submit(config, 'DY', '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era, globalTag)
+
+
