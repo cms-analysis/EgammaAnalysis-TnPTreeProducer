@@ -258,6 +258,7 @@ def setSequences(process, options):
         process.probeEle 
         )
     if not options['useAOD'] : process.ele_sequence += process.probeEleHLTsafe
+    if not options['useAOD'] : process.ele_sequence += process.probeDoubleEleHLTsafe
 
     process.pho_sequence = cms.Sequence(
         process.goodPhotons               +

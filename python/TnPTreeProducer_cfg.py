@@ -325,6 +325,8 @@ for mvaId in ['80X', '94X', '94XV2']:
 if not options['useAOD'] :
     setattr( process.tnpEleTrig.flags, 'passingHLTsafe', cms.InputTag("probeEleHLTsafe" ) )
     setattr( process.tnpEleIDs.flags , 'passingHLTsafe', cms.InputTag("probeEleHLTsafe" ) )
+    setattr( process.tnpEleTrig.flags, 'passingDoubleHLTsafe', cms.InputTag("probeDoubleEleHLTsafe" ) )
+    setattr( process.tnpEleIDs.flags , 'passingDoubleHLTsafe', cms.InputTag("probeDoubleEleHLTsafe" ) )
 
 # Add SUSY variables to the "variables", add SUSY IDs to the "flags"
 if options['addSUSY'] :
