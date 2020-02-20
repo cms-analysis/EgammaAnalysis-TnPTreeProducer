@@ -16,5 +16,5 @@ for era in ['2016', '2017', '2018']:
     shutil.move('TnPTree_%s.root' % dataset, 'TnPTree_%s_%s.root' % (dataset, era))
     for tree in ['tnpEleIDs', 'tnpPhoIDs', 'tnpEleTrig']:
       print era, dataset, tree
-      print system('./compareTrees TnPTree_%s_%s.root TnPTree_%s_%s_ref.root' % (dataset, era, dataset, era))
+      print system('./compareTrees TnPTree_%s_%s.root TnPTree_%s_%s_ref.root -s -d %s' % (dataset, era, dataset, era, tree))
       print '\n\n\n\n\n'

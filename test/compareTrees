@@ -111,6 +111,9 @@ for branchTarget in branchesTarget:
 if args.singleValue:
     for branch in branchesTarget:
         leaf = branch.GetLeaf(branch.GetName())
+        if not leaf:
+          branchesTargetSingleVal.append({'name' : branch.GetName(), 'value' : 'null'})
+          continue
         refVal = None
         hasMultVals = False
         for iEvent in range(numEvents):
@@ -124,6 +127,9 @@ if args.singleValue:
 
     for branch in branchesReference:
         leaf = branch.GetLeaf(branch.GetName())
+        if not leaf:
+          branchesRefSingleVal.append({'name' : branch.GetName(), 'value' : 'null'})
+          continue
         refVal = None
         hasMultVals = False
         for iEvent in range(numEvents):
