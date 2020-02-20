@@ -3,7 +3,10 @@ import subprocess, shutil
 
 # System command and retrieval of its output
 def system(command):
-  return subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+  try:
+    return subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
+  except subprocess.CalledProcessError as e:
+    print e.output
 
 #
 # Simply run a test for both data/MC for 2016, 2017 and 2018
