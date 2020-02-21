@@ -70,9 +70,8 @@ if __name__ == '__main__':
   submit(config, 'Run2016H', '/SingleElectron/Run2016H-07Aug17v1/MINIAOD', era, globalTag)
 
   globalTag = '94X_mcRun2_asymptotic_v3'
-  submit(config, 'DY_NLO', '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv2-PUMoriond17_HCALDebug_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/MINIAODSIM', era, globalTag)
-  submit(config, 'DY_LO',  '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv2-PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v2/MINIAODSIM', era, globalTag)
-
+  submit(config, 'DY_NLO', '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/MINIAODSIM', era, globalTag)
+  submit(config, 'DY_LO',  '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v2/MINIAODSIM', era, globalTag)
 
   era       = '2017'
   globalTag = '94X_dataRun2_v11'
@@ -99,6 +98,6 @@ if __name__ == '__main__':
   submit(config, 'Run2018D', '/EGamma/Run2018D-PromptReco-v2/MINIAOD', era, globalTag)
 
   globalTag = '102X_upgrade2018_realistic_v20'
-  submit(config, 'DY', '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era, globalTag)
-
+  submit(config, 'DY',     '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era, globalTag)
+  submit(config, 'DY_pow', '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era, globalTag) 
 
