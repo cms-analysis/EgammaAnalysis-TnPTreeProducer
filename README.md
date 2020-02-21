@@ -20,8 +20,10 @@ cmsRun TnPTreeProducer_cfg.py isMC=True doTrigger=True era=2018
 Check TnPTreeProducer\_cfg.py for all available options. Update the code if you need to implement custom-made recipes.
 Test files can be defined in python/etc/tnpInputTestFiles_cff.py
 
+If you update the code, you can use the ./runTests.py script in the test directory to check for new differences in the 2016, 2017 and 2018 test files.
+
 ### 3. Submit jobs
-Check in EgammaAnalysis/TnPTreeProducer/scripts/crab for scripts to submit your jobs using crab
+Check in EgammaAnalysis/TnPTreeProducer//crab the tnpCrabSubmit.py script to submit your jobs using crab
 
 ## For developpers
 1. On github fork the package https://github.com/cms-analysis/EgammaAnalysis-TnPTreeProducer 
