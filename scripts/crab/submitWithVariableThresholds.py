@@ -1,13 +1,13 @@
 #!/bin/env python
 
 ### Version of submission ###
-submitVersion = "test"
+submitVersion = "L1Matching"
 
 
 
 defaultArgs   = ['isMC=False','doEleID=False','doPhoID=False','doTrigger=True', 'GT=101X_dataRun2_Prompt_v9']
 #mainOutputDir = '/store/user/tomc/tnpTuples/%s' % submitVersion # Change to your own
-mainOutputDir = '/store/group/phys_egamma/lfinco/2018/L1Matching/%s' % submitVersion
+mainOutputDir = '/store/group/phys_egamma/lfinco/new/2018/%s' % submitVersion
 from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = config()
@@ -94,7 +94,7 @@ if __name__ == '__main__':
     config.Data.splitting       = 'LumiBased'
     config.Data.lumiMask        = json
     config.Data.unitsPerJob     = 100
-    config.JobType.pyCfgParams  = defaultArgs + ['leg1Threshold=%s' % leg1threshold, 'leg2Threshold=%s' % 0]
+    config.JobType.pyCfgParams  = defaultArgs + ['L1Threshold=%s' % leg1threshold]
 
     try:
       crabCommand('submit', config = config)
@@ -103,14 +103,21 @@ if __name__ == '__main__':
     except ClientException as cle:
       print "Failed submitting task: %s" % (cle)
 
+  from multiprocessing import Process
+  def submitWrapper(config, sample, leg1threshold, leg2threshold, json):
+    p = Process(target=submit, args=(config, sample, leg1threshold, leg2threshold, json))
+    p.start()
+    p.join()
+
+
   for leg1, leg2, json in getSeedsForDoubleEle('2018'):
     print 'Submitting for (%s, %s)' % (leg1, leg2)
     #print LumiList(filename = json)
     # Crab fails on this on second iteration, of course with only a very cryptic error message
     # Not sure how to workaround this
-    #submit(config, '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', leg1, leg2, json)
-    #submit(config, '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', leg1, leg2, json)
-    #submit(config, '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', leg1, leg2, json)
+    submit(config, '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', leg1, leg2, json)
+    submit(config, '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', leg1, leg2, json)
+    submit(config, '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', leg1, leg2, json)
     submit(config, '/EGamma/Run2018D-PromptReco-v2/MINIAOD', leg1, leg2, json)
 
 

@@ -67,14 +67,24 @@ def setTagsProbes(process, options):
     process.probeElePassHLT.isAND        = cms.bool(False)
 
     #probably not needed
-    #process.probeElePassHLTL1matched              = process.tagEle.clone()
-    #process.probeElePassHLTL1matched.inputs       = cms.InputTag("probeEleL1matched")  
-    #process.probeElePassHLTL1matched.isAND        = cms.bool(False)
+    process.probeElePassHLTL1matched              = process.tagEle.clone()
+    process.probeElePassHLTL1matched.inputs       = cms.InputTag("probeEleL1matched")  
+    process.probeElePassHLTL1matched.isAND        = cms.bool(False)
 
-    for flag, filterNames in options['HLTFILTERSTOMEASURE'].iteritems():
-        setattr(process, flag, process.probeElePassHLT.clone(filterNames=filterNames))
-        #probably not needed:
-        #setattr(process, flag + "L1matched", process.probeElePassHLTL1matched.clone(filterNames=filterNames))
+    
+    setattr(process,  "passHltEle32WPTightGsf", process.probeElePassHLT.clone(filterNames=cms.vstring("hltEle32WPTightGsfTrackIsoFilter")))
+    setattr(process,  "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1", process.probeElePassHLT.clone(filterNames=cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter")))
+    setattr(process,  "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1L1match", process.probeElePassHLTL1matched.clone(filterNames=cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter")))
+    setattr(process,  "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg2", process.probeElePassHLT.clone(filterNames=cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter")))
+    setattr(process,  "passHltDoubleEle33CaloIdLMWSeedLeg", process.probeElePassHLT.clone(filterNames=cms.vstring("hltEle33CaloIdLMWPMS2Filter"))),
+    setattr(process,  "passHltDoubleEle33CaloIdLMWSeedLegL1match", process.probeElePassHLTL1matched.clone(filterNames=cms.vstring("hltEle33CaloIdLMWPMS2Filter"))),
+    setattr(process,  "passHltDoubleEle33CaloIdLMWUnsLeg", process.probeElePassHLT.clone(filterNames=cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter")))
+
+
+    # for flag, filterNames in options['HLTFILTERSTOMEASURE'].iteritems():
+    #     setattr(process, flag, process.probeElePassHLT.clone(filterNames=filterNames))
+        ##probably not needed:
+        ##setattr(process, flag + "L1matched", process.probeElePassHLTL1matched.clone(filterNames=filterNames))
 
         #setattr(process, flag, process.probeElePassHLTL1matched.clone(filterNames=filterNames)) #if I add this, I guess I'm introducing on all probes (not only the ones I called probeElepassHLTL1matched) the L1 matching requirement (but only in the numerator, so the efficiency goes down)
 

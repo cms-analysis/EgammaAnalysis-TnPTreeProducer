@@ -139,7 +139,13 @@ options['TnPHLTTagFilters']     = cms.vstring("hltEle32WPTightGsfTrackIsoFilter"
 options['TnPHLTProbeFilters']   = cms.vstring()
 options['HLTFILTERSTOMEASURE']  = {"passHltEle32WPTightGsf" :                    cms.vstring("hltEle32WPTightGsfTrackIsoFilter"),
                                    "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
+                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1L1match" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
                                    "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg2" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter"),
+
+                                   "passHltDoubleEle33CaloIdLMWSeedLeg" : cms.vstring("hltEle33CaloIdLMWPMS2Filter"),
+                                   "passHltDoubleEle33CaloIdLMWSeedLegL1match" : cms.vstring("hltEle33CaloIdLMWPMS2Filter"),
+                                   "passHltDoubleEle33CaloIdLMWUnsLeg" : cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
+                                   
                                   } # Some examples, you can add multiple filters (or OR's of filters, note the vstring) here, each of them will be added to the tuple
 
 options['L1Threshold'] = varOptions.L1Threshold
@@ -215,7 +221,7 @@ if options['DoRECO']                          : process.cand_sequence += process
 
 process.tnpPairs_sequence = cms.Sequence()
 if options['DoTrigger'] : process.tnpPairs_sequence *= process.tnpPairingEleHLT
-if options['DoTrigger'] : process.tnpPairs_sequence *= process.tnpPairingEleHLTL1matched
+#if options['DoTrigger'] : process.tnpPairs_sequence *= process.tnpPairingEleHLTL1matched
 if options['DoRECO']    : process.tnpPairs_sequence *= process.tnpPairingEleRec
 if options['DoEleID']   : process.tnpPairs_sequence *= process.tnpPairingEleIDs
 if options['DoPhoID']   : process.tnpPairs_sequence *= process.tnpPairingPhoIDs
@@ -454,7 +460,7 @@ tnpSetup.customize( process.tnpEleReco , options )
 
 process.tree_sequence = cms.Sequence()
 if (options['DoTrigger']): process.tree_sequence *= process.tnpEleTrig
-if (options['DoTrigger']): process.tree_sequence *= process.tnpEleTrigL1matched
+#if (options['DoTrigger']): process.tree_sequence *= process.tnpEleTrigL1matched
 if (options['DoRECO'])   : process.tree_sequence *= process.tnpEleReco
 if (options['DoEleID'])  : process.tree_sequence *= process.tnpEleIDs
 if (options['DoPhoID'])  : process.tree_sequence *= process.tnpPhoIDs

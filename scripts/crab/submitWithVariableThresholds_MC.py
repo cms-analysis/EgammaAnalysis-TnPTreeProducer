@@ -1,13 +1,13 @@
 #!/bin/env python
 
 ### Version of submission ###
-submitVersion = "test"
+submitVersion = "L1Matching"
 
 
 
 defaultArgs   = ['isMC=True','doEleID=False','doPhoID=False','doTrigger=True', 'GT=102X_upgrade2018_realistic_v12']
 #mainOutputDir = '/store/user/tomc/tnpTuples/%s' % submitVersion # Change to your own
-mainOutputDir = '/store/group/phys_egamma/lfinco/2018/L1Matching/%s' % submitVersion
+mainOutputDir = '/store/group/phys_egamma/lfinco/new/2018/%s' % submitVersion
 from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = config()
@@ -76,15 +76,21 @@ if __name__ == '__main__':
     except ClientException as cle:
       print "Failed submitting task: %s" % (cle)
 
+  from multiprocessing import Process
+  def submitWrapper(config, sample, leg1threshold, leg2threshold):
+    p = Process(target=submit, args=(config, sample, leg1threshold, leg2threshold))
+    p.start()
+    p.join()
+
   #for leg1, leg2, json in getSeedsForDoubleEle('2018'):
     # Crab fails on this on second iteration, of course with only a very cryptic error message
     # Not sure how to workaround this
     #submit(config, '/EGamma/Run2018A-PromptReco-v1/MINIAOD', leg1, leg2, json)
     #submit(config, '/EGamma/Run2018A-17Sep2018/MINIAOD', leg1, leg2, json)
-  submit(config, '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 22, 0)
+  #submit(config, '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 22, 0)
   #submit(config, '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 22, 0)
-  #submit(config, '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 25, 0)
-  #submit(config, '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 25, 0)
+  submit(config, '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 25, 0)
+  submit(config, '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 25, 0)
 
 
 
