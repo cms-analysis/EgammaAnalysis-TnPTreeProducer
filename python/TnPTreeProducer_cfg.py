@@ -10,21 +10,21 @@ process = cms.Process("tnpEGM")
 varOptions = VarParsing('analysis')
 
 varOptions.register(
-    "isMC", True,
+    "isMC", False,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Compute MC efficiencies"
     )
 
 varOptions.register(
-    "doEleID", False,
+    "doEleID", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Include tree for photon ID SF"
     )
 
 varOptions.register(
-    "doPhoID", False,
+    "doPhoID", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
     "Include tree for photon ID SF"
@@ -145,15 +145,11 @@ else:
 
 options['L1Threshold']          = varOptions.L1Threshold
 options['TnPHLTProbeFilters']   = cms.vstring()
-options['HLTFILTERSTOMEASURE']  = {"passHltEle32WPTightGsf" :                    cms.vstring("hltEle32WPTightGsfTrackIsoFilter"),
-                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
-                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1L1match" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
-                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg2" : cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter"),
-
-                                   "passHltDoubleEle33CaloIdLMWSeedLeg" : cms.vstring("hltEle33CaloIdLMWPMS2Filter"),
-                                   "passHltDoubleEle33CaloIdLMWSeedLegL1match" : cms.vstring("hltEle33CaloIdLMWPMS2Filter"),
-                                   "passHltDoubleEle33CaloIdLMWUnsLeg" : cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
-                                   
+options['HLTFILTERSTOMEASURE']  = {"passHltEle32WPTightGsf" :                           cms.vstring("hltEle32WPTightGsfTrackIsoFilter"),
+                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg1" :        cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg1Filter"),
+                                   "passHltEle23Ele12CaloIdLTrackIdLIsoVLLeg2" :        cms.vstring("hltEle23Ele12CaloIdLTrackIdLIsoVLTrackIsoLeg2Filter"),
+                                   "passHltDoubleEle33CaloIdLMWSeedLeg" :               cms.vstring("hltEle33CaloIdLMWPMS2Filter"),
+                                   "passHltDoubleEle33CaloIdLMWUnsLeg" :                cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
                                   } # Some examples, you can add multiple filters (or OR's of filters, note the vstring) here, each of them will be added to the tuple
 
 options['OUTPUT_FILE_NAME']     = "TnPTree_%s.root" % ("mc" if options['isMC'] else "data")
@@ -199,7 +195,7 @@ pileUpSetup.setPileUpConfiguration(process, options)
 ###################################################################
 ## Init and Load
 ###################################################################
-process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(False) )
+process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
 
 process.MessageLogger.cerr.threshold = ''
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
@@ -226,7 +222,6 @@ if options['DoRECO']                          : process.cand_sequence += process
 
 process.tnpPairs_sequence = cms.Sequence()
 if options['DoTrigger'] : process.tnpPairs_sequence *= process.tnpPairingEleHLT
-#if options['DoTrigger'] : process.tnpPairs_sequence *= process.tnpPairingEleHLTL1matched
 if options['DoRECO']    : process.tnpPairs_sequence *= process.tnpPairingEleRec
 if options['DoEleID']   : process.tnpPairs_sequence *= process.tnpPairingEleIDs
 if options['DoPhoID']   : process.tnpPairs_sequence *= process.tnpPairingPhoIDs
@@ -246,23 +241,8 @@ process.tnpEleTrig = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     flags         = cms.PSet(),
                                     )
 
-process.tnpEleTrigL1matched = cms.EDAnalyzer("TagProbeFitTreeProducer",
-                                    tnpVars.CommonStuffForGsfElectronProbe, tnpVars.mcTruthCommonStuff,
-                                    tagProbePairs = cms.InputTag("tnpPairingEleHLTL1matched"),
-                                    probeMatches  = cms.InputTag("genProbeEleL1matched"),
-                                    allProbes     = cms.InputTag("probeEleL1matched"),
-                                    flags = cms.PSet(
-                                        passingLoose94X   = cms.InputTag("probeEleCutBasedLoose94X" ),
-                                        passingMedium94X  = cms.InputTag("probeEleCutBasedMedium94X"),
-                                        passingTight94X   = cms.InputTag("probeEleCutBasedTight94X" ),
-                                        ),
-                                    )
-
-
 for flag in options['HLTFILTERSTOMEASURE']:
   setattr(process.tnpEleTrig.flags, flag, cms.InputTag(flag))
-  setattr(process.tnpEleTrigL1matched.flags, flag, cms.InputTag(flag))
-
 
 
 process.tnpEleReco = cms.EDAnalyzer("TagProbeFitTreeProducer",
@@ -374,7 +354,6 @@ if options['addSUSY'] :
 
 
 tnpSetup.customize( process.tnpEleTrig , options )
-tnpSetup.customize( process.tnpEleTrigL1matched , options )
 tnpSetup.customize( process.tnpEleIDs  , options )
 tnpSetup.customize( process.tnpPhoIDs  , options )
 tnpSetup.customize( process.tnpEleReco , options )
@@ -382,7 +361,6 @@ tnpSetup.customize( process.tnpEleReco , options )
 
 process.tree_sequence = cms.Sequence()
 if (options['DoTrigger']): process.tree_sequence *= process.tnpEleTrig
-#if (options['DoTrigger']): process.tree_sequence *= process.tnpEleTrigL1matched
 if (options['DoRECO'])   : process.tree_sequence *= process.tnpEleReco
 if (options['DoEleID'])  : process.tree_sequence *= process.tnpEleIDs
 if (options['DoPhoID'])  : process.tree_sequence *= process.tnpPhoIDs
