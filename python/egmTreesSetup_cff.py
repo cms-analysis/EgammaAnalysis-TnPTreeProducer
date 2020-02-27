@@ -39,15 +39,32 @@ def setTagsProbes(process, options):
     ##################### PROBE ELECTRONs ###########################
     process.probeEle             = process.tagEle.clone()
     process.probeEle.filterNames = cms.vstring(options['TnPHLTProbeFilters'])
-    process.probeEle.inputs      = cms.InputTag("goodElectrons")  
+    process.probeEle.inputs      = cms.InputTag("goodElectrons")
 
     ################# PROBE ELECTRONs passHLT #######################
-    process.probeElePassHLT              = process.tagEle.clone()
-    process.probeElePassHLT.inputs       = cms.InputTag("probeEle")  
-    process.probeElePassHLT.isAND        = cms.bool(False)
+    process.probeElePassHLT        = process.tagEle.clone()
+    process.probeElePassHLT.inputs = cms.InputTag("probeEle")
+    process.probeElePassHLT.isAND  = cms.bool(False)
+
+    ################# PROBE Matched to L1 #######################
+    if options['ApplyL1Matching']:
+      print "L1 matching will be applied for some HLTFILTERSTOMEASURE"
+      process.goodElectronProbesL1 = cms.EDProducer("PatElectronL1Stage2CandProducer",
+                                                  inputs       = cms.InputTag("goodElectrons"),
+                                                  objects      = cms.InputTag("caloStage2Digis:EGamma"),
+                                                  minET        = cms.double(options['L1Threshold']), #lead eff only
+                                                  dRmatch      = cms.double(0.2), #match L1 online to hlt in EB
+                                                  dRmatchEE    = cms.double(0.2), #match L1 online to hlt in EE
+                                                  isolatedOnly = cms.bool(False)
+      )
+      process.probeEleL1matched               = process.probeEle.clone()
+      process.probeEleL1matched.inputs        = cms.InputTag("goodElectronProbesL1")
+      process.probeElePassHLTL1matched        = process.probeElePassHLT.clone()
+      process.probeElePassHLTL1matched.inputs = cms.InputTag("probeEleL1matched")
 
     for flag, filterNames in options['HLTFILTERSTOMEASURE'].iteritems():
-      setattr(process, flag, process.probeElePassHLT.clone(filterNames=filterNames))
+      if 'L1match' in flag: setattr(process, flag, process.probeElePassHLTL1matched.clone(filterNames=filterNames))
+      else:                 setattr(process, flag, process.probeElePassHLT.clone(filterNames=filterNames))
 
     ###################### PROBE PHOTONs ############################
     process.probePho  = cms.EDProducer( gamHLTProducer,
@@ -171,6 +188,7 @@ def setSequences(process, options):
     process.sc_sequence += process.probeSC
     process.sc_sequence += process.probeSCEle
 
+    # TODO: shorten this code in a similar way as is done for the hltfilters below
     process.ele_sequence = cms.Sequence(
 #        process.probeEleCutBasedVeto      +
 #        process.probeEleCutBasedLoose     +
@@ -254,9 +272,14 @@ def setSequences(process, options):
         process.probeEleMVA94XwpLisoV2        +
         process.probeEleMVA94Xwp90isoV2        +
         process.probeEleMVA94Xwp80isoV2        +
-        process.probeEleMVA94XwpHZZisoV2        +
-        process.probeEle 
+        process.probeEleMVA94XwpHZZisoV2 +
+        process.probeEle
         )
+
+    if options['ApplyL1Matching']:
+      process.ele_sequence += process.goodElectronProbesL1
+      process.ele_sequence += process.probeEleL1matched
+
     if not options['useAOD'] : process.ele_sequence += process.probeEleHLTsafe
     if not options['useAOD'] : process.ele_sequence += process.probeDoubleEleHLTsafe
 
