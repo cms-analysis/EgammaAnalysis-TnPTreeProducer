@@ -48,6 +48,7 @@ def setTagsProbes(process, options):
 
     ################# PROBE Matched to L1 #######################
     if options['ApplyL1Matching']:
+      print "L1 matching will be applied for some HLTFILTERSTOMEASURE"
       process.goodElectronProbesL1 = cms.EDProducer("PatElectronL1Stage2CandProducer",
                                                   inputs       = cms.InputTag("goodElectrons"),
                                                   objects      = cms.InputTag("caloStage2Digis:EGamma"),
@@ -63,7 +64,7 @@ def setTagsProbes(process, options):
 
     for flag, filterNames in options['HLTFILTERSTOMEASURE'].iteritems():
       if 'L1match' in flag: setattr(process, flag, process.probeElePassHLTL1matched.clone(filterNames=filterNames))
-      else:                 setattr(process, flag,             process.probeElePassHLT.clone(filterNames=filterNames))
+      else:                 setattr(process, flag, process.probeElePassHLT.clone(filterNames=filterNames))
 
     ###################### PROBE PHOTONs ############################
     process.probePho  = cms.EDProducer( gamHLTProducer,
