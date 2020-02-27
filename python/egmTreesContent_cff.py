@@ -135,16 +135,22 @@ PhoProbeVariablesToStore = cms.PSet(
     ph_e      = cms.string("energy"),
 
 ## super cluster quantities
-    ph_sc_energy = cms.string("superCluster.energy"),
-    ph_sc_et     = cms.string("superCluster.energy*sin(superCluster.position.theta)"),    
-    ph_sc_eta    = cms.string("-log(tan(superCluster.position.theta/2))"),
-    phsc_abseta = cms.string("abs(-log(tan(superCluster.position.theta/2)))"),
+    ph_sc_energy    = cms.string("superCluster.energy"),
+    ph_sc_rawEnergy = cms.string("superCluster.rawEnergy"),
+    ph_sc_et        = cms.string("superCluster.energy*sin(superCluster.position.theta)"),
+    ph_sc_eta       = cms.string("-log(tan(superCluster.position.theta/2))"),
+    ph_sc_abseta    = cms.string("abs(-log(tan(superCluster.position.theta/2)))"),
+
+## preshower energy plane 1 and 2
+    ph_preshower_energy_plane1 = cms.string("superCluster.preshowerEnergyPlane1"),
+    ph_preshower_energy_plane2 = cms.string("superCluster.preshowerEnergyPlane2"),
 
 
 #id based
     ph_full5x5x_r9   = cms.string("full5x5_r9"),
     ph_r9            = cms.string("r9"),
     ph_sieie         = cms.string("full5x5_sigmaIetaIeta"),
+    ph_s4            = cms.string("full5x5_showerShapeVariables.e2x2/full5x5_showerShapeVariables.e5x5"),
     ph_sieip         = cms.InputTag("photonIDValueMapProducer:phoFull5x5SigmaIEtaIPhi"),
     ph_ESsigma       = cms.InputTag("photonIDValueMapProducer:phoESEffSigmaRR"),
     ph_hoe           = cms.string("hadronicOverEm"),
@@ -156,9 +162,9 @@ PhoProbeVariablesToStore = cms.PSet(
     ph_chWorIso = cms.InputTag("photonIDValueMapProducer:phoWorstChargedIsolation"), 
 
 #pho mva
-
     ph_mva80X       = cms.InputTag("photonMVAValueMapProducer:PhotonMVAEstimatorRun2Spring16NonTrigV1Values"),
     ph_mva94X       = cms.InputTag("photonMVAValueMapProducer:PhotonMVAEstimatorRunIIFall17v1p1Values"),
+    ph_mva94XV2     = cms.InputTag("photonMVAValueMapProducer:PhotonMVAEstimatorRunIIFall17v2Values"),
 )
 
 
