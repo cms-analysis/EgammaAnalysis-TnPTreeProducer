@@ -3,12 +3,11 @@ import os
 
 #
 # Example script to submit TnPTreeProducer to crab
-# Currently implemented for 2018 data/MC (TODO: get all default values for 2016/2017 in here)
 #
-submitVersion = "test"
+submitVersion = "2020-02-28"
 
-defaultArgs   = ['doEleID=True','doPhoID=False','doTrigger=True']
-mainOutputDir = '/store/user/%s/tnpTuples/%s' % (os.environ['USER'], submitVersion)
+defaultArgs   = ['doEleID=True','doPhoID=True','doTrigger=True']
+mainOutputDir = '/store/group/phys_egamma/tnpTuples/%s/%s' % (os.environ['USER'], submitVersion)
 from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = config()
@@ -28,9 +27,15 @@ config.Site.storageSite               = 'T2_CH_CERN'
 
 
 def getLumiMask(era):
-  if   era=='2016': return 'TO_BE_ADDED'
-  elif era=='2017': return 'TO_BE_ADDED'
+  if   era=='2016': return 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
+  elif era=='2017': return 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions17/13TeV/ReReco/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'
   elif era=='2018': return 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions18/13TeV/PromptReco/Cert_314472-325175_13TeV_PromptReco_Collisions18_JSON.txt'
+
+# Logging the current version of TnpTreeProducer here, such that you can find back what the actual code looked like when you were submitting
+os.system('mkdir -p /eos/cms/%s' % mainOutputDir)
+os.system('(git log -n 1;git diff) &> /eos/cms/%s/git.log' % mainOutputDir)
+
+
 
 if __name__ == '__main__':
   from CRABAPI.RawCommand import crabCommand
@@ -45,11 +50,11 @@ if __name__ == '__main__':
     isMC                        = 'SIM' in sample
     config.General.requestName  = requestName
     config.Data.inputDataset    = sample
-    config.Data.outLFNDirBase   = '%s/%s/' % (mainOutputDir, 'mc' if isMC else 'data')
+    config.Data.outLFNDirBase   = '%s/%s/%s/' % (mainOutputDir, era, 'mc' if isMC else 'data')
     config.Data.splitting       = 'FileBased' if isMC else 'LumiBased'
     config.Data.lumiMask        = None if isMC else getLumiMask(era) 
     config.Data.unitsPerJob     = 5 if isMC else 100
-    config.JobType.pyCfgParams  = defaultArgs + ['isMC=True' if isMC else 'isMC=False', 'GT=%' % globalTag, 'era=%s' % era]
+    config.JobType.pyCfgParams  = defaultArgs + ['isMC=True' if isMC else 'isMC=False', 'GT=%s' % globalTag, 'era=%s' % era]
 
     try:
       crabCommand('submit', config = config)
@@ -72,6 +77,8 @@ if __name__ == '__main__':
   globalTag = '94X_mcRun2_asymptotic_v3'
   submit(config, 'DY_NLO', '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/MINIAODSIM', era, globalTag)
   submit(config, 'DY_LO',  '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v2/MINIAODSIM', era, globalTag)
+
+
 
   era       = '2017'
   globalTag = '94X_dataRun2_v11'
