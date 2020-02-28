@@ -140,6 +140,8 @@ PhoProbeVariablesToStore = cms.PSet(
     ph_sc_et        = cms.string("superCluster.energy*sin(superCluster.position.theta)"),
     ph_sc_eta       = cms.string("-log(tan(superCluster.position.theta/2))"),
     ph_sc_abseta    = cms.string("abs(-log(tan(superCluster.position.theta/2)))"),
+    ph_sc_etaWidth  = cms.string("superCluster.etaWidth"),
+    ph_sc_phiWidth  = cms.string("superCluster.phiWidth"),
 
 ## preshower energy plane 1 and 2
     ph_preshower_energy_plane1 = cms.string("superCluster.preshowerEnergyPlane1"),
@@ -199,7 +201,6 @@ TagVariablesToStore = cms.PSet(
     Ele_IsoMVA94X   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV1Values"),
     Ele_noIsoMVA94XV2   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV2Values"), 
     Ele_IsoMVA94XV2   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV2Values"),
-
     )
 
 CommonStuffForGsfElectronProbe = cms.PSet(
