@@ -16,7 +16,7 @@ config.General.requestName            = ''
 config.General.transferLogs           = False
 config.JobType.pluginName             = 'Analysis'
 
-config.JobType.psetName               = '../../python/TnPTreeProducer_cfg.py'
+config.JobType.psetName               = '../python/TnPTreeProducer_cfg.py'
 config.JobType.sendExternalFolder     = True
 
 config.Data.inputDataset              = ''
