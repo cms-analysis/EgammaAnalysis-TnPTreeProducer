@@ -63,48 +63,55 @@ if __name__ == '__main__':
     except ClientException as cle:
       print "Failed submitting task: %s" % (cle)
 
+  from multiprocessing import Process
+  def submitWrapper(*args):
+    p = Process(target=submit, args=args)
+    p.start()
+    p.join()
+
+
   # If you would switch to AOD, don't forget to add 'isAOD=True' to the defaultArgs!
   era       = '2016'
   globalTag = '94X_dataRun2_v10'
-  submit(config, 'Run2016B', '/SingleElectron/Run2016B-07Aug17_ver2-v2/MINIAOD', era, globalTag)
-  submit(config, 'Run2016C', '/SingleElectron/Run2016C-07Aug17-v1/MINIAOD', era, globalTag)
-  submit(config, 'Run2016D', '/SingleElectron/Run2016D-07Aug17-v1/MINIAOD', era, globalTag)
-  submit(config, 'Run2016E', '/SingleElectron/Run2016E-07Aug17-v1/MINIAOD', era, globalTag)
-  submit(config, 'Run2016F', '/SingleElectron/Run2016F-07Aug17-v1/MINIAOD', era, globalTag)
-  submit(config, 'Run2016G', '/SingleElectron/Run2016G-07Aug17-v1/MINIAOD', era, globalTag)
-  submit(config, 'Run2016H', '/SingleElectron/Run2016H-07Aug17v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2016B', '/SingleElectron/Run2016B-07Aug17_ver2-v2/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2016C', '/SingleElectron/Run2016C-07Aug17-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2016D', '/SingleElectron/Run2016D-07Aug17-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2016E', '/SingleElectron/Run2016E-07Aug17-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2016F', '/SingleElectron/Run2016F-07Aug17-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2016G', '/SingleElectron/Run2016G-07Aug17-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2016H', '/SingleElectron/Run2016H-07Aug17v1/MINIAOD', era, globalTag)
 
   globalTag = '94X_mcRun2_asymptotic_v3'
-  submit(config, 'DY_NLO', '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/MINIAODSIM', era, globalTag)
-  submit(config, 'DY_LO',  '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v2/MINIAODSIM', era, globalTag)
+  submitWrapper(config, 'DY_NLO', '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/MINIAODSIM', era, globalTag)
+  submitWrapper(config, 'DY_LO',  '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v2/MINIAODSIM', era, globalTag)
 
 
 
   era       = '2017'
   globalTag = '94X_dataRun2_v11'
-  submit(config, 'Run2017B', '/SingleElectron/Run2017B-31Mar2018-v1/MINIAOD', era, globalTag)
-  submit(config, 'Run2017C', '/SingleElectron/Run2017C-31Mar2018-v1/MINIAOD', era, globalTag)
-  submit(config, 'Run2017D', '/SingleElectron/Run2017D-31Mar2018-v1/MINIAOD', era, globalTag)
-  submit(config, 'Run2017E', '/SingleElectron/Run2017E-31Mar2018-v1/MINIAOD', era, globalTag)
-  submit(config, 'Run2017F', '/SingleElectron/Run2017F-31Mar2018-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2017B', '/SingleElectron/Run2017B-31Mar2018-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2017C', '/SingleElectron/Run2017C-31Mar2018-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2017D', '/SingleElectron/Run2017D-31Mar2018-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2017E', '/SingleElectron/Run2017E-31Mar2018-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2017F', '/SingleElectron/Run2017F-31Mar2018-v1/MINIAOD', era, globalTag)
 
   globalTag = '94X_mc2017_realistic_v17'
-  submit(config, 'DY1_LO',     '/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM', era, globalTag)
-  submit(config, 'DY1_LO_ext', '/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_v3_94X_mc2017_realistic_v14_ext1-v2/MINIAODSIM', era, globalTag)
-  submit(config, 'DY_NLO',     '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM',  era, globalTag)
-  submit(config, 'DY_NLO_ext', '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/MINIAODSIM', era, globalTag)
+  submitWrapper(config, 'DY1_LO',     '/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM', era, globalTag)
+  submitWrapper(config, 'DY1_LO_ext', '/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_v3_94X_mc2017_realistic_v14_ext1-v2/MINIAODSIM', era, globalTag)
+  submitWrapper(config, 'DY_NLO',     '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM',  era, globalTag)
+  submitWrapper(config, 'DY_NLO_ext', '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/MINIAODSIM', era, globalTag)
  
 
 
   era       = '2018'
   globalTag = '102X_dataRun2_v12'
-  submit(config, 'Run2018A', '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', era, globalTag)
-  submit(config, 'Run2018B', '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', era, globalTag)
-  submit(config, 'Run2018C', '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2018A', '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2018B', '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2018C', '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', era, globalTag)
   globalTag = '102X_dataRun2_Prompt_v15'
-  submit(config, 'Run2018D', '/EGamma/Run2018D-PromptReco-v2/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2018D', '/EGamma/Run2018D-PromptReco-v2/MINIAOD', era, globalTag)
 
   globalTag = '102X_upgrade2018_realistic_v20'
-  submit(config, 'DY',     '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era, globalTag)
-  submit(config, 'DY_pow', '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era, globalTag) 
+  submitWrapper(config, 'DY',     '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era, globalTag)
+  submitWrapper(config, 'DY_pow', '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era, globalTag) 
 

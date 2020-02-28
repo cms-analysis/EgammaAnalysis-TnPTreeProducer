@@ -16,7 +16,7 @@ config.General.requestName            = ''
 config.General.transferLogs           = False
 config.JobType.pluginName             = 'Analysis'
 
-config.JobType.psetName               = '../../python/TnPTreeProducer_cfg.py'
+config.JobType.psetName               = '../python/TnPTreeProducer_cfg.py'
 config.JobType.sendExternalFolder     = True
 
 config.Data.inputDataset              = ''
@@ -89,8 +89,8 @@ if __name__ == '__main__':
     #submit(config, '/EGamma/Run2018A-17Sep2018/MINIAOD', leg1, leg2, json)
   #submit(config, '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 22, 0)
   #submit(config, '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 22, 0)
-  submit(config, '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 25, 0)
-  submit(config, '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 25, 0)
+  submitWrapper(config, '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 25, 0)
+  submitWrapper(config, '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', 25, 0)
 
 
 

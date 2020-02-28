@@ -16,7 +16,7 @@ config.General.requestName            = ''
 config.General.transferLogs           = False
 config.JobType.pluginName             = 'Analysis'
 
-config.JobType.psetName               = '../../python/TnPTreeProducer_cfg.py'
+config.JobType.psetName               = '../python/TnPTreeProducer_cfg.py'
 config.JobType.sendExternalFolder     = True
 
 config.Data.inputDataset              = ''
@@ -112,13 +112,10 @@ if __name__ == '__main__':
 
   for leg1, leg2, json in getSeedsForDoubleEle('2018'):
     print 'Submitting for (%s, %s)' % (leg1, leg2)
-    #print LumiList(filename = json)
-    # Crab fails on this on second iteration, of course with only a very cryptic error message
-    # Not sure how to workaround this
-    submit(config, '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', leg1, leg2, json)
-    submit(config, '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', leg1, leg2, json)
-    submit(config, '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', leg1, leg2, json)
-    submit(config, '/EGamma/Run2018D-PromptReco-v2/MINIAOD', leg1, leg2, json)
+    submitWrapper(config, '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', leg1, leg2, json)
+    submitWrapper(config, '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', leg1, leg2, json)
+    submitWrapper(config, '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', leg1, leg2, json)
+    submitWrapper(config, '/EGamma/Run2018D-PromptReco-v2/MINIAOD', leg1, leg2, json)
 
 
 
