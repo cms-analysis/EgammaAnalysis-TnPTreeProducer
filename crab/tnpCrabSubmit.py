@@ -12,19 +12,19 @@ from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = config()
 
-config.General.requestName            = ''
-config.General.transferLogs           = False
-config.JobType.pluginName             = 'Analysis'
+config.General.requestName             = ''
+config.General.transferLogs            = False
+config.JobType.pluginName              = 'Analysis'
 
-config.JobType.psetName               = '../python/TnPTreeProducer_cfg.py'
-config.JobType.sendExternalFolder     = True
+config.JobType.psetName                = '../python/TnPTreeProducer_cfg.py'
+config.JobType.sendExternalFolder      = True
+config.JobType.allowUndistributedCMSSW = True
 
-config.Data.inputDataset              = ''
-config.Data.inputDBS                  = 'global'
-config.Data.publication               = False
-config.Data.allowNonValidInputDataset = True
-config.Site.storageSite               = 'T2_CH_CERN'
-
+config.Data.inputDataset               = ''
+config.Data.inputDBS                   = 'global'
+config.Data.publication                = False
+config.Data.allowNonValidInputDataset  = True
+config.Site.storageSite                = 'T2_CH_CERN'
 
 def getLumiMask(era):
   if   era=='2016': return 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
