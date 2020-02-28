@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
   def submit(config, requestName, sample, era, globalTag):
     isMC                        = 'SIM' in sample
-    config.General.requestName  = requestName
+    config.General.requestName  = '%s_%s' % (era, requestName)
     config.Data.inputDataset    = sample
     config.Data.outLFNDirBase   = '%s/%s/%s/' % (mainOutputDir, era, 'mc' if isMC else 'data')
     config.Data.splitting       = 'FileBased' if isMC else 'LumiBased'
