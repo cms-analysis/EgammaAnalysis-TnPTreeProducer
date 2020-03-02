@@ -17,6 +17,14 @@ varOptions.register(
     )
 
 varOptions.register(
+    "is80X", False,
+    VarParsing.multiplicity.singleton,
+    VarParsing.varType.bool,
+    "Running on old 80X files"
+    )
+
+
+varOptions.register(
     "doEleID", True,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.bool,
@@ -104,6 +112,7 @@ varOptions.parseArguments()
 
 options = dict()
 options['useAOD']               = varOptions.isAOD
+options['use80X']               = varOptions.is80X
 
 options['HLTProcessName']       = varOptions.HLTname
 options['era']                  = varOptions.era

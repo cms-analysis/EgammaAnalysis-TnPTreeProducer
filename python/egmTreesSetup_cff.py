@@ -10,9 +10,10 @@ def setTagsProbes(process, options):
 
     eleHLTProducer = 'PatElectronTriggerCandProducer'
     gamHLTProducer = 'PatPhotonTriggerCandProducer'
-    hltObjects     = 'selectedPatTrigger' if options['era'] == '2016' else 'slimmedPatTrigger'
+    hltObjects     = 'selectedPatTrigger' if options['use80X'] else 'slimmedPatTrigger'
     genParticles   = 'prunedGenParticles'
     SCEleMatcher   = 'PatElectronMatchedCandidateProducer' 
+
 
     if (options['useAOD']):
         eleHLTProducer = 'GsfElectronTriggerCandProducer'

@@ -46,7 +46,7 @@ if __name__ == '__main__':
   # That's why we need to set this parameter (here or above in the configuration file, it does not matter, we will not overwrite it).
   config.General.workArea = 'crab_%s' % submitVersion
 
-  def submit(config, requestName, sample, era, globalTag):
+  def submit(config, requestName, sample, era, globalTag, extraParam=[]):
     isMC                        = 'SIM' in sample
     config.General.requestName  = '%s_%s' % (era, requestName)
     config.Data.inputDataset    = sample
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     config.Data.splitting       = 'FileBased' if isMC else 'LumiBased'
     config.Data.lumiMask        = None if isMC else getLumiMask(era) 
     config.Data.unitsPerJob     = 5 if isMC else 100
-    config.JobType.pyCfgParams  = defaultArgs + ['isMC=True' if isMC else 'isMC=False', 'GT=%s' % globalTag, 'era=%s' % era]
+    config.JobType.pyCfgParams  = defaultArgs + ['isMC=True' if isMC else 'isMC=False', 'GT=%s' % globalTag, 'era=%s' % era] + extraParam
 
     try:
       crabCommand('submit', config = config)
@@ -73,13 +73,13 @@ if __name__ == '__main__':
   # If you would switch to AOD, don't forget to add 'isAOD=True' to the defaultArgs!
   era       = '2016'
   globalTag = '94X_dataRun2_v10'
-  submitWrapper(config, 'Run2016B', '/SingleElectron/Run2016B-07Aug17_ver2-v2/MINIAOD', era, globalTag)
-  submitWrapper(config, 'Run2016C', '/SingleElectron/Run2016C-07Aug17-v1/MINIAOD', era, globalTag)
-  submitWrapper(config, 'Run2016D', '/SingleElectron/Run2016D-07Aug17-v1/MINIAOD', era, globalTag)
-  submitWrapper(config, 'Run2016E', '/SingleElectron/Run2016E-07Aug17-v1/MINIAOD', era, globalTag)
-  submitWrapper(config, 'Run2016F', '/SingleElectron/Run2016F-07Aug17-v1/MINIAOD', era, globalTag)
-  submitWrapper(config, 'Run2016G', '/SingleElectron/Run2016G-07Aug17-v1/MINIAOD', era, globalTag)
-  submitWrapper(config, 'Run2016H', '/SingleElectron/Run2016H-07Aug17v1/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2016B', '/SingleElectron/Run2016B-07Aug17_ver2-v2/MINIAOD', era, globalTag, ['is80X=True'])
+  submitWrapper(config, 'Run2016C', '/SingleElectron/Run2016C-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
+  submitWrapper(config, 'Run2016D', '/SingleElectron/Run2016D-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
+  submitWrapper(config, 'Run2016E', '/SingleElectron/Run2016E-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
+  submitWrapper(config, 'Run2016F', '/SingleElectron/Run2016F-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
+  submitWrapper(config, 'Run2016G', '/SingleElectron/Run2016G-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
+  submitWrapper(config, 'Run2016H', '/SingleElectron/Run2016H-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
 
   globalTag = '94X_mcRun2_asymptotic_v3'
   submitWrapper(config, 'DY_NLO', '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/MINIAODSIM', era, globalTag)
@@ -108,8 +108,7 @@ if __name__ == '__main__':
   submitWrapper(config, 'Run2018A', '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', era, globalTag)
   submitWrapper(config, 'Run2018B', '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', era, globalTag)
   submitWrapper(config, 'Run2018C', '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', era, globalTag)
-  globalTag = '102X_dataRun2_Prompt_v15'
-  submitWrapper(config, 'Run2018D', '/EGamma/Run2018D-PromptReco-v2/MINIAOD', era, globalTag)
+  submitWrapper(config, 'Run2018D', '/EGamma/Run2018D-22Jan2019-v2/MINIAOD', era, globalTag)
 
   globalTag = '102X_upgrade2018_realistic_v20'
   submitWrapper(config, 'DY',     '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era, globalTag)
