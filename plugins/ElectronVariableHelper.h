@@ -73,6 +73,7 @@ ElectronVariableHelper<T>::ElectronVariableHelper(const edm::ParameterSet & iCon
   produces<edm::ValueMap<float> >("dxy");
   produces<edm::ValueMap<float> >("sip");
   produces<edm::ValueMap<float> >("missinghits");
+  produces<edm::ValueMap<float> >("gsfhits");
   produces<edm::ValueMap<float> >("l1e");
   produces<edm::ValueMap<float> >("l1et");
   produces<edm::ValueMap<float> >("l1eta");
@@ -250,6 +251,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
   store("dxy", dxyVals, probes, iEvent);
   store("sip", sipVals, probes, iEvent);
   store("missinghits", mhVals, probes, iEvent);
+  store("gsfhits", gsfhVals, probes, iEvent);
   store("l1e", l1EVals, probes, iEvent);
   store("l1et", l1EtVals, probes, iEvent);
   store("l1eta", l1EtaVals, probes, iEvent);
