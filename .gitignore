@@ -1,3 +1,5 @@
 *.root
 *.pyc
 __init__.py
+crab/prescaleInformation
+crab/crab*
