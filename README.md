@@ -1,7 +1,17 @@
 # EgammaAnalysis-TnPTreeProducer
 TnP package for EGM
 
-## For regular users
+If you do not need changes to the default code, you can simply use existing flat tag and probe trees, avalaible for both 2016, 2017 and 2018:
+```
+ls /eos/cms/store/group/phys_egamma/tnpTuples/tomc/2020-02-28/*/merged/ 
+``` 
+These inlcude the tnpEleTrig, tnpEleIDs and tnpPhoIDs trees.
+In case you need L1 matching for the measurement of doubleEle HLT triggers, you can use the tnpEleTrig trees found in:
+```
+ls /eos/cms/store/group/phys_egamma/tnpTuples/tomc/2020-03-03/*/merged/*L1matched.root 
+```
+
+## To produce new tuples
 ### 1. Install (CMSSW\_10\_2\_10 or higher, works for 2016, 2017 and 2018 data/MC)
 
 ```
@@ -18,14 +28,14 @@ You can find the cmsRun executable in EgammaAnalysis/TnPTreeProducer/python:
 cmsRun TnPTreeProducer_cfg.py isMC=True doTrigger=True era=2018
 ```
 Check TnPTreeProducer\_cfg.py for all available options. Update the code if you need to implement custom-made recipes.
-Test files can be defined in python/etc/tnpInputTestFiles_cff.py
 
+Test files can be defined in python/etc/tnpInputTestFiles_cff.py
 If you update the code, you can use the ./runTests.py script in the test directory to check for new differences in the 2016, 2017 and 2018 test files.
 
 ### 3. Submit jobs
 Check in EgammaAnalysis/TnPTreeProducer//crab the tnpCrabSubmit.py script to submit your jobs using crab
 
-## For developpers
+## To make a pull request to this repository
 1. On github fork the package https://github.com/cms-analysis/EgammaAnalysis-TnPTreeProducer 
 2. Add the remote 
 ```

@@ -1,9 +1,11 @@
 #!/bin/env python
-import os, glob, ROOT
+import os, glob, ROOT, subprocess
 
 submitVersion = "2020-03-03"
 mainOutputDir = '/eos/cms/store/group/phys_egamma/tnpTuples/%s/%s' % (os.environ['USER'], submitVersion)
 
+def system(command):
+  return subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT)
 
 # Check if valid ROOT file exists
 def isValidRootFile(fname):
@@ -21,6 +23,7 @@ for eraDir in glob.glob(os.path.join(mainOutputDir, '20*')):
   except: pass
   print era
   for crabDir in glob.glob(os.path.join(mainOutputDir, era, '*/*/*')):
+    if not '2018D' in crabDir: continue
     targetFile   = os.path.join(eraDir, 'merged', crabDir.split(era + '_')[-1] + '.root')
     filesToMerge = glob.glob(os.path.join(crabDir, '*/*/*.root'))
 
@@ -28,4 +31,4 @@ for eraDir in glob.glob(os.path.join(mainOutputDir, '20*')):
       if isValidRootFile(targetFile): continue
       else:                           os.system('rm %s' % targetFile)
 
-    os.system('hadd %s %s' % (targetFile, ' '.join(filesToMerge))) 
+    print system('hadd %s %s' % (targetFile, ' '.join(filesToMerge)))
