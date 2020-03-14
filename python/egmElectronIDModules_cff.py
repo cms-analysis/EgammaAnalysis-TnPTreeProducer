@@ -41,8 +41,9 @@ def setIDs(process, options):
         setupAllVIDIdsInModule(process, idmod, setupVIDElectronSelection)
 
     process.egmGsfElectronIDs.physicsObjectSrc     = cms.InputTag(options['ELECTRON_COLL'])
-    process.electronMVAValueMapProducer.srcMiniAOD = cms.InputTag(options['ELECTRON_COLL'])
+    process.electronMVAValueMapProducer.src        = cms.InputTag(options['ELECTRON_COLL'])
     process.electronRegressionValueMapProducer.srcMiniAOD = cms.InputTag(options['ELECTRON_COLL'])
+
 
     process.probeEleCutBasedVeto = cms.EDProducer(eleProducer,
                                                       input     = cms.InputTag("goodElectrons"),
@@ -295,7 +296,6 @@ def setIDs(process, options):
                                                      selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight"),
                                                      id_cut    = cms.bool(True)
                                                 )    
-    process.tagEleCutBasedTight.selection = cms.InputTag("egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-tight")
 
     if options['addSUSY'] :
 
