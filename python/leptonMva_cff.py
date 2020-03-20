@@ -77,7 +77,7 @@ def leptonMvaSequence(process, options, tnpVars):
       jetNDauChargedMVASel = cms.InputTag('ptRatioRelForEle:jetNDauChargedMVASel'),
       closestJet           = cms.InputTag('ptRatioRelForEle:jetForLepJetVar'),
       mvas                 = cms.InputTag('electronMVAValueMapProducer:ElectronMVAEstimator%sValues' % ('Run2Spring16GeneralPurposeV1' if options['era']=='2016' else 'Run2Fall17NoIsoV1')),
-      debug                = cms.bool(True), # set to True if you want to sync with your analysis
+      debug                = cms.bool(False), # set to True if you want to sync with your analysis
     )
 
     leptonMva_sequence += cms.Sequence(
