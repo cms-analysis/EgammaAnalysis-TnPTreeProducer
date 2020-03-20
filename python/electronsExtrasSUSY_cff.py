@@ -21,6 +21,7 @@ workingPoints = ["ConvVeto", "MVAVLooseFO", "MVAVLoose", "Mini", "Mini2", "Mini4
 
 
 def addSusyIDs(process, options):
+    print 'Warning: this option might be broken, and some of these variables are already implemented in the default trees'
 
     # For some reason importing the NanoAOD configuration breakes VID, so we need to make 
     # sure these lines are called before calling setIDs() in the egmTreesSetup
@@ -29,7 +30,7 @@ def addSusyIDs(process, options):
     from PhysicsTools.NanoAOD.electrons_cff import slimmedElectronsWithUserData
     from PhysicsTools.NanoAOD.electrons_cff import electronMVATTH
 
-    doJEC = True
+    doJEC = False # used to be true, but does not work
     if (doJEC):
         from PhysicsTools.NanoAOD.jets_cff import updatedJets
         from PhysicsTools.NanoAOD.jets_cff import jetCorrFactors # is this needed?
@@ -107,8 +108,8 @@ def addSusyIDs(process, options):
     if (doJEC) :
         process.susy_sequence += process.jetCorrFactors
         process.susy_sequence += process.updatedJets
-        process.susy_sequence += process.ptRatioRelForEleUncorr
 
+    process.susy_sequence += process.ptRatioRelForEleUncorr
     process.susy_sequence += process.isoForEle
     process.susy_sequence += process.ptRatioRelForEle
     process.susy_sequence += process.slimmedElectronsWithUserData

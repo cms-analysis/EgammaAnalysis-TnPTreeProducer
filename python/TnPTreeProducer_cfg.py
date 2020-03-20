@@ -107,7 +107,7 @@ varOptions.parseArguments()
 
 
 ###################################################################
-## Define TnP inputs 
+## Define TnP inputs
 ###################################################################
 
 options = dict()
@@ -189,37 +189,57 @@ options['L1Threshold']          = varOptions.L1Threshold
 ## Define input files for test local run
 ###################################################################
 if options['era'] == '2016':
-  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_23Sep2016 as inputs
-  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_23Sep2016 as inputs
+  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_2016 as inputs
+  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_2016 as inputs
 if options['era'] == '2017':
-  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_Preliminary2017 as inputs
-  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_Preliminary2017 as inputs
+  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_2017 as inputs
+  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_2017 as inputs
 if options['era'] == '2018':
-  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_Preliminary2018 as inputs
-  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_Preliminary2018 as inputs
+  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_2018 as inputs
+  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_2018 as inputs
 
 options['INPUT_FILE_NAME'] = inputs['mc' if varOptions.isMC else 'data']
+#options['INPUT_FILE_NAME'] = cms.untracked.vstring('file:pickevents.root')
 
 
 ###################################################################
-## import TnP tree maker pythons and configure for AODs
+## Standard imports, GT and pile-up
 ###################################################################
 process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff")
 process.load("Configuration.Geometry.GeometryRecoDB_cff")
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
 process.load("Configuration.StandardSequences.GeometryRecoDB_cff")
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
-process.load('Configuration.StandardSequences.Services_cff') 
+process.load('Configuration.StandardSequences.Services_cff')
 process.load('FWCore.MessageService.MessageLogger_cfi')
 
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, options['GLOBALTAG'] , '')
 
+import EgammaAnalysis.TnPTreeProducer.pileupConfiguration_cff as pileUpSetup
+pileUpSetup.setPileUpConfiguration(process, options)
+
+
+###################################################################
+## Import tnpVars to store in tree and configure for AOD
+###################################################################
+import EgammaAnalysis.TnPTreeProducer.egmTreesContent_cff as tnpVars
+if options['useAOD']: tnpVars.setupTnPVariablesForAOD()
+tnpVars.mcTruthCommonStuff.isMC = cms.bool(varOptions.isMC)
+
+###################################################################
+## Import Tnp setup
+###################################################################
 import EgammaAnalysis.TnPTreeProducer.egmTreesSetup_cff as tnpSetup
 tnpSetup.setupTreeMaker(process,options)
 
-import EgammaAnalysis.TnPTreeProducer.pileupConfiguration_cff as pileUpSetup
-pileUpSetup.setPileUpConfiguration(process, options)
+###################################################################
+# If miniAOD, adding some leptonMva versions, as well
+# as some advanced input variables like miniIso
+###################################################################
+if not options['useAOD']:
+  from EgammaAnalysis.TnPTreeProducer.leptonMva_cff import leptonMvaSequence
+  process.init_sequence += leptonMvaSequence(process, options, tnpVars)
 
 ###################################################################
 ## Init and Load
@@ -238,7 +258,7 @@ if options['DoRECO']    : print "  -- Producing RECO SF tree        -- "
 if options['DoEleID']   : print "  -- Producing electron SF tree    -- "
 if options['DoPhoID']   : print "  -- Producing photon SF tree      -- "
 
-    
+
 ###################################################################
 ## Define sequences and TnP pairs
 ###################################################################
@@ -258,10 +278,6 @@ if options['DoPhoID']   : process.tnpPairs_sequence *= process.tnpPairingPhoIDs
 ##########################################################################
 ## TnP Trees
 ##########################################################################
-import EgammaAnalysis.TnPTreeProducer.egmTreesContent_cff as tnpVars
-if options['useAOD']: tnpVars.setupTnPVariablesForAOD()
-tnpVars.mcTruthCommonStuff.isMC = cms.bool(varOptions.isMC)
-
 process.tnpEleTrig = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     tnpVars.CommonStuffForGsfElectronProbe, tnpVars.mcTruthCommonStuff,
                                     tagProbePairs = cms.InputTag("tnpPairingEleHLT"),
@@ -275,7 +291,7 @@ for flag in options['HLTFILTERSTOMEASURE']:
 
 
 process.tnpEleReco = cms.EDAnalyzer("TagProbeFitTreeProducer",
-                                    tnpVars.mcTruthCommonStuff, tnpVars.CommonStuffForSuperClusterProbe, 
+                                    tnpVars.mcTruthCommonStuff, tnpVars.CommonStuffForSuperClusterProbe,
                                     tagProbePairs = cms.InputTag("tnpPairingEleRec"),
                                     probeMatches  = cms.InputTag("genProbeSC"),
                                     allProbes     = cms.InputTag("probeSC"),
@@ -329,7 +345,7 @@ storeEleId('MVA94XwpHZZisoV2')
 
 process.tnpPhoIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     tnpVars.mcTruthCommonStuff, tnpVars.CommonStuffForPhotonProbe,
-                                    tagProbePairs = cms.InputTag("tnpPairingPhoIDs"),                                                                                         
+                                    tagProbePairs = cms.InputTag("tnpPairingPhoIDs"),
                                     probeMatches  = cms.InputTag("genProbePho"),
                                     allProbes     = cms.InputTag("probePho"),
                                     flags         = cms.PSet(),
@@ -367,14 +383,14 @@ if not options['useAOD'] :
     setattr( process.tnpEleTrig.flags, 'passingDoubleHLTsafe', cms.InputTag("probeDoubleEleHLTsafe" ) )
     setattr( process.tnpEleIDs.flags , 'passingDoubleHLTsafe', cms.InputTag("probeDoubleEleHLTsafe" ) )
 
-# Add SUSY variables to the "variables", add SUSY IDs to the "flags"
+# Add SUSY variables to the "variables", add SUSY IDs to the "flags" [kind of deprecated, better ways to add these]
 if options['addSUSY'] :
     setattr( process.tnpEleIDs.variables , 'el_miniIsoChg', cms.string("userFloat('miniIsoChg')") )
     setattr( process.tnpEleIDs.variables , 'el_miniIsoAll', cms.string("userFloat('miniIsoAll')") )
     setattr( process.tnpEleIDs.variables , 'el_ptRatio', cms.string("userFloat('ptRatio')") )
     setattr( process.tnpEleIDs.variables , 'el_ptRatioUncorr', cms.string("userFloat('ptRatioUncorr')") )
     setattr( process.tnpEleIDs.variables , 'el_ptRel', cms.string("userFloat('ptRel')") )
-    setattr( process.tnpEleIDs.variables , 'el_MVATTH', cms.InputTag("susyEleVarHelper:electronMVATTH") )   
+    setattr( process.tnpEleIDs.variables , 'el_MVATTH', cms.InputTag("susyEleVarHelper:electronMVATTH") )
     setattr( process.tnpEleIDs.variables , 'el_sip3d', cms.InputTag("susyEleVarHelper:sip3d") )
     def addFlag(name):
         setattr( process.tnpEleIDs.flags, 'passing'+name, cms.InputTag('probes'+name ) )
@@ -394,7 +410,6 @@ if (options['DoRECO'])   : process.tree_sequence *= process.tnpEleReco
 if (options['DoEleID'])  : process.tree_sequence *= process.tnpEleIDs
 if (options['DoPhoID'])  : process.tree_sequence *= process.tnpPhoIDs
 
-
 ##########################################################################
 ## PATHS
 ##########################################################################
@@ -410,10 +425,10 @@ process.evtCounter = cms.EDAnalyzer('SimpleEventCounter')
 process.p = cms.Path(
         process.evtCounter        +
         process.hltFilter         +
-        process.cand_sequence     + 
+        process.cand_sequence     +
         process.tnpPairs_sequence +
         process.mc_sequence       +
-        process.tree_sequence 
+        process.tree_sequence
         )
 
 process.TFileService = cms.Service(

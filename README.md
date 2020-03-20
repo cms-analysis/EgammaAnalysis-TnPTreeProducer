@@ -27,9 +27,9 @@ You can find the cmsRun executable in EgammaAnalysis/TnPTreeProducer/python:
 ```
 cmsRun TnPTreeProducer_cfg.py isMC=True doTrigger=True era=2018
 ```
-Check TnPTreeProducer\_cfg.py for all available options. Update the code if you need to implement custom-made recipes.
+Check [TnPTreeProducer\_cfg.py](python/TnPTreeProducer_cfg.py) for all available options. Update the code if you need to implement custom-made recipes.
 
-Test files can be defined in python/etc/tnpInputTestFiles_cff.py
+Test files can be defined in [python/etc/tnpInputTestFiles\_cff.py](python/etc/tnpInputTestFiles_cff.py)
 If you update the code, you can use the ./runTests.py script in the test directory to check for new differences in the 2016, 2017 and 2018 test files.
 
 ### 3. Submit jobs
@@ -45,3 +45,12 @@ git remote add username-push git@github.com:username/EgammaAnalysis-TnPTreeProdu
 ```
 git push username-push branchname
 ```
+
+# Note about leptonMva
+Some leptonMva variables are now included in the TnPTreeProducer trees. Unfortunately, it is very easy to get out of sync for these variables:
+even a new global tag could slightly alter the input variables, given some of them are dependent on the jet energy corrections or b-taggers which
+were in use when training these leptonMva's. Additionaly, some leptonMva's use (extremely) old effective areas for miniIso or relIso variables.
+We therefore strongly recommend leptonMva analyzers to sync with their own analysis code before producing tuples.
+The sync can easily be done by setting the debug flag to True in [python/leptonMva\_cff.py](python/leptonMva_cff.py). The leptonMva xml files
+are found in [data](data), and implementation of a new leptonMvaType can happen in the produce function in
+[plugins/LeptonMvaProducer.cc](plugins/LeptonMvaProducer.cc).

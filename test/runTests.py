@@ -12,9 +12,8 @@ def system(command):
 # Simply run a test for both data/MC for 2016, 2017 and 2018
 #
 for era in ['2016', '2017', '2018']:
-  optional = 'is80X=True' if era=='2016' else '' # current implemented test files are both 80X for 2016
-  system('source /cvmfs/cms.cern.ch/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py era=%s maxEvents=1000 L1Threshold=5 %s' % (era, optional))
-  system('source /cvmfs/cms.cern.ch/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py era=%s maxEvents=1000 isMC=True L1Threshold=5 %s' % (era, optional))
+  system('source /cvmfs/cms.cern.ch/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py era=%s maxEvents=1000 L1Threshold=5' % era)
+  system('source /cvmfs/cms.cern.ch/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py era=%s maxEvents=1000 isMC=True L1Threshold=5' % era)
 
   for dataset in ['data', 'mc']:
     shutil.move('TnPTree_%s.root' % dataset, 'TnPTree_%s_%s.root' % (dataset, era))

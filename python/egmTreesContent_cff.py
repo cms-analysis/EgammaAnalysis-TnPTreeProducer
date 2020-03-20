@@ -98,7 +98,7 @@ EleProbeVariablesToStore = cms.PSet(
 
     #added for VHbbEIso
     el_sumPUPt       = cms.string("pfIsolationVariables().sumPUPt"),
-    el_reliso03      = cms.string("(pfIsolationVariables().sumChargedHadronPt + max(pfIsolationVariables().sumNeutralHadronEt + pfIsolationVariables().sumPhotonEt - 0.5 * pfIsolationVariables().sumPUPt,0.0)) / pt() "),
+    el_relIso03_dB   = cms.string("(pfIsolationVariables().sumChargedHadronPt + max(pfIsolationVariables().sumNeutralHadronEt + pfIsolationVariables().sumPhotonEt - 0.5 * pfIsolationVariables().sumPUPt,0.0)) / pt() "),
 
     # tracker Variabels
     el_tk_pt        = cms.string("gsfTrack().ptMode"),
