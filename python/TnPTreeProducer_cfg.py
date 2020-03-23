@@ -263,7 +263,6 @@ if options['DoPhoID']   : print "  -- Producing photon SF tree      -- "
 ## Define sequences and TnP pairs
 ###################################################################
 process.cand_sequence = cms.Sequence( process.init_sequence + process.tag_sequence )
-if options['addSUSY']                         : process.cand_sequence += process.susy_ele_sequence
 if options['DoEleID'] or options['DoTrigger'] : process.cand_sequence += process.ele_sequence
 if options['DoPhoID']                         : process.cand_sequence += process.pho_sequence
 if options['DoTrigger']                       : process.cand_sequence += process.hlt_sequence
@@ -312,35 +311,12 @@ process.tnpEleIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     )
 
 # ID's to store in the electron ID and trigger tree
-def storeEleId(id):
-  setattr(process.tnpEleTrig.flags, 'passing' + id, cms.InputTag('probeEle' + id))
-  setattr(process.tnpEleIDs.flags,  'passing' + id, cms.InputTag('probeEle' + id))
+# Simply look which probeEleX modules were made in egmElectronIDModules_cff.py and convert them into a passingX boolean in the tree 
+for probeEleModule in str(process.ele_sequence).split('+'):
+  if not 'probeEle' in probeEleModule or probeEleModule in ['probeEle', 'probeEleL1matched']: continue
+  setattr(process.tnpEleTrig.flags, probeEleModule.replace('probeEle', 'passing'), cms.InputTag(probeEleModule))
+  setattr(process.tnpEleIDs.flags,  probeEleModule.replace('probeEle', 'passing'), cms.InputTag(probeEleModule))
 
-cutBasedIds = ['80X',
-               '94X',
-               '94XV2',
-               '94XV2MinPtCut',
-               '94XV2GsfEleSCEtaMultiRangeCut',
-               '94XV2GsfEleDEtaInSeedCut',
-               '94XV2GsfEleDPhiInCut',
-               '94XV2GsfEleFull5x5SigmaIEtaIEtaCut',
-               '94XV2GsfEleHadronicOverEMEnergyScaledCut',
-               '94XV2GsfEleEInverseMinusPInverseCut',
-               '94XV2GsfEleRelPFIsoScaledCut',
-               '94XV2GsfEleConversionVetoCut',
-               '94XV2GsfEleMissingHitsCut']
-
-for cutBasedId in cutBasedIds:
-  for wp in ['Veto', 'Loose', 'Medium', 'Tight']:
-    storeEleId('CutBased%s%s' % (wp, cutBasedId))
-
-for wp in ['wpLnoiso', 'wp80noiso', 'wp90noiso', 'wpLiso', 'wp80iso', 'wp90iso']:
-  storeEleId('MVA94X%s' % wp)
-  storeEleId('MVA94X%sV2' % wp)
-
-storeEleId('MVA80Xwp80')
-storeEleId('MVA80Xwp90')
-storeEleId('MVA94XwpHZZisoV2')
 
 
 process.tnpPhoIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
@@ -351,37 +327,12 @@ process.tnpPhoIDs = cms.EDAnalyzer("TagProbeFitTreeProducer",
                                     flags         = cms.PSet(),
                                     )
 
-
 # ID's to store in the photon ID tree
-def storePhoId(id):
-  setattr(process.tnpPhoIDs.flags,  'passing' + id, cms.InputTag('probePho' + id))
+# Simply look which probePhoX modules were made in egmPhotonIDModules_cff.py and convert them into a passingX boolean in the tree 
+for probePhoModule in str(process.pho_sequence).split('+'):
+  if not 'probePho' in probePhoModule or probePhoModule=='probePho': continue
+  setattr(process.tnpPhoIDs.flags, probePhoModule.replace('probePho', 'passing'), cms.InputTag(probePhoModule))
 
-cutBasedIds = ['80X',
-               '94X',
-               '100XV2',
-               '100XV2MinPtCut',
-               '100XV2PhoSCEtaMultiRangeCut',
-               '100XV2PhoSingleTowerHadOverEmCut',
-               '100XV2PhoFull5x5SigmaIEtaIEtaCut',
-               '100XV2PhoAnyPFIsoWithEACut',
-               '100XV2PhoAnyPFIsoWithEAAndQuadScalingCut',
-               '100XV2PhoAnyPFIsoWithEACut1']
-
-for cutBasedId in cutBasedIds:
-  for wp in ['Loose', 'Medium', 'Tight']:
-    storePhoId('CutBased%s%s' % (wp, cutBasedId))
-
-for mvaId in ['80X', '94X', '94XV2']:
-  for wp in ['wp80', 'wp90']:
-    storePhoId('MVA%s%s' % (mvaId, wp))
-
-
-## add pass HLT-safe flag, available for miniAOD only [note: HLT-safe flat is not up to date anymore since early 2016!]
-if not options['useAOD'] :
-    setattr( process.tnpEleTrig.flags, 'passingHLTsafe', cms.InputTag("probeEleHLTsafe" ) )
-    setattr( process.tnpEleIDs.flags , 'passingHLTsafe', cms.InputTag("probeEleHLTsafe" ) )
-    setattr( process.tnpEleTrig.flags, 'passingDoubleHLTsafe', cms.InputTag("probeDoubleEleHLTsafe" ) )
-    setattr( process.tnpEleIDs.flags , 'passingDoubleHLTsafe', cms.InputTag("probeDoubleEleHLTsafe" ) )
 
 # Add SUSY variables to the "variables", add SUSY IDs to the "flags" [kind of deprecated, better ways to add these]
 if options['addSUSY'] :
@@ -392,10 +343,6 @@ if options['addSUSY'] :
     setattr( process.tnpEleIDs.variables , 'el_ptRel', cms.string("userFloat('ptRel')") )
     setattr( process.tnpEleIDs.variables , 'el_MVATTH', cms.InputTag("susyEleVarHelper:electronMVATTH") )
     setattr( process.tnpEleIDs.variables , 'el_sip3d', cms.InputTag("susyEleVarHelper:sip3d") )
-    def addFlag(name):
-        setattr( process.tnpEleIDs.flags, 'passing'+name, cms.InputTag('probes'+name ) )
-    from EgammaAnalysis.TnPTreeProducer.electronsExtrasSUSY_cff  import workingPoints
-    for wp in workingPoints: addFlag(wp)
 
 
 tnpSetup.customize( process.tnpEleTrig , options )

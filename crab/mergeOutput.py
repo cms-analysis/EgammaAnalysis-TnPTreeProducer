@@ -1,7 +1,7 @@
 #!/bin/env python
 import os, glob, ROOT, subprocess
 
-submitVersion = "2020-03-03"
+submitVersion = "2020-02-28"
 mainOutputDir = '/eos/cms/store/group/phys_egamma/tnpTuples/%s/%s' % (os.environ['USER'], submitVersion)
 
 def system(command):
@@ -23,7 +23,6 @@ for eraDir in glob.glob(os.path.join(mainOutputDir, '20*')):
   except: pass
   print era
   for crabDir in glob.glob(os.path.join(mainOutputDir, era, '*/*/*')):
-    if not '2018D' in crabDir: continue
     targetFile   = os.path.join(eraDir, 'merged', crabDir.split(era + '_')[-1] + '.root')
     filesToMerge = glob.glob(os.path.join(crabDir, '*/*/*.root'))
 

@@ -46,7 +46,14 @@ git remote add username-push git@github.com:username/EgammaAnalysis-TnPTreeProdu
 git push username-push branchname
 ```
 
-# Note about leptonMva
+## Adding new workingpoints
+You can add new electron workingpoints in [python/egmElectronIDModules\_cff.py](python/egmElectronIDModules_cff.py) and new photon workingpoints
+in [python/egmPhotonIDModules\_cff.py](python/egmPhotonIDModules_cff.py). Each new workingpoint added in these python config fragments will
+add a new "passing<WP>" boolean in the electron and photon trees respectively. Of course, one can also choose to simply add a variable in
+[python/egmTreesContent\_cff.py](python/egmTreesContent\_cff.py), which might be preferred for MVA variables when you want to have the
+flexibility to explore different workingpoints: you can simply put a cut on these variable in the egm\_tnp\_analysis package.
+
+## Note about leptonMva
 Some leptonMva variables are now included in the TnPTreeProducer trees. Unfortunately, it is very easy to get out of sync for these variables:
 even a new global tag could slightly alter the input variables, given some of them are dependent on the jet energy corrections or b-taggers which
 were in use when training these leptonMva's. Additionaly, some leptonMva's use (extremely) old effective areas for miniIso or relIso variables.
