@@ -20,30 +20,11 @@
 #include "TMVA/Reader.h"
 
 #include "FWCore/ParameterSet/interface/FileInPath.h"
+#include "EgammaAnalysis/TnPTreeProducer/plugins/WriteValueMap.h"
 
 #include "TMath.h"
 
 namespace{
-  template<typename T> void Store(edm::Event &iEvent, const edm::Handle<std::vector<pat::Electron>> &probes,
-	                          const std::vector<T> &values, const std::string &name){
-      std::unique_ptr<edm::ValueMap<T>> valMap(new edm::ValueMap<T>());
-      typename edm::ValueMap<T>::Filler filler(*valMap);
-      filler.insert(probes, values.begin(), values.end());
-      filler.fill();
-      iEvent.put(std::move(valMap), name);
-  }
-
-  // void StoreBoolToFloat(edm::Event &iEvent, const edm::Handle<std::vector<pat::Electron>> &probes,
-  //                           const std::vector<bool> &valuesBool, const std::string &name){
-  //     std::unique_ptr<edm::ValueMap<float>> valMap(new edm::ValueMap<float>());
-  //     edm::ValueMap<float>::Filler filler(*valMap);
-  //     std::vector<float> valuesFloat;
-  //     for(bool value : valuesBool) valuesFloat.push_back( (float) value);
-  //     filler.insert(probes, valuesFloat.begin(), valuesFloat.end());
-  //     filler.fill();
-  //     iEvent.put(std::move(valMap), name);
-  // }
-
   bool PassMVAVLooseFO(double mva, double abssceta){
     if(abssceta<0.8)        return mva > -0.7;
     else if(abssceta<1.479) return mva > -0.83;
@@ -366,11 +347,11 @@ void SusyElectronVariableHelper::produce(edm::Event & iEvent, const edm::EventSe
     ++i;
   }
 
-  Store(iEvent, probes, sip3dValues, "sip3d");
-  Store(iEvent, probes, leptonMvaValues, "electronMVATTH");
+  writeValueMap(iEvent, probes, sip3dValues, "sip3d");
+  writeValueMap(iEvent, probes, leptonMvaValues, "electronMVATTH");
 
   for(TString wp : workingPoints){
-    Store(iEvent, probes, passWorkingPoints[wp], ("pass" + wp).Data());
+    writeValueMap(iEvent, probes, passWorkingPoints[wp], ("pass" + wp).Data());
   }
 }
 

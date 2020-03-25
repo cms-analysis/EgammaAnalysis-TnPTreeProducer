@@ -12,6 +12,7 @@
 
 #include "DataFormats/RecoCandidate/interface/RecoEcalCandidate.h"
 #include "RecoEgamma/EgammaHLTAlgos/interface/EgammaHLTTrackIsolation.h"
+#include "EgammaAnalysis/TnPTreeProducer/plugins/WriteValueMap.h"
 
 template <class T>
 class SCVariableHelper : public edm::EDProducer {
@@ -92,11 +93,7 @@ void SCVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSetup & i
 
   
   // convert into ValueMap and store
-  std::unique_ptr<edm::ValueMap<float> > scIsoValMap(new edm::ValueMap<float>());
-  edm::ValueMap<float>::Filler scIsoFiller(*scIsoValMap);
-  scIsoFiller.insert(probes, scIsoValues.begin(), scIsoValues.end());
-  scIsoFiller.fill();
-  iEvent.put(std::move(scIsoValMap), "scTkIso");
+  writeValueMap(iEvent, probes, scIsoValues, "scTkIso");
 }
 
 #endif

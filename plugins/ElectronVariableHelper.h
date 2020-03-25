@@ -34,6 +34,7 @@
 #include "DataFormats/EgammaCandidates/interface/Conversion.h"
 #include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
 
+#include "EgammaAnalysis/TnPTreeProducer/plugins/WriteValueMap.h"
 #include "isolations.h"
 
 #include "TMath.h"
@@ -49,8 +50,6 @@ class ElectronVariableHelper : public edm::EDProducer {
   virtual void produce(edm::Event & iEvent, const edm::EventSetup & iSetup) override;
 
 private:
-  void store(const std::string &varName, std::vector<float> vals, edm::Handle<std::vector<T> > &probes, edm::Event &iEvent);
-
   edm::EDGetTokenT<std::vector<T> > probesToken_;
   edm::EDGetTokenT<reco::VertexCollection> vtxToken_;
   edm::EDGetTokenT<BXVector<l1t::EGamma> > l1EGToken_;
@@ -96,15 +95,6 @@ template<class T>
 ElectronVariableHelper<T>::~ElectronVariableHelper()
 {}
 
-template<class T>
-void ElectronVariableHelper<T>::store(const std::string &varName, std::vector<float> vals, edm::Handle<std::vector<T> > &probes, edm::Event &iEvent) {
-  // convert into ValueMap and store
-  std::unique_ptr<edm::ValueMap<float> > valMap(new edm::ValueMap<float>());
-  edm::ValueMap<float>::Filler filler(*valMap);
-  filler.insert(probes, vals.begin(), vals.end());
-  filler.fill();
-  iEvent.put(std::move(valMap), varName);
-}
 
 template<class T>
 void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSetup & iSetup) {
@@ -247,23 +237,22 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
 
 
   // convert into ValueMap and store
-  store("dz", dzVals, probes, iEvent);
-  store("dxy", dxyVals, probes, iEvent);
-  store("sip", sipVals, probes, iEvent);
-  store("missinghits", mhVals, probes, iEvent);
-  store("gsfhits", gsfhVals, probes, iEvent);
-  store("l1e", l1EVals, probes, iEvent);
-  store("l1et", l1EtVals, probes, iEvent);
-  store("l1eta", l1EtaVals, probes, iEvent);
-  store("l1phi", l1PhiVals, probes, iEvent);
-  store("pfPt", pfPtVals, probes, iEvent);
-  store("convVtxFitProb", convVtxFitProbVals, probes, iEvent);
-  store("kfhits", kfhitsVals, probes, iEvent);
-  store("kfchi2", kfchi2Vals, probes, iEvent);
-  store("ioemiop", ioemiopVals, probes, iEvent);
-  store("5x5circularity", ocVals, probes, iEvent);
-  store("pfLeptonIsolation", pfLeptonIsolations, probes, iEvent);
-
+  writeValueMap(iEvent, probes, dzVals, "dz");
+  writeValueMap(iEvent, probes, dxyVals, "dxy");
+  writeValueMap(iEvent, probes, sipVals, "sip");
+  writeValueMap(iEvent, probes, mhVals, "missinghits");
+  writeValueMap(iEvent, probes, gsfhVals, "gsfhits");
+  writeValueMap(iEvent, probes, l1EVals, "l1e");
+  writeValueMap(iEvent, probes, l1EtVals, "l1et");
+  writeValueMap(iEvent, probes, l1EtaVals, "l1eta");
+  writeValueMap(iEvent, probes, l1PhiVals, "l1phi");
+  writeValueMap(iEvent, probes, pfPtVals, "pfPt");
+  writeValueMap(iEvent, probes, convVtxFitProbVals, "convVtxFitProb");
+  writeValueMap(iEvent, probes, kfhitsVals, "kfhits");
+  writeValueMap(iEvent, probes, kfchi2Vals, "kfchi2");
+  writeValueMap(iEvent, probes, ioemiopVals, "ioemiop");
+  writeValueMap(iEvent, probes, ocVals, "5x5circularity");
+  writeValueMap(iEvent, probes, pfLeptonIsolations, "pfLeptonIsolation");
 }
 
 #endif

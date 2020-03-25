@@ -15,6 +15,7 @@
 //#include "DataFormats/EgammaCandidate/interface/SuperCluster.h"
 
 #include "DataFormats/Math/interface/deltaR.h"
+#include "EgammaAnalysis/TnPTreeProducer/plugins/WriteValueMap.h"
 
 template <class T>
 class HLTVariableHelper : public edm::EDProducer {
@@ -137,21 +138,11 @@ void HLTVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSetup & 
 
   // Save hardcoded
   for (unsigned int i=0; i<hardCodedNames_.size(); i++) {
-    // convert into ValueMap and store
-    std::unique_ptr<edm::ValueMap<float> > aMap(new edm::ValueMap<float>());
-    edm::ValueMap<float>::Filler aFiller(*aMap);
-    aFiller.insert(probes, hardCodedValues[i].begin(), hardCodedValues[i].end());
-    aFiller.fill();
-    iEvent.put(std::move(aMap), hardCodedNames_[i]);
+    writeValueMap(iEvent, probes, hardCodedValues[i], hardCodedNames_[i]);
   }
 
   for (unsigned int i=0; i<mapNames_.size(); i++) {
-    // convert into ValueMap and store
-    std::unique_ptr<edm::ValueMap<float> > aMap(new edm::ValueMap<float>());
-    edm::ValueMap<float>::Filler aFiller(*aMap);
-    aFiller.insert(probes, values[i].begin(), values[i].end());
-    aFiller.fill();
-    iEvent.put(std::move(aMap), mapNames_[i]);
+    writeValueMap(iEvent, probes, values[i], mapNames_[i]);
   }
 }
 #endif 
