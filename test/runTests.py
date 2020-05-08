@@ -5,6 +5,8 @@ if not 'CMSSW_BASE' in os.environ or os.environ['CMSSW_BASE'].replace('/storage_
   print('\033[1m\033[91mPlease do cmsenv first!')
   exit(0)
 
+try:    os.makedirs('log')
+except: pass
 
 # System command and retrieval of its output
 def system(command):
