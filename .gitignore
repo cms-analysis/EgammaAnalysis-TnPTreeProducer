@@ -3,3 +3,4 @@
 __init__.py
 crab/prescaleInformation
 crab/crab*
+test/log/*
