@@ -11,6 +11,15 @@ In case you need L1 matching for the measurement of doubleEle HLT triggers, you 
 ls /eos/cms/store/group/phys_egamma/tnpTuples/tomc/2020-03-03/*/merged/*L1matched.root 
 ```
 
+## Available branches
+
+| Branch                             | release            | tnpEleIDs          | tnpPhoIDs          | tnpEleTrig         | tnpEleReco         | miniAOD            |  AOD               |
+| ---------------------------------- | ------------------ |:------------------:|:------------------:|:------------------:|:------------------:|:------------------:|:------------------:|
+| [RunIIfinal](../RunIIfinal)        | CMSSW\_10_\2       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :white_check_mark: |
+| [RunIIfinal\_UL](../RunIIfinal)    | CMSSW\_10_\6       | :heavy_check_mark: | :white_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :white_check_mark: |
+| [CMSSW\_11\_X\_Y](../CMSSW_11_X_Y) | CMSSW\_11          | :heavy_check_mark: | :white_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :white_check_mark: |
+
+
 ## To produce new tuples
 ### 1. Install (CMSSW\_10\_2\_10 or higher, works for 2016, 2017 and 2018 data/MC)
 
