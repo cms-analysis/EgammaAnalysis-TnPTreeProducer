@@ -26,3 +26,14 @@ developer: Willem Verbeke [@wverbeke](https:://github.com/wverbeke/)
 Superseeded by the above one
 [2016](el_ttH16_BDTG.weights.xml)
 [2017](el_ttH17_BDTG.weights.xml)
+
+## Note about leptonMva
+Some leptonMva variables are now included in the TnPTreeProducer trees. Unfortunately, it is very easy to get out of sync for these variables:
+even a new global tag could slightly alter the input variables, given some of them are dependent on the jet energy corrections or b-taggers which
+were in use when training these leptonMva's. Additionaly, some leptonMva's use (extremely) old effective areas for miniIso or relIso variables.
+We therefore strongly recommend leptonMva analyzers to sync with their own analysis code before producing tuples.
+The sync can easily be done by setting the debug flag to True in [python/leptonMva\_cff.py](python/leptonMva_cff.py). The leptonMva xml files
+are found in [data](data), and implementation of a new leptonMvaType can happen in the produce function in
+[plugins/LeptonMvaProducer.cc](plugins/LeptonMvaProducer.cc).
+
+
