@@ -164,6 +164,20 @@ void LeptonMvaProducer::produce(edm::Event & iEvent, const edm::EventSetup & iSe
       inputValues["dz"]                     = log(probe.dB(pat::Electron::PVDZ));
       inputValues["electronMvaSpring16GP"]  = floats["mvas"]; // because these names actually differ given on the training
       inputValues["electronMvaFall17NoIso"] = floats["mvas"];
+    } else if(leptonMvaType_=="leptonMvaTOP"){
+      inputValues["pt"]                     = pp->pt();
+      inputValues["etaAbs"]                 = fabs(pp->eta());
+      inputValues["trackMultClosestJet"]    = floats["jetNDauChargedMVASel"];
+      inputValues["miniIsoCharged"]         = floats["miniIsoChg"];
+      inputValues["miniIsoNeutral"]         = floats["miniIsoAll"] - floats["miniIsoChg"];
+      inputValues["pTRel"]                  = floats["ptRel"];
+      inputValues["relIso"]                 = floats["PFIsoAll"];
+      inputValues["bTagDeepJetClosestJet"]  = deepFlavour;
+      inputValues["ptRatio"]                = std::min(floats["ptRatio"],(float)1.5);
+      inputValues["dxylog"]                 = log(probe.dB(pat::Electron::PV2D));
+      inputValues["sip3d"]                  = fabs(probe.dB(pat::Electron::PV3D)/probe.edB(pat::Electron::PV3D));
+      inputValues["dzlog"]                  = log(probe.dB(pat::Electron::PVDZ));
+      inputValues["mvaIdFall17v2noIso"]     = floats["mvas"];
     } else {
       throw cms::Exception("unknownLeptonMvaType") << "Please add " << leptonMvaType_ << " definitions to " << __FILE__ << " at line " <<  __LINE__;
     }

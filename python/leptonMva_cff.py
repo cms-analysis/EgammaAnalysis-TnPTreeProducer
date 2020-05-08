@@ -49,7 +49,8 @@ def leptonMvaSequence(process, options, tnpVars):
     makeIsoForEle(leptonMva_sequence, 'isoForEleSpring15', 'RecoEgamma/ElectronIdentification/data/Spring15/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_25ns.txt')
 
     #
-    # Calculate the lepton mva
+    # Calculate the lepton mva's
+    #   (at some point we can clean up the older TTH and Ghent ones, keeping only the TOP)
     #
     process.leptonMvaTTH = cms.EDProducer('LeptonMvaProducer',
       leptonMvaType        = cms.string("leptonMvaTTH"),
@@ -80,9 +81,25 @@ def leptonMvaSequence(process, options, tnpVars):
       debug                = cms.bool(False), # set to True if you want to sync with your analysis
     )
 
+    process.leptonMvaTOP = cms.EDProducer('LeptonMvaProducer',
+      leptonMvaType        = cms.string("leptonMvaTOP"),
+      weightFile           = cms.FileInPath('EgammaAnalysis/TnPTreeProducer/data/el_TOP%s_BDTG.weights.xml' % (options['era'].replace('20', ''))),
+      probes               = cms.InputTag('slimmedElectrons'),
+      miniIsoChg           = cms.InputTag('isoForEle%s:miniIsoChg' % ('Spring15' if options['era']=='2016' else 'Fall17')),
+      miniIsoAll           = cms.InputTag('isoForEle%s:miniIsoAll' % ('Spring15' if options['era']=='2016' else 'Fall17')),
+      PFIsoAll             = cms.InputTag('isoForEle%s:PFIsoAll' % ('Summer16' if options['era']=='2016' else 'Fall17')),
+      ptRatio              = cms.InputTag('ptRatioRelForEle:ptRatio'),
+      ptRel                = cms.InputTag('ptRatioRelForEle:ptRel'),
+      jetNDauChargedMVASel = cms.InputTag('ptRatioRelForEle:jetNDauChargedMVASel'),
+      closestJet           = cms.InputTag('ptRatioRelForEle:jetForLepJetVar'),
+      mvas                 = cms.InputTag('electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV2Values'),
+      debug                = cms.bool(False), # set to True if you want to sync with your analysis
+    )
+
     leptonMva_sequence += cms.Sequence(
       process.leptonMvaTTH +
-      process.leptonMvaGhent
+      process.leptonMvaGhent +
+      process.leptonMvaTOP
     )
 
     #
@@ -92,6 +109,7 @@ def leptonMvaSequence(process, options, tnpVars):
     newVariables = {
       'el_leptonMva_ttH'     : cms.InputTag('leptonMvaTTH:leptonMvaTTH'),
       'el_leptonMva_ghent'   : cms.InputTag('leptonMvaGhent:leptonMvaGhent'),
+      'el_leptonMva_TOP'     : cms.InputTag('leptonMvaTOP:leptonMvaTOP'),
       'el_miniIsoAll_fall17' : cms.InputTag('isoForEleFall17:miniIsoAll'),
       'el_miniIsoChg_fall17' : cms.InputTag('isoForEleFall17:miniIsoChg'),
       'el_relIso_fall17'     : cms.InputTag('isoForEleFall17:PFIsoAll'),
