@@ -210,7 +210,6 @@ CommonStuffForGsfElectronProbe = cms.PSet(
     pairVariables    =  cms.PSet(ZVariablesToStore),
     tagVariables     =  cms.PSet(TagVariablesToStore),
 
-    ignoreExceptions = cms.bool (True),
     addRunLumiInfo   = cms.bool (True),
     pileupInfoTag    = cms.InputTag("slimmedAddPileupInfo"),
     vertexCollection = cms.InputTag("offlineSlimmedPrimaryVertices"),    
