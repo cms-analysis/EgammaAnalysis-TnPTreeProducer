@@ -233,26 +233,30 @@ CommonStuffForPhotonProbe.variables = cms.PSet(PhoProbeVariablesToStore)
 CommonStuffForSuperClusterProbe = CommonStuffForGsfElectronProbe.clone()
 CommonStuffForSuperClusterProbe.variables = cms.PSet(SCProbeVariablesToStore)
 
-mcTruthCommonStuff = cms.PSet(
-    isMC = cms.bool(True),
-    tagMatches   = cms.InputTag("genTagEle"),
-    motherPdgId = cms.vint32(),
-    #motherPdgId = cms.vint32(22,23),
-    #motherPdgId = cms.vint32(443), # JPsi
-    #motherPdgId = cms.vint32(553), # Yupsilon
-    makeMCUnbiasTree = cms.bool(False),
-    #checkMotherInUnbiasEff = cms.bool(False),
-    mcVariables = cms.PSet(
-        probe_eta    = cms.string("eta"),
-        probe_phi    = cms.string("phi"),
-        probe_et     = cms.string("et"),
-        probe_e      = cms.string("energy"),
-        ),
-    mcFlags     =  cms.PSet(
-        probe_flag = cms.string("pt>0")
-        ),      
-    )
 
+def getTnPVariablesForMCTruth(isMC=True):
+    if isMC:
+      return cms.PSet(
+        isMC                   = cms.bool(True),
+        tagMatches             = cms.InputTag("genTagEle"),
+        motherPdgId            = cms.vint32(),
+       #motherPdgId            = cms.vint32(22,23),
+       #motherPdgId            = cms.vint32(443), # JPsi
+       #motherPdgId            = cms.vint32(553), # Yupsilon
+        makeMCUnbiasTree       = cms.bool(False),
+       #checkMotherInUnbiasEff = cms.bool(False),
+        mcVariables = cms.PSet(
+          probe_eta    = cms.string("eta"),
+          probe_phi    = cms.string("phi"),
+          probe_et     = cms.string("et"),
+          probe_e      = cms.string("energy"),
+          ),
+        mcFlags     =  cms.PSet(
+          probe_flag = cms.string("pt>0")
+        ),
+      )
+    else:
+      return cms.PSet(isMC = cms.bool(False))
 
 
 def setupTnPVariablesForAOD():
