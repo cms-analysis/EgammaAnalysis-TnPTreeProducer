@@ -1,0 +1,99 @@
+ -- comparing nEvts:  115
+Used parameters:
+----------------
+Target file:    rootfiles/TnPTree_mc_2017_miniAOD.root
+Reference file: rootfiles/TnPTree_mc_2017_miniAOD_ref.root
+Directory name: tnpEleTrig
+Tree name:      fitter_tree
+Cut value:      0
+
+Trees properties:
+-----------------
+Number of events (target/reference): 115/115
+Number of branches (target/reference): 214/214
+
+Branches which do not differ:
+-----------------------------
+Increase verbosity (-v) to show this
+
+Entries: 214
+
+Branches which differ:
+----------------------
+
+Entries: 0
+
+Branches found in reference but not in target:
+----------------------------------------------
+
+Entries: 0
+
+Branches found in target but not in reference:
+----------------------------------------------
+
+Entries: 0
+
+Branches in target with a single value in all entries:
+------------------------------------------------------
+el_ecalIso : value 0.0
+el_hcalIso : value 0.0
+el_convVtxFitProb : value -1.0
+passingCutBasedLoose94XV2GsfEleConversionVetoCut : value 1
+passingCutBasedLoose94XV2GsfEleEInverseMinusPInverseCut : value 1
+passingCutBasedLoose94XV2GsfEleSCEtaMultiRangeCut : value 1
+passingCutBasedLoose94XV2MinPtCut : value 1
+passingCutBasedMedium94XV2GsfEleConversionVetoCut : value 1
+passingCutBasedMedium94XV2GsfEleEInverseMinusPInverseCut : value 1
+passingCutBasedMedium94XV2GsfEleSCEtaMultiRangeCut : value 1
+passingCutBasedMedium94XV2MinPtCut : value 1
+passingCutBasedTight94XV2GsfEleConversionVetoCut : value 1
+passingCutBasedTight94XV2GsfEleEInverseMinusPInverseCut : value 1
+passingCutBasedTight94XV2GsfEleSCEtaMultiRangeCut : value 1
+passingCutBasedTight94XV2MinPtCut : value 1
+passingCutBasedVeto94XV2GsfEleConversionVetoCut : value 1
+passingCutBasedVeto94XV2GsfEleDPhiInCut : value 1
+passingCutBasedVeto94XV2GsfEleEInverseMinusPInverseCut : value 1
+passingCutBasedVeto94XV2GsfEleMissingHitsCut : value 1
+passingCutBasedVeto94XV2GsfEleSCEtaMultiRangeCut : value 1
+passingCutBasedVeto94XV2MinPtCut : value 1
+run : value 1
+lumi : value 148927
+event_BeamSpot_x : value -0.0247936006635
+event_BeamSpot_y : value 0.0692861005664
+event_BeamSpot_z : value 0.789894998074
+mc_probe_flag : value 1
+
+Entries: 27
+
+Branches in reference with a single value in all entries:
+---------------------------------------------------------
+el_ecalIso : value 0.0
+el_hcalIso : value 0.0
+el_convVtxFitProb : value -1.0
+passingCutBasedLoose94XV2GsfEleConversionVetoCut : value 1
+passingCutBasedLoose94XV2GsfEleEInverseMinusPInverseCut : value 1
+passingCutBasedLoose94XV2GsfEleSCEtaMultiRangeCut : value 1
+passingCutBasedLoose94XV2MinPtCut : value 1
+passingCutBasedMedium94XV2GsfEleConversionVetoCut : value 1
+passingCutBasedMedium94XV2GsfEleEInverseMinusPInverseCut : value 1
+passingCutBasedMedium94XV2GsfEleSCEtaMultiRangeCut : value 1
+passingCutBasedMedium94XV2MinPtCut : value 1
+passingCutBasedTight94XV2GsfEleConversionVetoCut : value 1
+passingCutBasedTight94XV2GsfEleEInverseMinusPInverseCut : value 1
+passingCutBasedTight94XV2GsfEleSCEtaMultiRangeCut : value 1
+passingCutBasedTight94XV2MinPtCut : value 1
+passingCutBasedVeto94XV2GsfEleConversionVetoCut : value 1
+passingCutBasedVeto94XV2GsfEleDPhiInCut : value 1
+passingCutBasedVeto94XV2GsfEleEInverseMinusPInverseCut : value 1
+passingCutBasedVeto94XV2GsfEleMissingHitsCut : value 1
+passingCutBasedVeto94XV2GsfEleSCEtaMultiRangeCut : value 1
+passingCutBasedVeto94XV2MinPtCut : value 1
+run : value 1
+lumi : value 148927
+event_BeamSpot_x : value -0.0247936006635
+event_BeamSpot_y : value 0.0692861005664
+event_BeamSpot_z : value 0.789894998074
+mc_probe_flag : value 1
+
+Entries: 27
+

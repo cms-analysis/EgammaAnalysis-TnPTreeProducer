@@ -7,8 +7,8 @@ TnP package for EGM
 |                                            |                    | *miniAOD*          | *miniAOD*          | *miniAOD*          | *AOD*              |
 | ------------------------------------------ | ------------------ |:------------------:|:------------------:|:------------------:|:------------------:|
 | [RunIIfinal](../../tree/RunIIfinal)        | CMSSW\_10\_2       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| [RunIIfinal\_UL](../../tree/RunIIfinal_UL) | CMSSW\_10\_6       | :heavy_check_mark: | :white_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| [CMSSW\_11\_X\_Y](../../tree/CMSSW_11_X_Y) | CMSSW\_11          | :heavy_check_mark: | :white_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| [RunIIfinal\_UL](../../tree/RunIIfinal_UL) | CMSSW\_10\_6       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| [CMSSW\_11\_X\_Y](../../tree/CMSSW_11_X_Y) | CMSSW\_11          | :heavy_check_mark: | :white_check_mark: | :heavy_check_mark: | :white_check_mark: |
 
 
 ## Available trees 

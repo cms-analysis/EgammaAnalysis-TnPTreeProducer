@@ -83,17 +83,18 @@ EleProbeVariablesToStore = cms.PSet(
 
      
     #isolation
-    el_chIso         = cms.string("pfIsolationVariables().sumChargedHadronPt"),
-    el_phoIso        = cms.string("pfIsolationVariables().sumPhotonEt"),
-    el_neuIso        = cms.string("pfIsolationVariables().sumNeutralHadronEt"),
-    el_ecalIso       = cms.string("ecalPFClusterIso"),
-    el_dr03EcalRecHitSumEt       = cms.string("dr03EcalRecHitSumEt"),
-    el_hcalIso       = cms.string("hcalPFClusterIso"),
-    el_trkIso        = cms.string("trackIso"),
-    el_dr03TkSumPt   = cms.string("dr03TkSumPt"),
+    el_chIso               = cms.string("pfIsolationVariables().sumChargedHadronPt"),
+    el_phoIso              = cms.string("pfIsolationVariables().sumPhotonEt"),
+    el_neuIso              = cms.string("pfIsolationVariables().sumNeutralHadronEt"),
+    el_dr03EcalRecHitSumEt = cms.string("dr03EcalRecHitSumEt"),
+    el_ecalIso             = cms.string("ecalPFClusterIso"), # this one seem to be always 0 in CMSSW_10_2_X
+    el_hcalIso             = cms.string("hcalPFClusterIso"), # this one seem to be always 0 in CMSSW_10_2_X
+    el_trkIso              = cms.string("trackIso"),
+    el_dr03TkSumPt         = cms.string("dr03TkSumPt"),
 
     # this relative PF lepton isolation component is added to the standard PF isolation sum
     # in order to get the isolation variable used in the triboson analysis
+    # in the small test runs this variable is always 0, but I guess it is very rare to find another lepton in the cone
     el_relPfLepIso03 = cms.InputTag("eleVarHelper:pfLeptonIsolation"),
 
     #added for VHbbEIso

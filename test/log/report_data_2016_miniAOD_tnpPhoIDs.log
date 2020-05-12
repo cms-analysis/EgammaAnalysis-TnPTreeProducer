@@ -1,0 +1,71 @@
+ -- comparing nEvts:  32
+Used parameters:
+----------------
+Target file:    rootfiles/TnPTree_data_2016_miniAOD.root
+Reference file: rootfiles/TnPTree_data_2016_miniAOD_ref.root
+Directory name: tnpPhoIDs
+Tree name:      fitter_tree
+Cut value:      0
+
+Trees properties:
+-----------------
+Number of events (target/reference): 32/32
+Number of branches (target/reference): 106/106
+
+Branches which do not differ:
+-----------------------------
+Increase verbosity (-v) to show this
+
+Entries: 106
+
+Branches which differ:
+----------------------
+
+Entries: 0
+
+Branches found in reference but not in target:
+----------------------------------------------
+
+Entries: 0
+
+Branches found in target but not in reference:
+----------------------------------------------
+
+Entries: 0
+
+Branches in target with a single value in all entries:
+------------------------------------------------------
+passingCutBasedLoose94XV2MinPtCut : value 1
+passingCutBasedLoose94XV2PhoAnyPFIsoWithEAAndQuadScalingCut : value 1
+passingCutBasedLoose94XV2PhoSCEtaMultiRangeCut : value 1
+passingCutBasedMedium94XV2MinPtCut : value 1
+passingCutBasedMedium94XV2PhoSCEtaMultiRangeCut : value 1
+passingCutBasedTight94XV2MinPtCut : value 1
+passingCutBasedTight94XV2PhoSCEtaMultiRangeCut : value 1
+run : value 274335
+lumi : value 951
+truePU : value 0
+event_BeamSpot_x : value 0.0641769096255
+event_BeamSpot_y : value 0.0964255258441
+event_BeamSpot_z : value 0.216581016779
+
+Entries: 13
+
+Branches in reference with a single value in all entries:
+---------------------------------------------------------
+passingCutBasedLoose94XV2MinPtCut : value 1
+passingCutBasedLoose94XV2PhoAnyPFIsoWithEAAndQuadScalingCut : value 1
+passingCutBasedLoose94XV2PhoSCEtaMultiRangeCut : value 1
+passingCutBasedMedium94XV2MinPtCut : value 1
+passingCutBasedMedium94XV2PhoSCEtaMultiRangeCut : value 1
+passingCutBasedTight94XV2MinPtCut : value 1
+passingCutBasedTight94XV2PhoSCEtaMultiRangeCut : value 1
+run : value 274335
+lumi : value 951
+truePU : value 0
+event_BeamSpot_x : value 0.0641769096255
+event_BeamSpot_y : value 0.0964255258441
+event_BeamSpot_z : value 0.216581016779
+
+Entries: 13
+
