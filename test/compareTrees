@@ -63,8 +63,8 @@ if treeTarget.GetEntries() != treeReference.GetEntries():
 print " -- comparing nEvts: " , numEvents
 
 # Compare the trees
-branchesReference = treeReference.GetListOfBranches()
-branchesTarget = treeTarget.GetListOfBranches()
+branchesReference = [i.GetName() for i in treeReference.GetListOfBranches()]
+branchesTarget    = [i.GetName() for i in treeTarget.GetListOfBranches()]
 branchesNotInTarget = [] # branches found in reference but not in target
 branchesNotInReference = [] # branches found in target but not in reference
 branchesSame = [] # branches found in both and do not differ
@@ -72,74 +72,51 @@ branchesDiffer = [] # branches found in both but differ
 branchesTargetSingleVal = [] # branches in target filled with a single value
 branchesRefSingleVal = [] # branches in reference filled with a single value
 
-for branchRef in branchesReference:
-    # Compare branches in reference with branches in target
-#    print " -- comparing branch ", branchRef.GetName() 
-    if treeTarget.GetBranch(branchRef.GetName()):
-        # Check whether the branches differ by going through branch event by event
-        branchTarget = treeTarget.GetBranch(branchRef.GetName())        
-        leafTarget = branchTarget.GetLeaf(branchRef.GetListOfLeaves()[0].GetName())
-        leafRef = branchRef.GetLeaf(branchRef.GetListOfLeaves()[0].GetName())
-
-        if not leafTarget : print ' - null target pointer for branch ', branchRef.GetName() 
-        if not leafRef    : print ' - null ref    pointer for branch ', branchRef.GetName() 
-        
-        if not leafTarget :
-            branchTarget.Print()
-            for leaf in branchTarget.GetListOfLeaves():
-                leaf.Print()
+# Check whether the branches differ by going through branch event by event
+for branch in branchesReference:
+    if branch in branchesTarget:
         mse = 0
         for iEvent in range(numEvents):
-            branchTarget.GetEntry(iEvent)
-            branchRef.GetEntry(iEvent)
-            if leafTarget and leafRef:
-                mse += (leafTarget.GetValue()-leafRef.GetValue())**2
+	    treeTarget.GetEntry(iEvent)
+	    treeReference.GetEntry(iEvent)
+	    if hasattr(treeTarget, branch) and hasattr(treeReference, branch):
+	        mse += (getattr(treeTarget, branch)-getattr(treeReference, branch))**2
         mse /= numEvents
-        if mse>args.cut:
-            branchesDiffer.append({'name' : branchRef.GetName(), 'MSE' : mse})
-        else:
-            branchesSame.append({'name' : branchRef.GetName()})
+        if mse>args.cut: branchesDiffer.append({'name' : branch, 'MSE' : mse})
+        else:            branchesSame.append({'name' : branch})
     else:
-        branchesNotInTarget.append({'name' : branchRef.GetName()})
+        branchesNotInTarget.append({'name' : branch})
 
 # Check whether all branches in target are as well in reference
-for branchTarget in branchesTarget:
-    if not treeReference.GetBranch(branchTarget.GetName()):
-        branchesNotInReference.append({'name' : branchTarget.GetName()})
+for branch in branchesTarget:
+    if not branch in branchesReference:
+        branchesNotInReference.append({'name' : branch})
 
 # Check for single values in branches
 if args.singleValue:
     for branch in branchesTarget:
-        leaf = branch.GetLeaf(branch.GetName())
-        if not leaf:
-          branchesTargetSingleVal.append({'name' : branch.GetName(), 'value' : 'null'})
-          continue
         refVal = None
         hasMultVals = False
         for iEvent in range(numEvents):
-            branch.GetEntry(iEvent)
+            treeTarget.GetEntry(iEvent)
             if iEvent==0:
-                refVal = leaf.GetValue()
-            else:
-                if refVal != leaf.GetValue(): hasMultVals = True
+                refVal = getattr(treeTarget, branch)
+            elif refVal != getattr(treeTarget, branch):
+                hasMultVals = True
         if not hasMultVals:
-            branchesTargetSingleVal.append({'name' : branch.GetName(), 'value' : refVal})
+            branchesTargetSingleVal.append({'name' : branch, 'value' : refVal})
 
     for branch in branchesReference:
-        leaf = branch.GetLeaf(branch.GetName())
-        if not leaf:
-          branchesRefSingleVal.append({'name' : branch.GetName(), 'value' : 'null'})
-          continue
         refVal = None
         hasMultVals = False
         for iEvent in range(numEvents):
-            branch.GetEntry(iEvent)
+            treeReference.GetEntry(iEvent)
             if iEvent==0:
-                refVal = leaf.GetValue()
-            else:
-                if refVal != leaf.GetValue(): hasMultVals = True
+                refVal = getattr(treeReference, branch)
+            elif refVal != getattr(treeReference, branch):
+                hasMultVals = True
         if not hasMultVals:
-            branchesRefSingleVal.append({'name' : branch.GetName(), 'value' : refVal})
+            branchesRefSingleVal.append({'name' : branch, 'value' : refVal})
 
 """
 Print summary
