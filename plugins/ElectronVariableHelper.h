@@ -7,25 +7,18 @@
 #include "FWCore/Utilities/interface/InputTag.h"
 
 #include "DataFormats/Common/interface/ValueMap.h"
-#include "DataFormats/Candidate/interface/CandidateFwd.h"
-#include "DataFormats/Candidate/interface/Candidate.h"
 
 #include "DataFormats/VertexReco/interface/Vertex.h"
 #include "DataFormats/VertexReco/interface/VertexFwd.h"
 
-//#include "DataFormats/L1Trigger/interface/L1EmParticle.h"
-//#include "DataFormats/L1Trigger/interface/L1EmParticleFwd.h"
-#include "HLTrigger/HLTcore/interface/HLTFilter.h"
+#include "DataFormats/L1Trigger/interface/L1EmParticle.h"
+#include "DataFormats/L1Trigger/interface/L1EmParticleFwd.h"
 #include "DataFormats/L1Trigger/interface/EGamma.h"
 #include "DataFormats/HLTReco/interface/TriggerFilterObjectWithRefs.h"
-#include "CondFormats/L1TObjects/interface/L1CaloGeometry.h"
-#include "CondFormats/DataRecord/interface/L1CaloGeometryRecord.h"
 
 #include "DataFormats/Math/interface/deltaR.h"
 
-#include "DataFormats/ParticleFlowCandidate/interface/PFCandidate.h"
 #include "DataFormats/PatCandidates/interface/PackedCandidate.h"
-
 #include "DataFormats/Candidate/interface/CandidateFwd.h"
 #include "DataFormats/Candidate/interface/Candidate.h"
 
@@ -35,11 +28,10 @@
 #include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
 
 #include "EgammaAnalysis/TnPTreeProducer/plugins/WriteValueMap.h"
-#include "isolations.h"
+#include "EgammaAnalysis/TnPTreeProducer/plugins/isolations.h"
 
 #include "TMath.h"
 
-typedef edm::View<reco::Candidate> CandView;
 
 template <class T>
 class ElectronVariableHelper : public edm::EDProducer {
@@ -53,10 +45,9 @@ private:
   edm::EDGetTokenT<std::vector<T> > probesToken_;
   edm::EDGetTokenT<reco::VertexCollection> vtxToken_;
   edm::EDGetTokenT<BXVector<l1t::EGamma> > l1EGToken_;
-  edm::EDGetTokenT<CandView> pfCandToken_;
   edm::EDGetTokenT<reco::ConversionCollection> conversionsToken_;
   edm::EDGetTokenT<reco::BeamSpot> beamSpotToken_;
-  edm::EDGetTokenT<pat::PackedCandidateCollection> pfCandidatesToken_;
+  edm::EDGetTokenT<edm::View<reco::Candidate>> pfCandidatesToken_;
 };
 
 template<class T>
@@ -66,7 +57,7 @@ ElectronVariableHelper<T>::ElectronVariableHelper(const edm::ParameterSet & iCon
   l1EGToken_(consumes<BXVector<l1t::EGamma> >(iConfig.getParameter<edm::InputTag>("l1EGColl"))),
   conversionsToken_(consumes<reco::ConversionCollection>(iConfig.getParameter<edm::InputTag>("conversions"))),
   beamSpotToken_(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("beamSpot"))),
-  pfCandidatesToken_(consumes<pat::PackedCandidateCollection>(edm::InputTag("packedPFCandidates"))) {
+  pfCandidatesToken_(consumes<edm::View<reco::Candidate>>(iConfig.getParameter<edm::InputTag>("pfCandidates"))){
 
   produces<edm::ValueMap<float> >("dz");
   produces<edm::ValueMap<float> >("dxy");
@@ -84,11 +75,6 @@ ElectronVariableHelper<T>::ElectronVariableHelper(const edm::ParameterSet & iCon
   produces<edm::ValueMap<float> >("ioemiop");
   produces<edm::ValueMap<float> >("5x5circularity");
   produces<edm::ValueMap<float> >("pfLeptonIsolation");
-
-  if( iConfig.existsAs<edm::InputTag>("pfCandColl") ) {
-    pfCandToken_ = consumes<CandView>(iConfig.getParameter<edm::InputTag>("pfCandColl"));
-  }
-
 }
 
 template<class T>
@@ -100,14 +86,14 @@ template<class T>
 void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSetup & iSetup) {
 
   // read input
-  edm::Handle<std::vector<T> > probes;
+  edm::Handle<std::vector<T>> probes;
   edm::Handle<reco::VertexCollection> vtxH;
 
   iEvent.getByToken(probesToken_, probes);
   iEvent.getByToken(vtxToken_, vtxH);
   const reco::VertexRef vtx(vtxH, 0);
 
-  edm::Handle<BXVector<l1t::EGamma> > l1Cands;
+  edm::Handle<BXVector<l1t::EGamma>> l1Cands;
   iEvent.getByToken(l1EGToken_, l1Cands);
 
   edm::Handle<reco::ConversionCollection> conversions;
@@ -117,8 +103,8 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
   iEvent.getByToken(beamSpotToken_, beamSpotHandle);
   const reco::BeamSpot* beamSpot = &*(beamSpotHandle.product());
 
-  edm::Handle<CandView> pfCands;
-  if( !pfCandToken_.isUninitialized() ) iEvent.getByToken(pfCandToken_,pfCands);
+  edm::Handle<edm::View<reco::Candidate>> pfCandidates;
+  iEvent.getByToken(pfCandidatesToken_, pfCandidates);
 
   // prepare vector for output
   std::vector<float> dzVals;
@@ -174,12 +160,12 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
         l1phi = l1Cand->phi();
       }
     }
-    if( pfCands.isValid() )
-    for( size_t ipf = 0; ipf < pfCands->size(); ++ipf ) {
-        auto pfcand = pfCands->ptrAt(ipf);
-    if( abs( pfcand->pdgId() ) != 11 ) continue;
-    float dR = deltaR(pfcand->eta(), pfcand->phi() , probe->eta(), probe->phi());
-    if( dR < 0.0001 ) pfpt = pfcand->pt();
+
+    for( size_t ipf = 0; ipf < pfCandidates->size(); ++ipf ) {
+      auto pfcand = pfCandidates->ptrAt(ipf);
+      if(abs(pfcand->pdgId()) != 11) continue;
+      float dR = deltaR(pfcand->eta(), pfcand->phi(), probe->eta(), probe->phi());
+      if(dR < 0.0001) pfpt = pfcand->pt();
     }
 
     l1EVals.push_back(l1e);
@@ -227,15 +213,6 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     ioemiopVals.push_back(ele_IoEmIop);
   }
 
-  // PF lepton isolations
-  edm::Handle<pat::PackedCandidateCollection> pfCandidates;
-  iEvent.getByToken(pfCandidatesToken_, pfCandidates);
-  auto pfLeptonIsolations = computePfLeptonIsolations(*probes, *pfCandidates);
-  for(unsigned int i = 0; i < probes->size(); ++i) {
-      pfLeptonIsolations[i] /= (*probes)[i].pt();
-  }
-
-
   // convert into ValueMap and store
   writeValueMap(iEvent, probes, dzVals, "dz");
   writeValueMap(iEvent, probes, dxyVals, "dxy");
@@ -252,7 +229,15 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
   writeValueMap(iEvent, probes, kfchi2Vals, "kfchi2");
   writeValueMap(iEvent, probes, ioemiopVals, "ioemiop");
   writeValueMap(iEvent, probes, ocVals, "5x5circularity");
-  writeValueMap(iEvent, probes, pfLeptonIsolations, "pfLeptonIsolation");
+
+  // PF lepton isolations (will only work in miniAOD)
+  try {
+    auto pfLeptonIsolations = computePfLeptonIsolations(*probes, *pfCandidates);
+    for(unsigned int i = 0; i < probes->size(); ++i){
+      pfLeptonIsolations[i] /= (*probes)[i].pt();
+    }
+    writeValueMap(iEvent, probes, pfLeptonIsolations, "pfLeptonIsolation");
+  } catch (std::bad_cast){}
 }
 
 #endif

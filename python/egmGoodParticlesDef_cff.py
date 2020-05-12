@@ -69,7 +69,7 @@ def setGoodParticlesMiniAOD(process, options):
                                           vertexCollection = cms.InputTag("offlineSlimmedPrimaryVertices"),
                                           beamSpot         = cms.InputTag("offlineBeamSpot"),
                                           conversions      = cms.InputTag("reducedEgamma:reducedConversions"),
-                                          #pfCandColl       = cms.InputTag("packedPFCandidates"),
+                                          pfCandidates     = cms.InputTag("packedPFCandidates"),
                                           )
 
     ####################  Electron collection
@@ -110,12 +110,12 @@ def setGoodParticlesAOD(process, options):
 
 
     process.eleVarHelper = cms.EDProducer("GsfElectronVariableHelper",
-                                          probes      = cms.InputTag(options['ELECTRON_COLL']),
+                                          probes           = cms.InputTag(options['ELECTRON_COLL']),
                                           vertexCollection = cms.InputTag("offlinePrimaryVertices"),
-                                          l1EGColl    = cms.InputTag("caloStage2Digis:EGamma"),
+                                          l1EGColl         = cms.InputTag("caloStage2Digis:EGamma"),
                                           beamSpot         = cms.InputTag("offlineBeamSpot"),
                                           conversions      = cms.InputTag("allConversions"),
-                                          #pfCandColl  = cms.InputTag("particleFlow"),
+                                          pfCandidates     = cms.InputTag("particleFlow"),
                                           )
 
     process.hltVarHelper = cms.EDProducer("GsfElectronHLTVariableHelper",

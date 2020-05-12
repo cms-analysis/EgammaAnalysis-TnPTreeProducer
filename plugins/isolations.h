@@ -7,12 +7,13 @@
 
 template<class CandidateContainer>
 std::vector<float> computePfLeptonIsolations(CandidateContainer const& targetCandidates,
-                                             pat::PackedCandidateCollection const& pfCandidates) {
+                                             edm::View<reco::Candidate> const& pfCandidates){
 
   std::vector<float> leptonIsolations(targetCandidates.size());
   for(auto const& pfcand : pfCandidates) {
     auto absPdg = std::abs(pfcand.pdgId());
-    if(!(absPdg==11 || absPdg==13) || pfcand.fromPV() < pat::PackedCandidate::PVTight) {
+    auto pfPackedCand = dynamic_cast<const pat::PackedCandidate&>(pfcand);
+    if(!(absPdg==11 || absPdg==13) || pfPackedCand.fromPV() < pat::PackedCandidate::PVTight){
       continue;
     }
     for(unsigned int i = 0; i < targetCandidates.size(); ++i) {

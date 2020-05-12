@@ -18,7 +18,10 @@ def system(command):
 #
 # Simply run a test for both data/MC for 2016, 2017 and 2018
 #
-for isAOD in [False]:
+for isAOD in [False, True]:
+  if isAOD: treesToRun = ['tnpEleIDs', 'tnpPhoIDs', 'tnpEleTrig']
+  else:     treesToRun = ['tnpEleReco']
+
   for isMC in [False, True]:
     for era in ['2016', '2017', '2018']:
 
@@ -30,7 +33,8 @@ for isAOD in [False]:
       outFile = 'rootfiles/TnPTree_%s_%s_%s.root' % ('mc' if isMC else 'data', era, 'AOD' if isAOD else 'miniAOD')
       shutil.move('TnPTree_%s.root' % ('mc' if isMC else 'data'), outFile)
 
-      for tree in ['tnpEleIDs', 'tnpPhoIDs', 'tnpEleTrig', 'tnpEleReco']:
+      for tree in treesToRun:
+ 
 	report = 'log/report_%s_%s_%s_%s.log' % ('mc' if isMC else 'data', era, 'AOD' if isAOD else 'miniAOD', tree)
 
 	print ('Testing for options %s and tree %s...' % (' '.join(options), tree)),
