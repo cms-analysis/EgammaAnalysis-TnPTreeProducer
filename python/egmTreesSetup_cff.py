@@ -1,5 +1,6 @@
 import FWCore.ParameterSet.Config as cms
-
+from EgammaAnalysis.TnPTreeProducer.logger import getLogger
+log = getLogger()
 
 ###################################################################################
 ################  --- TAG AND PROBE collections
@@ -49,7 +50,7 @@ def setTagsProbes(process, options):
 
     ################# PROBE Matched to L1 #######################
     if options['ApplyL1Matching']:
-      print "L1 matching will be applied for %s" % ', '.join([f.replace('L1match','') for f in options['HLTFILTERSTOMEASURE'].keys() if 'L1match' in f])
+      log.info("L1 matching will be applied for %s" % ', '.join([f.replace('L1match','') for f in options['HLTFILTERSTOMEASURE'].keys() if 'L1match' in f]))
       process.goodElectronProbesL1 = cms.EDProducer("PatElectronL1Stage2CandProducer",
                                                   inputs       = cms.InputTag("goodElectrons"),
                                                   objects      = cms.InputTag("caloStage2Digis:EGamma"),

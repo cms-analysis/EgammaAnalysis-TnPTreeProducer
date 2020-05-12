@@ -18,14 +18,14 @@ def system(command):
 #
 # Simply run a test for both data/MC for 2016, 2017 and 2018
 #
-for isAOD in [False, True]:
-  if isAOD: treesToRun = ['tnpEleIDs', 'tnpPhoIDs', 'tnpEleTrig']
-  else:     treesToRun = ['tnpEleReco']
+for isAOD in [False]:
+  if isAOD: treesToRun = ['tnpEleReco']
+  else:     treesToRun = ['tnpEleIDs', 'tnpPhoIDs', 'tnpEleTrig']
 
   for isMC in [False, True]:
     for era in ['2016', '2017', '2018']:
 
-      options  = ['doRECO=True', 'era=%s maxEvents=1000' % era]
+      options  = ['era=%s maxEvents=1000' % era]
       options += ['isAOD=True'] if isAOD else []
       options += ['isMC=True'] if isMC else []
       system('source /cvmfs/cms.cern.ch/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py %s' % ' '.join(options))

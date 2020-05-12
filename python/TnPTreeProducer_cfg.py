@@ -2,108 +2,56 @@ import FWCore.ParameterSet.Config as cms
 from FWCore.ParameterSet.VarParsing import VarParsing
 import sys
 
-process = cms.Process("tnpEGM")
 
 ###################################################################
 ## argument line options
 ###################################################################
 varOptions = VarParsing('analysis')
 
-varOptions.register(
-    "isMC", False,
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.bool,
-    "Compute MC efficiencies"
-    )
+def registerOption(optionName, defaultValue, description, optionType=VarParsing.varType.bool):
+  varOptions.register(
+      optionName, 
+      defaultValue,
+      VarParsing.multiplicity.singleton,
+      optionType,
+      description
+  )
 
-varOptions.register(
-    "is80X", False,
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.bool,
-    "Running on old 80X files"
-    )
+registerOption('isMC',        False,    'Use MC instead of data')
+registerOption('isAOD',       False,    'Use AOD samples instead of miniAOD')
+registerOption('is80X',       False,    'Compatibility to run on old 80X files')
+registerOption('doEleID',     True,     'Include tree for electron ID SF')
+registerOption('doPhoID',     True,     'Include tree for photon ID SF')
+registerOption('doTrigger',   True,     'Include tree for trigger SF')
+registerOption('doRECO',      False,    'Include tree for Reco SF (requires AOD)')
+registerOption('calibEn',     False,    'Use EGM smearer to calibrate photon and electron energy')
+registerOption('includeSUSY', False,    'Add also the variables used by SUSY')
 
+registerOption('HLTname',     'HLT',    'HLT process name (default HLT)', optionType=VarParsing.varType.string) # HLTname was HLT2 in now outdated reHLT samples
+registerOption('GT',          'auto',   'Global Tag to be used', optionType=VarParsing.varType.string)
+registerOption('era',         '2018',   'Data-taking era: 2016, 2017 or 2018', optionType=VarParsing.varType.string)
+registerOption('logLevel',    'INFO',   'Loglevel: could be DEBUG, INFO, WARNING, ERROR', optionType=VarParsing.varType.string)
 
-varOptions.register(
-    "doEleID", True,
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.bool,
-    "Include tree for photon ID SF"
-    )
-
-varOptions.register(
-    "doPhoID", True,
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.bool,
-    "Include tree for photon ID SF"
-    )
-
-varOptions.register(
-    "doTrigger", True,
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.bool,
-    "Include tree for Trigger SF"
-    )
-
-varOptions.register(
-    "doRECO", False,
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.bool,
-    "Include tree for Reco SF"
-    )
-
-varOptions.register(
-    "calibEn", False,
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.bool,
-    "use EGM smearer to calibrate photon and electron energy"
-    )
-
-#### HLTname is HLT2 in reHLT samples
-varOptions.register(
-    "HLTname", "HLT",
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.string,
-    "HLT process name (default HLT)"
-    )
-
-varOptions.register(
-    "GT", "auto",
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.string,
-    "Global Tag to be used"
-    )
-
-varOptions.register(
-    "includeSUSY", False,
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.bool,
-    "add also the variables used by SUSY"
-    )
-
-# Note: not sure if the AOD mode has been tested recently
-varOptions.register(
-    "isAOD", False,
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.bool,
-    "use AOD"
-    )
-
-varOptions.register(
-    "era", "2018",
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.string,
-    "Data-taking era: 2016, 2017 or 2018"
-    )
-
-varOptions.register(
-    "L1Threshold", 0,
-    VarParsing.multiplicity.singleton,
-    VarParsing.varType.int,
-    "Threshold for L1 matched objects"
-    )
+registerOption('L1Threshold',  0,       'Threshold for L1 matched objects', optionType=VarParsing.varType.int)
 
 varOptions.parseArguments()
+
+###################################################################
+# Some sanity checks
+###################################################################
+from EgammaAnalysis.TnPTreeProducer.logger import getLogger
+log = getLogger(varOptions.logLevel)
+if varOptions.isAOD and varOptions.doEleID:        log.warning('AOD is not supported for doEleID, please consider using miniAOD')
+if varOptions.isAOD and varOptions.doPhoID:        log.warning('AOD is not supported for doPhoID, please consider using miniAOD')
+if varOptions.isAOD and varOptions.doTrigger:      log.warning('AOD is not supported for doTrigger, please consider using miniAOD')
+if not varOptions.isAOD and varOptions.doRECO:     log.warning('miniAOD is not supported for doRECO, please consider using AOD')
+if varOptions.era not in ['2016', '2017', '2018']: log.error('%s is not a valid era' % options['era'])
+
+if varOptions.includeSUSY: log.info('Including variables for SUSY')
+if varOptions.doEleID:     log.info('Producing electron SF tree')
+if varOptions.doPhoID:     log.info('Producing photon SF tree')
+if varOptions.doTrigger:   log.info('Producing HLT (trigger ele) efficiency tree')
+if varOptions.doRECO:      log.info('Producing RECO SF tree')
 
 
 ###################################################################
@@ -132,7 +80,7 @@ options['DoRECO']               = varOptions.doRECO
 options['DoEleID']              = varOptions.doEleID
 options['DoPhoID']              = varOptions.doPhoID
 
-options['DEBUG']                = False
+options['DEBUG']                = False 
 options['isMC']                 = varOptions.isMC
 options['UseCalibEn']           = varOptions.calibEn
 options['addSUSY']              = varOptions.includeSUSY and not options['useAOD']
@@ -178,12 +126,11 @@ elif options['era'] == '2018':
                                    "passHltDoubleEle33CaloIdLMWSeedLegL1match" :        cms.vstring("hltEle33CaloIdLMWPMS2Filter"),
                                    "passHltDoubleEle33CaloIdLMWUnsLeg" :                cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
                                   }
-else:
-  print '%s is not a valid era' % options['era']
 
 # Apply L1 matching (using L1Threshold) when flag contains "L1match" in name
 options['ApplyL1Matching']      = any(['L1match' in flag for flag in options['HLTFILTERSTOMEASURE'].keys()])
 options['L1Threshold']          = varOptions.L1Threshold
+
 
 ###################################################################
 ## Define input files for test local run
@@ -198,13 +145,13 @@ if options['era'] == '2018':
   if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_2018 as inputs
   else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_2018 as inputs
 
-options['INPUT_FILE_NAME'] = inputs['mc' if varOptions.isMC else 'data']
-#options['INPUT_FILE_NAME'] = cms.untracked.vstring('file:pickevents.root')
+options['INPUT_FILE_NAME'] = inputs['mc' if options['isMC'] else 'data']
 
 
 ###################################################################
 ## Standard imports, GT and pile-up
 ###################################################################
+process = cms.Process("tnpEGM")
 process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff")
 process.load("Configuration.Geometry.GeometryRecoDB_cff")
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
@@ -225,7 +172,7 @@ pileUpSetup.setPileUpConfiguration(process, options)
 ###################################################################
 import EgammaAnalysis.TnPTreeProducer.egmTreesContent_cff as tnpVars
 if options['useAOD']: tnpVars.setupTnPVariablesForAOD()
-tnpVars.mcTruthCommonStuff.isMC = cms.bool(varOptions.isMC)
+tnpVars.mcTruthCommonStuff.isMC = cms.bool(options['isMC'])
 
 ###################################################################
 ## Import Tnp setup
@@ -251,12 +198,6 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.source = cms.Source("PoolSource", fileNames = options['INPUT_FILE_NAME'])
 process.maxEvents = cms.untracked.PSet( input = options['MAXEVENTS'])
-
-if options['addSUSY']   : print "  -- Including variables for SUSY       -- "
-if options['DoTrigger'] : print "  -- Producing HLT (trigger ele) efficiency tree -- "
-if options['DoRECO']    : print "  -- Producing RECO SF tree        -- "
-if options['DoEleID']   : print "  -- Producing electron SF tree    -- "
-if options['DoPhoID']   : print "  -- Producing photon SF tree      -- "
 
 
 ###################################################################

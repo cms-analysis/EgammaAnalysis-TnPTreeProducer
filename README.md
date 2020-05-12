@@ -1,6 +1,16 @@
 # EgammaAnalysis-TnPTreeProducer
 TnP package for EGM
 
+## Overview of branches
+
+| Branch                                     | release            | tnpEleIDs          | tnpPhoIDs          | tnpEleTrig         | tnpEleReco         |
+|                                            |                    | *miniAOD*          | *miniAOD*          | *miniAOD*          | *AOD*              |
+| ------------------------------------------ | ------------------ |:------------------:|:------------------:|:------------------:|:------------------:|
+| [RunIIfinal](../../tree/RunIIfinal)        | CMSSW\_10\_2       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| [RunIIfinal\_UL](../../tree/RunIIfinal_UL) | CMSSW\_10\_6       | :heavy_check_mark: | :white_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| [CMSSW\_11\_X\_Y](../../tree/CMSSW_11_X_Y) | CMSSW\_11          | :heavy_check_mark: | :white_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+
+
 ## Available trees 
 
 If you do not need changes to the default code, you can simply use existing flat tag and probe trees, avalaible for both 2016, 2017 and 2018 (RunIIfinal branch):
@@ -12,15 +22,6 @@ In case you need L1 matching for the measurement of doubleEle HLT triggers, you 
 ```
 ls /eos/cms/store/group/phys_egamma/tnpTuples/tomc/2020-03-03/*/merged/*L1matched.root 
 ```
-
-## Overview of branches
-
-| Branch                                     | release            | tnpEleIDs          | tnpPhoIDs          | tnpEleTrig         | tnpEleReco         | miniAOD            |  AOD               |
-| ------------------------------------------ | ------------------ |:------------------:|:------------------:|:------------------:|:------------------:|:------------------:|:------------------:|
-| [RunIIfinal](../../tree/RunIIfinal)        | CMSSW\_10\_2       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :white_check_mark: |
-| [RunIIfinal\_UL](../../tree/RunIIfinal_UL) | CMSSW\_10\_6       | :heavy_check_mark: | :white_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :white_check_mark: |
-| [CMSSW\_11\_X\_Y](../../tree/CMSSW_11_X_Y) | CMSSW\_11          | :heavy_check_mark: | :white_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :white_check_mark: |
-
 
 ## To produce new tuples
 ### 1. Install (CMSSW\_10\_2\_10 or higher, works for 2016, 2017 and 2018 data/MC)
