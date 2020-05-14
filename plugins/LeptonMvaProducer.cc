@@ -145,9 +145,9 @@ void LeptonMvaProducer::produce(edm::Event & iEvent, const edm::EventSetup & iSe
       inputValues["LepGood_jetPtRelv2"]           = floats["ptRel"];
       inputValues["LepGood_jetDF"]                = deepFlavour;
       inputValues["LepGood_jetPtRatio"]           = std::min(floats["ptRatio"],(float)1.5);
-      inputValues["LepGood_dxy"]                  = log(probe.dB(pat::Electron::PV2D));
+      inputValues["LepGood_dxy"]                  = log(fabs(probe.dB(pat::Electron::PV2D)));
       inputValues["LepGood_sip3d"]                = fabs(probe.dB(pat::Electron::PV3D)/probe.edB(pat::Electron::PV3D));
-      inputValues["LepGood_dz"]                   = log(probe.dB(pat::Electron::PVDZ));
+      inputValues["LepGood_dz"]                   = log(fabs(probe.dB(pat::Electron::PVDZ)));
       inputValues["LepGood_mvaFall17V2noIso"]     = floats["mvas"];
     } else if(leptonMvaType_=="leptonMvaGhent"){
       inputValues["pt"]                     = pp->pt();
@@ -159,9 +159,9 @@ void LeptonMvaProducer::produce(edm::Event & iEvent, const edm::EventSetup & iSe
       inputValues["relIso"]                 = floats["PFIsoAll"];
       inputValues["deepCsvClosestJet"]      = deepCsv;
       inputValues["ptRatio"]                = std::min(floats["ptRatio"],(float)1.5);
-      inputValues["dxy"]                    = log(probe.dB(pat::Electron::PV2D));
+      inputValues["dxy"]                    = log(fabs(probe.dB(pat::Electron::PV2D)));
       inputValues["sip3d"]                  = fabs(probe.dB(pat::Electron::PV3D)/probe.edB(pat::Electron::PV3D));
-      inputValues["dz"]                     = log(probe.dB(pat::Electron::PVDZ));
+      inputValues["dz"]                     = log(fabs(probe.dB(pat::Electron::PVDZ)));
       inputValues["electronMvaSpring16GP"]  = floats["mvas"]; // because these names actually differ given on the training
       inputValues["electronMvaFall17NoIso"] = floats["mvas"];
     } else if(leptonMvaType_=="leptonMvaTOP"){
@@ -174,9 +174,9 @@ void LeptonMvaProducer::produce(edm::Event & iEvent, const edm::EventSetup & iSe
       inputValues["relIso"]                 = floats["PFIsoAll"];
       inputValues["bTagDeepJetClosestJet"]  = deepFlavour;
       inputValues["ptRatio"]                = std::min(floats["ptRatio"],(float)1.5);
-      inputValues["dxylog"]                 = log(probe.dB(pat::Electron::PV2D));
+      inputValues["dxylog"]                 = log(fabs(probe.dB(pat::Electron::PV2D)));
       inputValues["sip3d"]                  = fabs(probe.dB(pat::Electron::PV3D)/probe.edB(pat::Electron::PV3D));
-      inputValues["dzlog"]                  = log(probe.dB(pat::Electron::PVDZ));
+      inputValues["dzlog"]                  = log(fabs(probe.dB(pat::Electron::PVDZ)));
       inputValues["mvaIdFall17v2noIso"]     = floats["mvas"];
     } else {
       throw cms::Exception("unknownLeptonMvaType") << "Please add " << leptonMvaType_ << " definitions to " << __FILE__ << " at line " <<  __LINE__;
