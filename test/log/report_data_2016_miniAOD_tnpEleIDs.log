@@ -16,12 +16,15 @@ Branches which do not differ:
 -----------------------------
 Increase verbosity (-v) to show this
 
-Entries: 198
+Entries: 195
 
 Branches which differ:
 ----------------------
+el_leptonMva_TOP : MSE 726539.727585
+el_leptonMva_ghent : MSE 726353.278324
+el_leptonMva_ttH : MSE 726140.834235
 
-Entries: 0
+Entries: 3
 
 Branches found in reference but not in target:
 ----------------------------------------------
