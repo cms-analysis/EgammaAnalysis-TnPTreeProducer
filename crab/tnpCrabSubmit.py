@@ -4,7 +4,7 @@ import os
 #
 # Example script to submit TnPTreeProducer to crab
 #
-submitVersion = "2020-03-03"
+submitVersion = "2020-05-13"
 doL1matching  = False
 
 defaultArgs   = ['doEleID=True','doPhoID=True','doTrigger=True']
@@ -18,7 +18,6 @@ os.system('(git log -n 1;git diff) &> /eos/cms/%s/git.log' % mainOutputDir)
 #
 # Common CRAB settings
 #
-from WMCore.Configuration import Configuration
 from CRABClient.UserUtilities import config
 config = config()
 
@@ -54,7 +53,7 @@ from CRABAPI.RawCommand import crabCommand
 from CRABClient.ClientExceptions import ClientException
 from httplib import HTTPException
 
-def submit(config, requestName, sample, era, globalTag, json, extraParam=[]):
+def submit(config, requestName, sample, era, json, extraParam=[]):
   isMC                        = 'SIM' in sample
   config.General.requestName  = '%s_%s' % (era, requestName)
   config.Data.inputDataset    = sample
@@ -62,7 +61,7 @@ def submit(config, requestName, sample, era, globalTag, json, extraParam=[]):
   config.Data.splitting       = 'FileBased' if isMC else 'LumiBased'
   config.Data.lumiMask        = None if isMC else json
   config.Data.unitsPerJob     = 5 if isMC else 100
-  config.JobType.pyCfgParams  = defaultArgs + ['isMC=True' if isMC else 'isMC=False', 'GT=%s' % globalTag, 'era=%s' % era] + extraParam
+  config.JobType.pyCfgParams  = defaultArgs + ['isMC=True' if isMC else 'isMC=False', 'era=%s' % era] + extraParam
 
   print config
   try:                           crabCommand('submit', config = config)
@@ -76,61 +75,55 @@ def submit(config, requestName, sample, era, globalTag, json, extraParam=[]):
 # In case of doL1matching=True, vary the L1Threshold and use sub-json
 #
 from multiprocessing import Process
-def submitWrapper(requestName, sample, era, globalTag, extraParam=[]):
+def submitWrapper(requestName, sample, era, extraParam=[]):
   if doL1matching:
     from getLeg1ThresholdForDoubleEle import getLeg1ThresholdForDoubleEle
     for leg1Threshold, json in getLeg1ThresholdForDoubleEle(era):
       print 'Submitting for leg 1 threshold %s' % (leg1Threshold)
-      p = Process(target=submit, args=(config, '%s_leg1Threshold%s' % (requestName, leg1Threshold), sample, era, globalTag, json, extraParam + ['L1Threshold=%s' % leg1Threshold]))
+      p = Process(target=submit, args=(config, '%s_leg1Threshold%s' % (requestName, leg1Threshold), sample, era, json, extraParam + ['L1Threshold=%s' % leg1Threshold]))
       p.start()
       p.join()
   else:
-    p = Process(target=submit, args=(config, requestName, sample, era, globalTag, getLumiMask(era), extraParam))
+    p = Process(target=submit, args=(config, requestName, sample, era, getLumiMask(era), extraParam))
     p.start()
     p.join()
 
 
 #
-# List of samples to submit, with eras and global tags
+# List of samples to submit, with eras
 # If you would switch to AOD, don't forget to add 'isAOD=True' to the defaultArgs!
 #
 era       = '2016'
-globalTag = '94X_dataRun2_v10'
-submitWrapper('Run2016B', '/SingleElectron/Run2016B-07Aug17_ver2-v2/MINIAOD', era, globalTag, ['is80X=True'])
-submitWrapper('Run2016C', '/SingleElectron/Run2016C-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
-submitWrapper('Run2016D', '/SingleElectron/Run2016D-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
-submitWrapper('Run2016E', '/SingleElectron/Run2016E-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
-submitWrapper('Run2016F', '/SingleElectron/Run2016F-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
-submitWrapper('Run2016G', '/SingleElectron/Run2016G-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
-submitWrapper('Run2016H', '/SingleElectron/Run2016H-07Aug17-v1/MINIAOD', era, globalTag, ['is80X=True'])
+submitWrapper('Run2016B', '/SingleElectron/Run2016B-07Aug17_ver2-v2/MINIAOD', era, ['is80X=True'])
+submitWrapper('Run2016C', '/SingleElectron/Run2016C-07Aug17-v1/MINIAOD', era, ['is80X=True'])
+submitWrapper('Run2016D', '/SingleElectron/Run2016D-07Aug17-v1/MINIAOD', era, ['is80X=True'])
+submitWrapper('Run2016E', '/SingleElectron/Run2016E-07Aug17-v1/MINIAOD', era, ['is80X=True'])
+submitWrapper('Run2016F', '/SingleElectron/Run2016F-07Aug17-v1/MINIAOD', era, ['is80X=True'])
+submitWrapper('Run2016G', '/SingleElectron/Run2016G-07Aug17-v1/MINIAOD', era, ['is80X=True'])
+submitWrapper('Run2016H', '/SingleElectron/Run2016H-07Aug17-v1/MINIAOD', era, ['is80X=True'])
 
-globalTag = '94X_mcRun2_asymptotic_v3'
-submitWrapper('DY_NLO', '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/MINIAODSIM', era, globalTag)
-submitWrapper('DY_LO',  '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v2/MINIAODSIM', era, globalTag)
+submitWrapper('DY_NLO', '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/MINIAODSIM', era)
+submitWrapper('DY_LO',  '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v2/MINIAODSIM', era)
 
 era       = '2017'
-globalTag = '94X_dataRun2_v11'
-submitWrapper('Run2017B', '/SingleElectron/Run2017B-31Mar2018-v1/MINIAOD', era, globalTag)
-submitWrapper('Run2017C', '/SingleElectron/Run2017C-31Mar2018-v1/MINIAOD', era, globalTag)
-submitWrapper('Run2017D', '/SingleElectron/Run2017D-31Mar2018-v1/MINIAOD', era, globalTag)
-submitWrapper('Run2017E', '/SingleElectron/Run2017E-31Mar2018-v1/MINIAOD', era, globalTag)
-submitWrapper('Run2017F', '/SingleElectron/Run2017F-31Mar2018-v1/MINIAOD', era, globalTag)
+submitWrapper('Run2017B', '/SingleElectron/Run2017B-31Mar2018-v1/MINIAOD', era)
+submitWrapper('Run2017C', '/SingleElectron/Run2017C-31Mar2018-v1/MINIAOD', era)
+submitWrapper('Run2017D', '/SingleElectron/Run2017D-31Mar2018-v1/MINIAOD', era)
+submitWrapper('Run2017E', '/SingleElectron/Run2017E-31Mar2018-v1/MINIAOD', era)
+submitWrapper('Run2017F', '/SingleElectron/Run2017F-31Mar2018-v1/MINIAOD', era)
 
-globalTag = '94X_mc2017_realistic_v17'
-submitWrapper('DY1_LO',     '/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM', era, globalTag)
-submitWrapper('DY1_LO_ext', '/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_v3_94X_mc2017_realistic_v14_ext1-v2/MINIAODSIM', era, globalTag)
-submitWrapper('DY_NLO',     '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM',  era, globalTag)
-submitWrapper('DY_NLO_ext', '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/MINIAODSIM', era, globalTag)
+submitWrapper('DY1_LO',     '/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM', era)
+submitWrapper('DY1_LO_ext', '/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_v3_94X_mc2017_realistic_v14_ext1-v2/MINIAODSIM', era)
+submitWrapper('DY_NLO',     '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM',  era)
+submitWrapper('DY_NLO_ext', '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/MINIAODSIM', era)
 
 
 
 era       = '2018'
-globalTag = '102X_dataRun2_v12'
-submitWrapper('Run2018A', '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', era, globalTag)
-submitWrapper('Run2018B', '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', era, globalTag)
-submitWrapper('Run2018C', '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', era, globalTag)
-submitWrapper('Run2018D', '/EGamma/Run2018D-22Jan2019-v2/MINIAOD', era, globalTag)
+submitWrapper('Run2018A', '/EGamma/Run2018A-17Sep2018-v2/MINIAOD', era)
+submitWrapper('Run2018B', '/EGamma/Run2018B-17Sep2018-v1/MINIAOD', era)
+submitWrapper('Run2018C', '/EGamma/Run2018C-17Sep2018-v1/MINIAOD', era)
+submitWrapper('Run2018D', '/EGamma/Run2018D-22Jan2019-v2/MINIAOD', era)
 
-globalTag = '102X_upgrade2018_realistic_v20'
-submitWrapper('DY',     '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era, globalTag)
-submitWrapper('DY_pow', '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era, globalTag)
+submitWrapper('DY',     '/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era)
+submitWrapper('DY_pow', '/DYToEE_M-50_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15-v1/MINIAODSIM', era)
