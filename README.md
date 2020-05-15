@@ -10,6 +10,7 @@ TnP package for EGM
 | [RunIIfinal\_UL](../../tree/RunIIfinal_UL) | CMSSW\_10\_6       | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 | [CMSSW\_11\_X\_Y](../../tree/CMSSW_11_X_Y) | CMSSW\_11          | :heavy_check_mark: | :white_check_mark: | :heavy_check_mark: | :white_check_mark: |
 
+Note: do not use the RunIIfinal\_UL/CMSSW\_10\_6 branch on other samples than ultra-legacy, because of a dataformat chance CMSSW\_10\_6 can only be used for ultra-legacy.
 
 ## Available trees 
 

@@ -18,15 +18,15 @@ def system(command):
 #
 # Simply run a test for both data/MC for 2016, 2017 and 2018
 #
-for isAOD in [False]:
+for isAOD in [False]: # No AOD test samples available on lxplus, so test only miniAOD
   if isAOD: treesToRun = ['tnpEleReco']
   else:     treesToRun = ['tnpEleIDs', 'tnpPhoIDs', 'tnpEleTrig']
 
   for isMC in [False, True]:
     for era in ['2016', '2017', '2018']:
 
-      options  = ['era=%s maxEvents=1000' % era]
-      options += ['isAOD=True'] if isAOD else []
+      options  = ['era=%s' % era, 'maxEvents=1000']
+      options += ['isAOD=True', 'doRECO=True'] if isAOD else ['doEleID=True', 'doPhoID=True', 'doTrigger=True']
       options += ['isMC=True'] if isMC else []
       system('source /cvmfs/cms.cern.ch/cmsset_default.sh;eval `scram runtime -sh`;cmsRun ../python/TnPTreeProducer_cfg.py %s' % ' '.join(options))
 
