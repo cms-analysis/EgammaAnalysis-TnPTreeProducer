@@ -1,7 +1,7 @@
 #!/bin/env python
 import os, glob, ROOT, subprocess
 
-submitVersion = "2020-02-28"
+submitVersion = "2020-05-14"
 mainOutputDir = '/eos/cms/store/group/phys_egamma/tnpTuples/%s/%s' % (os.environ['USER'], submitVersion)
 
 def system(command):
@@ -30,4 +30,23 @@ for eraDir in glob.glob(os.path.join(mainOutputDir, '20*')):
       if isValidRootFile(targetFile): continue
       else:                           os.system('rm %s' % targetFile)
 
-    print system('hadd %s %s' % (targetFile, ' '.join(filesToMerge)))
+    for f in filesToMerge:
+      if not isValidRootFile(f):
+        print 'WARNING: something wrong with %s' % f
+
+    if len(filesToMerge)>100:
+      print 'A lof of files to merge, this might take some time...'
+      tempTargets = []
+      for i in range(0,10):
+        tempTargetFile   = targetFile.replace('.root', '-temp%s.root' % str(i))
+        if os.path.exists(tempTargetFile): # if existing target file exists and looks ok, skip
+	  if isValidRootFile(tempTargetFile): continue
+	  else:                               os.system('rm %s' % tempTargetFile)
+        tempFilesToMerge = [f for f in filesToMerge if ('%s.root' % str(i)) in f]
+        print system('hadd %s %s' % (tempTargetFile, ' '.join(tempFilesToMerge)))
+        tempTargets.append(tempTargetFile)
+      print system('hadd %s %s' % (targetFile, ' '.join(tempTargets)))
+      for i in tempTargets:
+        system('rm %s' % i)
+    else:
+      print system('hadd %s %s' % (targetFile, ' '.join(filesToMerge)))
