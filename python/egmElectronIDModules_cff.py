@@ -51,19 +51,19 @@ def setIDs(process, options):
     #
     def addNewProbeModule(sequence, name, inputTag, cutNamesToMask=None):
       if cutNamesToMask:
-	temp = cms.EDProducer('PatElectronNm1Selector',
-			      input          = cms.InputTag("goodElectrons"),
-			      cut            = cms.string(options['ELECTRON_CUTS']),
-			      selection      = cms.InputTag(inputTag),
-			      cutNamesToMask = cutNamesToMask,
-			      )
+        temp = cms.EDProducer('PatElectronNm1Selector',
+                              input          = cms.InputTag("goodElectrons"),
+                              cut            = cms.string(options['ELECTRON_CUTS']),
+                              selection      = cms.InputTag(inputTag),
+                              cutNamesToMask = cutNamesToMask,
+                              )
       else:
-	temp = cms.EDProducer('GsfElectronSelectorByValueMap' if options['useAOD'] else 'PatElectronSelectorByValueMap',
-			      input     = cms.InputTag("goodElectrons"),
-			      cut       = cms.string(options['ELECTRON_CUTS']),
-			      selection = cms.InputTag(inputTag),
-			      id_cut    = cms.bool(True)
-			     )
+        temp = cms.EDProducer('GsfElectronSelectorByValueMap' if options['useAOD'] else 'PatElectronSelectorByValueMap',
+                              input     = cms.InputTag("goodElectrons"),
+                              cut       = cms.string(options['ELECTRON_CUTS']),
+                              selection = cms.InputTag(inputTag),
+                              id_cut    = cms.bool(True)
+                             )
       setattr(process, 'probeEle%s' % name, temp)
       sequence += temp
 

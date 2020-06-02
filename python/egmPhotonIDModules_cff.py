@@ -32,19 +32,19 @@ def setIDs(process, options):
     #
     def addNewProbeModule(sequence, name, inputTag, cutNamesToMask=None):
       if cutNamesToMask:
-	temp = cms.EDProducer('PatPhotonNm1Selector',
-			      input          = cms.InputTag("goodPhotons"),
-			      cut            = cms.string(options['PHOTON_CUTS']),
-			      selection      = cms.InputTag(inputTag),
-			      cutNamesToMask = cutNamesToMask,
-			      )
+        temp = cms.EDProducer('PatPhotonNm1Selector',
+                              input          = cms.InputTag("goodPhotons"),
+                              cut            = cms.string(options['PHOTON_CUTS']),
+                              selection      = cms.InputTag(inputTag),
+                              cutNamesToMask = cutNamesToMask,
+                              )
       else:
-	temp = cms.EDProducer('PhotonSelectorByValueMap' if options['useAOD'] else 'PatPhotonSelectorByValueMap',
-			      input     = cms.InputTag("goodPhotons"),
-			      cut       = cms.string(options['PHOTON_CUTS']),
-			      selection = cms.InputTag(inputTag),
-			      id_cut    = cms.bool(True)
-			     )
+        temp = cms.EDProducer('PhotonSelectorByValueMap' if options['useAOD'] else 'PatPhotonSelectorByValueMap',
+                              input     = cms.InputTag("goodPhotons"),
+                              cut       = cms.string(options['PHOTON_CUTS']),
+                              selection = cms.InputTag(inputTag),
+                              id_cut    = cms.bool(True)
+                             )
       setattr(process, 'probePho%s' % name, temp)
       sequence += temp
 
