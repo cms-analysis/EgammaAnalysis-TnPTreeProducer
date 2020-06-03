@@ -48,6 +48,8 @@ private:
   edm::EDGetTokenT<reco::ConversionCollection> conversionsToken_;
   edm::EDGetTokenT<reco::BeamSpot> beamSpotToken_;
   edm::EDGetTokenT<edm::View<reco::Candidate>> pfCandidatesToken_;
+
+  bool isMiniAODformat;
 };
 
 template<class T>
@@ -75,6 +77,8 @@ ElectronVariableHelper<T>::ElectronVariableHelper(const edm::ParameterSet & iCon
   produces<edm::ValueMap<float> >("ioemiop");
   produces<edm::ValueMap<float> >("5x5circularity");
   produces<edm::ValueMap<float> >("pfLeptonIsolation");
+
+  isMiniAODformat = true;
 }
 
 template<class T>
@@ -231,13 +235,17 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
   writeValueMap(iEvent, probes, ocVals, "5x5circularity");
 
   // PF lepton isolations (will only work in miniAOD)
-  try {
-    auto pfLeptonIsolations = computePfLeptonIsolations(*probes, *pfCandidates);
-    for(unsigned int i = 0; i < probes->size(); ++i){
-      pfLeptonIsolations[i] /= (*probes)[i].pt();
+  if(isMiniAODformat){
+    try {
+      auto pfLeptonIsolations = computePfLeptonIsolations(*probes, *pfCandidates);
+      for(unsigned int i = 0; i < probes->size(); ++i){
+	pfLeptonIsolations[i] /= (*probes)[i].pt();
+      }
+      writeValueMap(iEvent, probes, pfLeptonIsolations, "pfLeptonIsolation");
+    } catch (std::bad_cast){
+      isMiniAODformat = false;
     }
-    writeValueMap(iEvent, probes, pfLeptonIsolations, "pfLeptonIsolation");
-  } catch (std::bad_cast){}
+  }
 }
 
 #endif
