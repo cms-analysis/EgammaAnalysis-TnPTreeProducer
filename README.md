@@ -12,17 +12,28 @@ TnP package for EGM
 
 Note: do not use the RunIIfinal\_UL/CMSSW\_10\_6 branch on other samples than ultra-legacy, because of a dataformat chance CMSSW\_10\_6 can only be used for ultra-legacy.
 
-## Available trees 
+## Available tuples 
 
+### ReReco 2016, 2017 and 2018
 If you do not need changes to the default code, you can simply use existing flat tag and probe trees, avalaible for both 2016, 2017 and 2018 (RunIIfinal branch):
 ```
-ls /eos/cms/store/group/phys_egamma/tnpTuples/tomc/2020-02-28/*/merged/ 
+ls /eos/cms/store/group/phys_egamma/tnpTuples/tomc/2020-05-14/*/merged/ 
 ``` 
-These inlcude the tnpEleTrig, tnpEleIDs and tnpPhoIDs trees.
+These inlcude the tnpEleTrig, tnpEleIDs and tnpPhoIDs trees produced with the RunIIfinal branch.
+*Main change with respect to the 2020-02-28 production is the inclusion of leptonMva's* 
+
+### ReReco 2016, 2017 and 2018 - L1 matched
 In case you need L1 matching for the measurement of doubleEle HLT triggers, you can use the tnpEleTrig trees found in:
 ```
 ls /eos/cms/store/group/phys_egamma/tnpTuples/tomc/2020-03-03/*/merged/*L1matched.root 
 ```
+
+### UL2017 and UL2018
+For ultra-legacy  we have tnpEleTrig, tnpEleIDs and tnpPhoIDs trees (produced with the RunIIfinal\_UL) branch available at:
+```
+ls /eos/cms/store/group/phys_egamma/tnpTuples/tomc/2020-05-20/*/merged/ 
+```
+
 
 ## To produce new tuples
 ### 1. Install (CMSSW\_10\_2\_10 or higher, works for 2016, 2017 and 2018 data/MC)
