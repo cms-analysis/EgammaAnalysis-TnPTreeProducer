@@ -29,7 +29,7 @@ registerOption('includeSUSY', False,    'Add also the variables used by SUSY')
 
 registerOption('HLTname',     'HLT',    'HLT process name (default HLT)', optionType=VarParsing.varType.string) # HLTname was HLT2 in now outdated reHLT samples
 registerOption('GT',          'auto',   'Global Tag to be used', optionType=VarParsing.varType.string)
-registerOption('era',         '2018',   'Data-taking era: 2016, 2017 or 2018', optionType=VarParsing.varType.string)
+registerOption('era',         '2018',   'Data-taking era: 2016, 2017, 2018, UL2017 or UL2018', optionType=VarParsing.varType.string)
 registerOption('logLevel',    'INFO',   'Loglevel: could be DEBUG, INFO, WARNING, ERROR', optionType=VarParsing.varType.string)
 
 registerOption('L1Threshold',  0,       'Threshold for L1 matched objects', optionType=VarParsing.varType.int)
@@ -41,11 +41,15 @@ varOptions.parseArguments()
 ###################################################################
 from EgammaAnalysis.TnPTreeProducer.logger import getLogger
 log = getLogger(varOptions.logLevel)
-if varOptions.isAOD and varOptions.doEleID:        log.warning('AOD is not supported for doEleID, please consider using miniAOD')
-if varOptions.isAOD and varOptions.doPhoID:        log.warning('AOD is not supported for doPhoID, please consider using miniAOD')
-if varOptions.isAOD and varOptions.doTrigger:      log.warning('AOD is not supported for doTrigger, please consider using miniAOD')
-if not varOptions.isAOD and varOptions.doRECO:     log.warning('miniAOD is not supported for doRECO, please consider using AOD')
-if varOptions.era not in ['2016', '2017', '2018']: log.error('%s is not a valid era' % options['era'])
+if varOptions.isAOD and varOptions.doEleID:    log.warning('AOD is not supported for doEleID, please consider using miniAOD')
+if varOptions.isAOD and varOptions.doPhoID:    log.warning('AOD is not supported for doPhoID, please consider using miniAOD')
+if varOptions.isAOD and varOptions.doTrigger:  log.warning('AOD is not supported for doTrigger, please consider using miniAOD')
+if not varOptions.isAOD and varOptions.doRECO: log.warning('miniAOD is not supported for doRECO, please consider using AOD')
+
+from EgammaAnalysis.TnPTreeProducer.cmssw_version import isReleaseAbove
+if varOptions.era not in ['2016', '2017', '2018', 'UL2017', 'UL2018']: log.error('%s is not a valid era' % varOptions.era)
+if ('UL' in varOptions.era)!=(isReleaseAbove(10, 6)):
+  log.error('Inconsistent release for era %s. Use CMSSW_10_6_X for UL and CMSSW_10_2_X for rereco' % varOptions.era)
 
 if varOptions.includeSUSY: log.info('Including variables for SUSY')
 if varOptions.doEleID:     log.info('Producing electron SF tree')
@@ -92,20 +96,24 @@ options['OUTPUT_FILE_NAME']     = "TnPTree_%s.root" % ("mc" if options['isMC'] e
 #################################################
 if varOptions.GT == "auto":
   if options['isMC']:
-    if options['era'] == '2016': options['GLOBALTAG'] = '94X_mcRun2_asymptotic_v3'
-    if options['era'] == '2017': options['GLOBALTAG'] = '94X_mc2017_realistic_v17'
-    if options['era'] == '2018': options['GLOBALTAG'] = '102X_upgrade2018_realistic_v20'
+    if options['era'] == '2016':   options['GLOBALTAG'] = '94X_mcRun2_asymptotic_v3'
+    if options['era'] == '2017':   options['GLOBALTAG'] = '94X_mc2017_realistic_v17'
+    if options['era'] == '2018':   options['GLOBALTAG'] = '102X_upgrade2018_realistic_v20'
+    if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_dataRun2_v28'
+    if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_dataRun2_v28'
   else:
-    if options['era'] == '2016': options['GLOBALTAG'] = '94X_dataRun2_v10'
-    if options['era'] == '2017': options['GLOBALTAG'] = '94X_dataRun2_v11'
-    if options['era'] == '2018': options['GLOBALTAG'] = '102X_dataRun2_v12'
+    if options['era'] == '2016':   options['GLOBALTAG'] = '94X_dataRun2_v10'
+    if options['era'] == '2017':   options['GLOBALTAG'] = '94X_dataRun2_v11'
+    if options['era'] == '2018':   options['GLOBALTAG'] = '102X_dataRun2_v12'
+    if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_mc2017_realistic_v7'
+    if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_upgrade2018_realistic_v11_L1v1'
 else:
   options['GLOBALTAG'] = varOptions.GT
 
 #################################################
 # Settings for trigger tag and probe measurement
 #################################################
-if options['era'] == '2016':
+if '2016' in options['era']:
   options['TnPPATHS']           = cms.vstring("HLT_Ele27_eta2p1_WPTight_Gsf_v*")
   options['TnPHLTTagFilters']   = cms.vstring("hltEle27erWPTightGsfTrackIsoFilter")
   options['TnPHLTProbeFilters'] = cms.vstring()
@@ -116,7 +124,7 @@ if options['era'] == '2016':
                                    "passHltDoubleEle33CaloIdLMWUnsLeg" :                cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
                                   } # Some examples, you can add multiple filters (or OR's of filters, note the vstring) here, each of them will be added to the tuple
 
-elif options['era'] == '2017':
+elif '2017' in options['era']:
   options['TnPPATHS']           = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*")
   options['TnPHLTTagFilters']   = cms.vstring("hltEle32L1DoubleEGWPTightGsfTrackIsoFilter","hltEGL1SingleEGOrFilter")
   options['TnPHLTProbeFilters'] = cms.vstring()
@@ -128,7 +136,7 @@ elif options['era'] == '2017':
                                    "passHltDoubleEle33CaloIdLMWUnsLeg" :                cms.vstring("hltDiEle33CaloIdLMWPMS2UnseededFilter"),
                                   }
 
-elif options['era'] == '2018':
+elif '2018'  in options['era']:
   options['TnPPATHS']           = cms.vstring("HLT_Ele32_WPTight_Gsf_v*")
   options['TnPHLTTagFilters']   = cms.vstring("hltEle32WPTightGsfTrackIsoFilter")
   options['TnPHLTProbeFilters'] = cms.vstring()
@@ -147,15 +155,8 @@ options['L1Threshold']          = varOptions.L1Threshold
 ###################################################################
 ## Define input files for test local run
 ###################################################################
-if options['era'] == '2016':
-  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_2016 as inputs
-  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_2016 as inputs
-if options['era'] == '2017':
-  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_2017 as inputs
-  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_2017 as inputs
-if options['era'] == '2018':
-  if options['useAOD'] : from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesAOD_2018 as inputs
-  else:                  from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import filesMiniAOD_2018 as inputs
+importTestFiles = 'from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff import files%s_%s as inputs' % ('AOD' if options['useAOD'] else 'MiniAOD', options['era'])
+exec(importTestFiles)
 
 options['INPUT_FILE_NAME'] = inputs['mc' if options['isMC'] else 'data']
 

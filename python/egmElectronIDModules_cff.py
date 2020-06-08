@@ -5,6 +5,7 @@ import FWCore.ParameterSet.Config as cms
 ###################################################################
 
 from PhysicsTools.SelectorUtils.tools.vid_id_tools import *
+from EgammaAnalysis.TnPTreeProducer.cmssw_version import isReleaseAbove
 
 def setIDs(process, options):
 
@@ -33,7 +34,9 @@ def setIDs(process, options):
 
     process.egmGsfElectronIDs.physicsObjectSrc            = cms.InputTag(options['ELECTRON_COLL'])
     process.electronMVAValueMapProducer.src               = cms.InputTag(options['ELECTRON_COLL'])
-    process.electronRegressionValueMapProducer.srcMiniAOD = cms.InputTag(options['ELECTRON_COLL'])
+
+    if not isReleaseAbove(10, 6): # only for CMSSW_10_2
+      process.electronRegressionValueMapProducer.srcMiniAOD = cms.InputTag(options['ELECTRON_COLL'])
 
     #
     # One tag module --> cut based tight 94X V2

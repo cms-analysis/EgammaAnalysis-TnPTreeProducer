@@ -1,9 +1,9 @@
 import FWCore.ParameterSet.Config as cms
 
 def setPileUpConfiguration(process, options):
-  if options['era']=='2016':   from SimGeneral.MixingModule.mix_2016_25ns_Moriond17MC_PoissonOOTPU_cfi import mix
-  elif options['era']=='2017': from SimGeneral.MixingModule.mix_2017_25ns_WinterMC_PUScenarioV1_PoissonOOTPU_cfi import mix
-  elif options['era']=='2018': from SimGeneral.MixingModule.mix_2018_25ns_JuneProjectionFull18_PoissonOOTPU_cfi import mix
+  if   '2016' in options['era']: from SimGeneral.MixingModule.mix_2016_25ns_Moriond17MC_PoissonOOTPU_cfi import mix
+  elif '2017' in options['era']: from SimGeneral.MixingModule.mix_2017_25ns_WinterMC_PUScenarioV1_PoissonOOTPU_cfi import mix
+  elif '2018' in options['era']: from SimGeneral.MixingModule.mix_2018_25ns_JuneProjectionFull18_PoissonOOTPU_cfi import mix
 
   #### DATA PU DISTRIBUTIONS
   data_pu_distribs = {"Jamboree_golden_JSON" : [5.12e+04,3.66e+05,5.04e+05,4.99e+05,7.5e+05,1.1e+06,2.53e+06,9.84e+06,4.4e+07,1.14e+08,1.94e+08,2.63e+08,2.96e+08,2.74e+08,2.06e+08,1.26e+08,6.38e+07,2.73e+07,1.1e+07,5.2e+06,3.12e+06,1.87e+06,9.35e+05,3.64e+05,1.1e+05,2.64e+04,5.76e+03,1.53e+03,594,278,131,59.8,26,10.8,4.29,1.62,0.587,0.203,0.0669,0.0211,0.00633,0.00182,0.000498,0.00013,3.26e-05,7.77e-06,1.77e-06,3.85e-07,7.99e-08,1.58e-08,3e-09,5.43e-10],
@@ -16,9 +16,9 @@ def setPileUpConfiguration(process, options):
                       "2018_DATA_xSec69.2mb": [2.91e+05,1.02e+06,3.12e+06,6.82e+06,1.2e+07,1.86e+07,2.75e+07,4e+07,5.65e+07,7.82e+07,1.09e+08,1.53e+08,2.12e+08,2.9e+08,3.89e+08,5.1e+08,6.54e+08,8.22e+08,1.01e+09,1.2e+09,1.39e+09,1.56e+09,1.71e+09,1.83e+09,1.93e+09,2e+09,2.06e+09,2.12e+09,2.17e+09,2.22e+09,2.27e+09,2.32e+09,2.35e+09,2.37e+09,2.38e+09,2.37e+09,2.33e+09,2.27e+09,2.18e+09,2.07e+09,1.92e+09,1.76e+09,1.58e+09,1.38e+09,1.19e+09,1e+09,8.27e+08,6.69e+08,5.3e+08,4.12e+08,3.15e+08,2.37e+08,1.76e+08,1.29e+08,9.41e+07,6.78e+07,4.85e+07,3.45e+07,2.44e+07,1.72e+07,1.2e+07,8.34e+06,5.75e+06,3.93e+06,2.66e+06,1.78e+06,1.18e+06,7.72e+05,5e+05,3.21e+05,2.03e+05,1.27e+05,7.91e+04,4.87e+04,2.97e+04,1.79e+04,1.07e+04,6.35e+03,3.73e+03,2.17e+03,1.25e+03,714,402,224,123,67.1,36,19,9.93,5.1,2.58,1.29,0.632,0.305,0.145,0.0679,0.0313,0.0142,0.0063,0.00276],
    }
 
-  if options['era']=='2016':   data_pu_distribution = data_pu_distribs['MORIOND2017_JSON_36fb_xSec69.2mb']
-  elif options['era']=='2017': data_pu_distribution = data_pu_distribs['2017_DATA_xSec69.2mb_94X_17Jan']
-  elif options['era']=='2018': data_pu_distribution = data_pu_distribs['2018_DATA_xSec69.2mb']
+  if   '2016' in options['era']: data_pu_distribution = data_pu_distribs['MORIOND2017_JSON_36fb_xSec69.2mb']
+  elif '2017' in options['era']: data_pu_distribution = data_pu_distribs['2017_DATA_xSec69.2mb_94X_17Jan']
+  elif '2018' in options['era']: data_pu_distribution = data_pu_distribs['2018_DATA_xSec69.2mb']
 
   process.pileupReweightingProducer = cms.EDProducer("PileupWeightProducer",
                                   pileupInfoTag = cms.InputTag("slimmedAddPileupInfo"),
