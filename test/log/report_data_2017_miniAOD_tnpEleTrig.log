@@ -10,13 +10,13 @@ Cut value:      0
 Trees properties:
 -----------------
 Number of events (target/reference): 53/53
-Number of branches (target/reference): 206/204
+Number of branches (target/reference): 206/206
 
 Branches which do not differ:
 -----------------------------
 Increase verbosity (-v) to show this
 
-Entries: 204
+Entries: 206
 
 Branches which differ:
 ----------------------
@@ -30,10 +30,8 @@ Entries: 0
 
 Branches found in target but not in reference:
 ----------------------------------------------
-el_closestJetDeepCsv
-el_closestJetDeepFlavour
 
-Entries: 2
+Entries: 0
 
 Branches in target with a single value in all entries:
 ------------------------------------------------------

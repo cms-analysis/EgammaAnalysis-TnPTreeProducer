@@ -10,20 +10,18 @@ Cut value:      0
 Trees properties:
 -----------------
 Number of events (target/reference): 114/114
-Number of branches (target/reference): 210/208
+Number of branches (target/reference): 210/210
 
 Branches which do not differ:
 -----------------------------
 Increase verbosity (-v) to show this
 
-Entries: 206
+Entries: 210
 
 Branches which differ:
 ----------------------
-el_ecalIso : MSE 7.89921447461
-el_hcalIso : MSE 8.07800401323
 
-Entries: 2
+Entries: 0
 
 Branches found in reference but not in target:
 ----------------------------------------------
@@ -32,10 +30,8 @@ Entries: 0
 
 Branches found in target but not in reference:
 ----------------------------------------------
-el_closestJetDeepCsv
-el_closestJetDeepFlavour
 
-Entries: 2
+Entries: 0
 
 Branches in target with a single value in all entries:
 ------------------------------------------------------
@@ -73,5 +69,5 @@ event_BeamSpot_y : value 0.168645992875
 event_BeamSpot_z : value -1.00376999378
 mc_probe_flag : value 1
 
-Entries: 16
+Entries: 14
 
