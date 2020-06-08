@@ -10,21 +10,18 @@ Cut value:      0
 Trees properties:
 -----------------
 Number of events (target/reference): 53/53
-Number of branches (target/reference): 204/204
+Number of branches (target/reference): 206/204
 
 Branches which do not differ:
 -----------------------------
 Increase verbosity (-v) to show this
 
-Entries: 201
+Entries: 204
 
 Branches which differ:
 ----------------------
-el_leptonMva_TOP : MSE 622202.272922
-el_leptonMva_ghent : MSE 621936.851077
-el_leptonMva_ttH : MSE 621984.114685
 
-Entries: 3
+Entries: 0
 
 Branches found in reference but not in target:
 ----------------------------------------------
@@ -33,8 +30,10 @@ Entries: 0
 
 Branches found in target but not in reference:
 ----------------------------------------------
+el_closestJetDeepCsv
+el_closestJetDeepFlavour
 
-Entries: 0
+Entries: 2
 
 Branches in target with a single value in all entries:
 ------------------------------------------------------
