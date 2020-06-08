@@ -61,22 +61,23 @@ ElectronVariableHelper<T>::ElectronVariableHelper(const edm::ParameterSet & iCon
   beamSpotToken_(consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("beamSpot"))),
   pfCandidatesToken_(consumes<edm::View<reco::Candidate>>(iConfig.getParameter<edm::InputTag>("pfCandidates"))){
 
-  produces<edm::ValueMap<float> >("dz");
-  produces<edm::ValueMap<float> >("dxy");
-  produces<edm::ValueMap<float> >("sip");
-  produces<edm::ValueMap<float> >("missinghits");
-  produces<edm::ValueMap<float> >("gsfhits");
-  produces<edm::ValueMap<float> >("l1e");
-  produces<edm::ValueMap<float> >("l1et");
-  produces<edm::ValueMap<float> >("l1eta");
-  produces<edm::ValueMap<float> >("l1phi");
-  produces<edm::ValueMap<float> >("pfPt");
-  produces<edm::ValueMap<float> >("convVtxFitProb");
-  produces<edm::ValueMap<float> >("kfhits");
-  produces<edm::ValueMap<float> >("kfchi2");
-  produces<edm::ValueMap<float> >("ioemiop");
-  produces<edm::ValueMap<float> >("5x5circularity");
-  produces<edm::ValueMap<float> >("pfLeptonIsolation");
+  produces<edm::ValueMap<float>>("dz");
+  produces<edm::ValueMap<float>>("dxy");
+  produces<edm::ValueMap<float>>("sip");
+  produces<edm::ValueMap<float>>("missinghits");
+  produces<edm::ValueMap<float>>("gsfhits");
+  produces<edm::ValueMap<float>>("l1e");
+  produces<edm::ValueMap<float>>("l1et");
+  produces<edm::ValueMap<float>>("l1eta");
+  produces<edm::ValueMap<float>>("l1phi");
+  produces<edm::ValueMap<float>>("pfPt");
+  produces<edm::ValueMap<float>>("convVtxFitProb");
+  produces<edm::ValueMap<float>>("kfhits");
+  produces<edm::ValueMap<float>>("kfchi2");
+  produces<edm::ValueMap<float>>("ioemiop");
+  produces<edm::ValueMap<float>>("5x5circularity");
+  produces<edm::ValueMap<float>>("pfLeptonIsolation");
+  produces<edm::ValueMap<float>>("hasMatchedConversion");
 
   isMiniAODformat = true;
 }
@@ -129,6 +130,8 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
 
   std::vector<float> gsfhVals;
 
+  std::vector<float> hasMatchedConversionVals;
+
   typename std::vector<T>::const_iterator probe, endprobes = probes->end();
 
   for (probe = probes->begin(); probe != endprobes; ++probe) {
@@ -177,6 +180,9 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     l1EtaVals.push_back(l1eta);
     l1PhiVals.push_back(l1phi);
     pfPtVals.push_back(pfpt);
+
+    // Store hasMatchedConversion (currently stored as float instead of bool, as it allows to implement it in the same way as other variables)
+    hasMatchedConversionVals.push_back((float)ConversionTools::hasMatchedConversion(*probe, conversions, beamSpot->position()));
 
     // Conversion vertex fit
     reco::ConversionRef convRef = ConversionTools::matchedConversion(*probe, conversions, beamSpot->position());
@@ -233,6 +239,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
   writeValueMap(iEvent, probes, kfchi2Vals, "kfchi2");
   writeValueMap(iEvent, probes, ioemiopVals, "ioemiop");
   writeValueMap(iEvent, probes, ocVals, "5x5circularity");
+  writeValueMap(iEvent, probes, hasMatchedConversionVals, "hasMatchedConversion");
 
   // PF lepton isolations (will only work in miniAOD)
   if(isMiniAODformat){

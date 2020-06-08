@@ -107,14 +107,16 @@ def leptonMvaSequence(process, options, tnpVars):
     #   (currently only adding most recent version of miniIso)
     #
     newVariables = {
-      'el_leptonMva_ttH'     : cms.InputTag('leptonMvaTTH:leptonMvaTTH'),
-      'el_leptonMva_ghent'   : cms.InputTag('leptonMvaGhent:leptonMvaGhent'),
-      'el_leptonMva_TOP'     : cms.InputTag('leptonMvaTOP:leptonMvaTOP'),
-      'el_miniIsoAll_fall17' : cms.InputTag('isoForEleFall17:miniIsoAll'),
-      'el_miniIsoChg_fall17' : cms.InputTag('isoForEleFall17:miniIsoChg'),
-      'el_relIso_fall17'     : cms.InputTag('isoForEleFall17:PFIsoAll'),
-      'el_ptRatio'           : cms.InputTag('ptRatioRelForEle:ptRatio'),
-      'el_ptRel'             : cms.InputTag('ptRatioRelForEle:ptRel'),
+      'el_leptonMva_ttH'         : cms.InputTag('leptonMvaTTH:leptonMvaTTH'),
+      'el_leptonMva_ghent'       : cms.InputTag('leptonMvaGhent:leptonMvaGhent'),
+      'el_leptonMva_TOP'         : cms.InputTag('leptonMvaTOP:leptonMvaTOP'),
+      'el_miniIsoAll_fall17'     : cms.InputTag('isoForEleFall17:miniIsoAll'),
+      'el_miniIsoChg_fall17'     : cms.InputTag('isoForEleFall17:miniIsoChg'),
+      'el_relIso_fall17'         : cms.InputTag('isoForEleFall17:PFIsoAll'),
+      'el_ptRatio'               : cms.InputTag('ptRatioRelForEle:ptRatio'),
+      'el_ptRel'                 : cms.InputTag('ptRatioRelForEle:ptRel'),
+      'el_closestJetDeepFlavour' : cms.InputTag('leptonMvaTOP:closestJetDeepFlavour'), # For those crazy people who want to add even more cuts on top of their leptonMva but can't tell why they need it
+      'el_closestJetDeepCsv'     : cms.InputTag('leptonMvaTOP:closestJetDeepCsv'),
     }
     for i, j in newVariables.iteritems():
       setattr(tnpVars.CommonStuffForGsfElectronProbe.variables, i, j)

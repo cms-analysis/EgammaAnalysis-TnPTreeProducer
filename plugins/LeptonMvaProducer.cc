@@ -68,6 +68,8 @@ LeptonMvaProducer::LeptonMvaProducer(const edm::ParameterSet & iConfig) :
       }
     }
     produces<edm::ValueMap<float>>(leptonMvaType_);
+    produces<edm::ValueMap<float>>("closestJetDeepCsv");
+    produces<edm::ValueMap<float>>("closestJetDeepFlavour");
 }
 
 
@@ -115,6 +117,8 @@ void LeptonMvaProducer::produce(edm::Event & iEvent, const edm::EventSetup & iSe
   }
 
   std::vector<float> leptonMvaValues;
+  std::vector<float> closestJetDeepCsvValues;
+  std::vector<float> closestJetDeepFlavourValues;
 
   size_t i = 0;
   for(const auto &probe: *probes){
@@ -132,7 +136,7 @@ void LeptonMvaProducer::produce(edm::Event & iEvent, const edm::EventSetup & iSe
 
       probb   = jet->bDiscriminator("pfDeepCSVJetTags:probb");
       probbb  = jet->bDiscriminator("pfDeepCSVJetTags:probbb");
-      deepCsv = std::isnan(probb+probb) ? 0. :  std::max(probb+probbb, (float)0.);
+      deepCsv = std::isnan(probb+probbb) ? 0. :  std::max(probb+probbb, (float)0.);
     }
 
     // If you need a new leptonMvaType, you can implement the mapping of the variables here:
@@ -185,6 +189,8 @@ void LeptonMvaProducer::produce(edm::Event & iEvent, const edm::EventSetup & iSe
 
     float leptonMva = reader->EvaluateMVA("BDTG method");
     leptonMvaValues.push_back(leptonMva);
+    closestJetDeepCsvValues.push_back(deepCsv);
+    closestJetDeepFlavourValues.push_back(deepFlavour);
 
     if(debug_){
       for(auto& pair : inputValues) std::cout << std::left << std::setw(30) << pair.first << "\t" << pair.second << std::endl;
@@ -195,6 +201,8 @@ void LeptonMvaProducer::produce(edm::Event & iEvent, const edm::EventSetup & iSe
   }
 
   writeValueMap(iEvent, probes, leptonMvaValues, leptonMvaType_);
+  writeValueMap(iEvent, probes, closestJetDeepCsvValues, "closestJetDeepCsv");
+  writeValueMap(iEvent, probes, closestJetDeepFlavourValues, "closestJetDeepFlavour");
 }
 
 
