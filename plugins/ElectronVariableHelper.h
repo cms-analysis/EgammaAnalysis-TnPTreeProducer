@@ -184,18 +184,29 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     // Store hasMatchedConversion (currently stored as float instead of bool, as it allows to implement it in the same way as other variables)
     hasMatchedConversionVals.push_back((float)ConversionTools::hasMatchedConversion(*probe, conversions, beamSpot->position()));
 
-    // Conversion vertex fit
-    reco::ConversionRef convRef = ConversionTools::matchedConversion(*probe, conversions, beamSpot->position());
 
+    // Conversion vertex fit
     float convVtxFitProb = -1.;
+
+    #if CMSSW_MAJOR_VERSION>=10 && CMSSW_MINOR_VERSION>=4
+    reco::Conversion const* convRef = ConversionTools::matchedConversion(*probe,*conversions, beamSpot->position());
+    if(!convRef==0) {
+        const reco::Vertex &vtx = convRef->conversionVertex();
+        if (vtx.isValid()) {
+            convVtxFitProb = TMath::Prob( vtx.chi2(),  vtx.ndof());
+        }
+    }
+    #else
+    reco::ConversionRef convRef = ConversionTools::matchedConversion(*probe, conversions, beamSpot->position());
     if(!convRef.isNull()) {
         const reco::Vertex &vtx = convRef.get()->conversionVertex();
         if (vtx.isValid()) {
             convVtxFitProb = TMath::Prob( vtx.chi2(),  vtx.ndof());
         }
     }
-
+    #endif
     convVtxFitProbVals.push_back(convVtxFitProb);
+
 
     // kf track related variables
     bool validKf=false;
