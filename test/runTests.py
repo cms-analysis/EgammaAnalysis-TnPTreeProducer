@@ -15,15 +15,21 @@ def system(command):
   except subprocess.CalledProcessError as e:
     print e.output
 
+from EgammaAnalysis.TnPTreeProducer.cmssw_version import isReleaseAbove
+if isReleaseAbove(10, 6): erasToTest = ['UL2017', 'UL2018']
+else:                     erasToTest = ['2016', '2017', '2018']
+
+
 #
 # Simply run a test for both data/MC for 2016, 2017 and 2018
 #
-for isAOD in [False]: # No AOD test samples available on lxplus, so test only miniAOD
+for isAOD in [True, False]:
   if isAOD: treesToRun = ['tnpEleReco']
   else:     treesToRun = ['tnpEleIDs', 'tnpPhoIDs', 'tnpEleTrig']
 
   for isMC in [False, True]:
-    for era in ['2016', '2017', '2018']:
+    for era in erasToTest:
+      if isAOD and not 'UL' in era: continue # don't have specified AOD test files yet for rereco
 
       options  = ['era=%s' % era, 'maxEvents=1000']
       options += ['isAOD=True', 'doRECO=True', 'doEleID=False', 'doPhoID=False', 'doTrigger=False'] if isAOD else ['doRECO=False', 'doEleID=True', 'doPhoID=True', 'doTrigger=True']
@@ -34,7 +40,7 @@ for isAOD in [False]: # No AOD test samples available on lxplus, so test only mi
       shutil.move('TnPTree_%s.root' % ('mc' if isMC else 'data'), outFile)
 
       for tree in treesToRun:
- 
+
 	report = 'log/report_%s_%s_%s_%s.log' % ('mc' if isMC else 'data', era, 'AOD' if isAOD else 'miniAOD', tree)
 
 	print ('Testing for options %s and tree %s...' % (' '.join(options), tree)),
@@ -51,7 +57,7 @@ for isAOD in [False]: # No AOD test samples available on lxplus, so test only mi
 		for line in section:
 		  print line,
 	      section=[]
-	    if 'Branches which differ' in line or 'Branches found' in line: 
+	    if 'Branches which differ' in line or 'Branches found' in line:
 	      scanSection=True
 	    if scanSection:
 	      section.append(line)
