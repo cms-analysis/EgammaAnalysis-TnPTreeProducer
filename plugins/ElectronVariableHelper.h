@@ -182,7 +182,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     pfPtVals.push_back(pfpt);
 
     // Store hasMatchedConversion (currently stored as float instead of bool, as it allows to implement it in the same way as other variables)
-    #if CMSSW_MAJOR_VERSION>=10 && CMSSW_MINOR_VERSION>=4
+    #if (CMSSW_MAJOR_VERSION>=10 && CMSSW_MINOR_VERSION>=4) || (CMSSW_MAJOR_VERSION>=11)
     hasMatchedConversionVals.push_back((float)ConversionTools::hasMatchedConversion(*probe, *conversions, beamSpot->position()));
     #else
     hasMatchedConversionVals.push_back((float)ConversionTools::hasMatchedConversion(*probe, conversions, beamSpot->position()));
@@ -191,7 +191,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     // Conversion vertex fit
     float convVtxFitProb = -1.;
 
-    #if CMSSW_MAJOR_VERSION>=10 && CMSSW_MINOR_VERSION>=4
+    #if (CMSSW_MAJOR_VERSION>=10 && CMSSW_MINOR_VERSION>=4) || (CMSSW_MAJOR_VERSION>=11)
     reco::Conversion const* convRef = ConversionTools::matchedConversion(*probe,*conversions, beamSpot->position());
     if(!convRef==0) {
         const reco::Vertex &vtx = convRef->conversionVertex();
