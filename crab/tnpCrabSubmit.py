@@ -4,7 +4,7 @@ import os
 #
 # Example script to submit TnPTreeProducer to crab
 #
-submitVersion = "2020-##-##" # add some date here
+submitVersion = "2020-06-09" # add some date here
 doL1matching  = False
 
 defaultArgs   = ['doEleID=True','doPhoID=True','doTrigger=True']
@@ -122,13 +122,13 @@ if isReleaseAbove(10,6):
 
 else:
   era       = '2016'
-  submitWrapper('Run2016B', '/SingleElectron/Run2016B-07Aug17_ver2-v2/MINIAOD', era, ['is80X=True'])
-  submitWrapper('Run2016C', '/SingleElectron/Run2016C-07Aug17-v1/MINIAOD', era, ['is80X=True'])
-  submitWrapper('Run2016D', '/SingleElectron/Run2016D-07Aug17-v1/MINIAOD', era, ['is80X=True'])
-  submitWrapper('Run2016E', '/SingleElectron/Run2016E-07Aug17-v1/MINIAOD', era, ['is80X=True'])
-  submitWrapper('Run2016F', '/SingleElectron/Run2016F-07Aug17-v1/MINIAOD', era, ['is80X=True'])
-  submitWrapper('Run2016G', '/SingleElectron/Run2016G-07Aug17-v1/MINIAOD', era, ['is80X=True'])
-  submitWrapper('Run2016H', '/SingleElectron/Run2016H-07Aug17-v1/MINIAOD', era, ['is80X=True'])
+  submitWrapper('Run2016B', '/SingleElectron/Run2016B-17Jul2018_ver2-v1/MINIAOD', era)
+  submitWrapper('Run2016C', '/SingleElectron/Run2016C-17Jul2018-v1/MINIAOD', era)
+  submitWrapper('Run2016D', '/SingleElectron/Run2016D-17Jul2018-v1/MINIAOD', era)
+  submitWrapper('Run2016E', '/SingleElectron/Run2016E-17Jul2018-v1/MINIAOD', era)
+  submitWrapper('Run2016F', '/SingleElectron/Run2016F-17Jul2018-v1/MINIAOD', era)
+  submitWrapper('Run2016G', '/SingleElectron/Run2016G-17Jul2018-v1/MINIAOD', era)
+  submitWrapper('Run2016H', '/SingleElectron/Run2016H-17Jul2018-v1/MINIAOD', era)
 
   submitWrapper('DY_NLO', '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/MINIAODSIM', era)
   submitWrapper('DY_LO',  '/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v2/MINIAODSIM', era)
