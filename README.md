@@ -41,7 +41,7 @@ ls /eos/cms/store/group/phys_egamma/tnpTuples/tomc/2020-05-20/*/merged/
 
 ```
 cmsrel CMSSW_10_2_22
-cd CMSSW_10_2_12/src
+cd CMSSW_10_2_22/src
 cmsenv
 git clone -b RunIIfinal https://github.com/tomcornelis/EgammaAnalysis-TnPTreeProducer EgammaAnalysis/TnPTreeProducer
 scram b -j8
