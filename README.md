@@ -18,10 +18,10 @@ Note: because of a dataformat CMSSW\_10\_6 can only be used for ultra-legacy sam
 ### ReReco 2016, 2017 and 2018
 If you do not need changes to the default code, you can simply use existing flat tag and probe trees, avalaible for both 2016, 2017 and 2018 (RunIIfinal branch):
 ```
-ls /eos/cms/store/group/phys_egamma/tnpTuples/tomc/2020-05-14/*/merged/
+ls /eos/cms/store/group/phys_egamma/tnpTuples/tomc/2020-06-09/*/merged/
 ```
 These inlcude the tnpEleTrig, tnpEleIDs and tnpPhoIDs trees produced with the RunIIfinal branch.
-*Main change with respect to the 2020-02-28 production is the inclusion of leptonMva's*
+*Main change with respect to the 2020-02-28 production is the inclusion of some additional branches, e.g. the leptonMva's*
 
 ### ReReco 2016, 2017 and 2018 - L1 matched
 In case you need L1 matching for the measurement of doubleEle HLT triggers, you can use the tnpEleTrig trees found in:
