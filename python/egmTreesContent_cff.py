@@ -124,7 +124,7 @@ EleProbeVariablesToStore = cms.PSet(
     el_found_hits     = cms.string("gsfTrack().found()"), # sometimes called valid_hits
     el_convVtxFitProb  = cms.InputTag("eleVarHelper:convVtxFitProb"),
 
-#    el_hasMatchedConversion = cms.InputTag("eleVarHelper:hasMatchedConversion"),
+    el_hasMatchedConversion = cms.InputTag("eleVarHelper:hasMatchedConversion"),
 
     # Track cluster matching
     el_ep             = cms.string("eSuperClusterOverP()"),
