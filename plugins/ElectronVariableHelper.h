@@ -149,7 +149,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
 
     mhVals.push_back(float(probe->gsfTrack()->hitPattern().numberOfLostHits(reco::HitPattern::MISSING_INNER_HITS)));
     gsfhVals.push_back(float(probe->gsfTrack()->hitPattern().trackerLayersWithMeasurement()));
-    float l1e = 999999.;    
+    float l1e = 999999.;
     float l1et = 999999.;
     float l1eta = 999999.;
     float l1phi = 999999.;
@@ -185,7 +185,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
     #if (CMSSW_MAJOR_VERSION>=10 && CMSSW_MINOR_VERSION>=4) || (CMSSW_MAJOR_VERSION>=11)
     hasMatchedConversionVals.push_back((float)ConversionTools::hasMatchedConversion(*probe, *conversions, beamSpot->position()));
     #else
-    hasMatchedConversionVals.push_back((float)ConversionTools::hasMatchedConversion(*probe, conversions, beamSpot->position()));
+    hasMatchedConversionVals.push_back((float)ConversionTools::hasMatchedConversion(*probe, *conversions, beamSpot->position()));
     #endif
 
     // Conversion vertex fit
@@ -200,9 +200,9 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
         }
     }
     #else
-    reco::ConversionRef convRef = ConversionTools::matchedConversion(*probe, conversions, beamSpot->position());
-    if(!convRef.isNull()) {
-        const reco::Vertex &vtx = convRef.get()->conversionVertex();
+    reco::Conversion const* convRef = ConversionTools::matchedConversion(*probe, *conversions, beamSpot->position());
+    if(!convRef == 0) {
+        const reco::Vertex &vtx = convRef->conversionVertex();
         if (vtx.isValid()) {
             convVtxFitProb = TMath::Prob( vtx.chi2(),  vtx.ndof());
         }
