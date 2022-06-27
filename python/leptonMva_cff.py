@@ -81,9 +81,11 @@ def leptonMvaSequence(process, options, tnpVars):
       debug                = cms.bool(False), # set to True if you want to sync with your analysis
     )
 
+    # RemoveStrings = ['20', 'UL', 'preVFP', 'postVFP']
+
     process.leptonMvaTOP = cms.EDProducer('LeptonMvaProducer',
       leptonMvaType        = cms.string("leptonMvaTOP"),
-      weightFile           = cms.FileInPath('EgammaAnalysis/TnPTreeProducer/data/el_TOP%s_BDTG.weights.xml' % (options['era'].replace('20', '').replace('UL', ''))),
+      weightFile           = cms.FileInPath('EgammaAnalysis/TnPTreeProducer/data/el_TOP%s_BDTG.weights.xml' % (options['era'].replace('20', '').replace('UL', '').replace('preVFP','').replace('postVFP',''))),
       probes               = cms.InputTag('slimmedElectrons'),
       miniIsoChg           = cms.InputTag('isoForEle%s:miniIsoChg' % ('Spring15' if '2016' in options['era'] else 'Fall17')),
       miniIsoAll           = cms.InputTag('isoForEle%s:miniIsoAll' % ('Spring15' if '2016' in options['era'] else 'Fall17')),
