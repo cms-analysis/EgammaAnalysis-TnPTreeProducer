@@ -7,6 +7,11 @@ filesMiniAOD_2018 = {
     'data' : cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/Egamma-Run2018A-17Sep2018-v2.root'),
 }
 
+filesMiniAOD_2022 = {
+    'mc' :   cms.untracked.vstring(''),
+    'data' : cms.untracked.vstring('root://cmsxrootd.fnal.gov//store/data/Run2022A/EGamma/MINIAOD/PromptReco-v1/000/352/785/00000/86eb68b6-ce48-4c28-b612-f97578787871.root'),
+}
+
 filesMiniAOD_2017 = {
     'mc' :   cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/RunIIFall17MiniAODv2-DYJetsToLL_M-50.root'),
     'data' : cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/SingleElectron-Run2017B-31Mar2018-v1.root'),

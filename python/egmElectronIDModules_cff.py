@@ -36,7 +36,7 @@ def setIDs(process, options):
     process.electronMVAValueMapProducer.src               = cms.InputTag(options['ELECTRON_COLL'])
 
     if not isReleaseAbove(10, 6): # only for CMSSW_10_2
-      process.electronRegressionValueMapProducer.srcMiniAOD = cms.InputTag(options['ELECTRON_COLL'])
+      process.electronRegressionValueMapProducer.src = cms.InputTag(options['ELECTRON_COLL'])
 
     #
     # One tag module --> cut based tight 94X V2

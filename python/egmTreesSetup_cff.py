@@ -64,7 +64,7 @@ def setTagsProbes(process, options):
       process.probeElePassHLTL1matched        = process.probeElePassHLT.clone()
       process.probeElePassHLTL1matched.inputs = cms.InputTag("probeEleL1matched")
 
-    for flag, filterNames in options['HLTFILTERSTOMEASURE'].iteritems():
+    for flag, filterNames in options['HLTFILTERSTOMEASURE'].items():
       if 'L1match' in flag: setattr(process, flag, process.probeElePassHLTL1matched.clone(filterNames=filterNames))
       else:                 setattr(process, flag, process.probeElePassHLT.clone(filterNames=filterNames))
 

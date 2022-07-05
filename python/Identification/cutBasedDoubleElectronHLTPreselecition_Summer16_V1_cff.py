@@ -4,6 +4,7 @@ import FWCore.ParameterSet.Config as cms
 
 # Common functions and classes for ID definition are imported here:
 from RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_tools import *
+from RecoEgamma.PhotonIdentification.Identification.cutBasedPhotonID_tools import *
 
 
 class DoubleEleHLTSelection_V1:

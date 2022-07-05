@@ -3,12 +3,13 @@
   <use   name="FWCore/PluginManager"/>
   <use   name="FWCore/ParameterSet"/>
   <use   name="PhysicsTools/TagAndProbe"/>
+  <use   name="PhysicsTools/SelectorUtils"/>
   <use   name="HLTrigger/HLTcore"/>
   <use   name="DataFormats/PatCandidates"/>
   <use   name="DataFormats/Candidate"/>
   <use   name="CommonTools/Utils"/>
   <use   name="CommonTools/UtilAlgos"/>
-  <use   name="RecoEgamma/EgammaHLTAlgos"/>
+  <use   name="CommonTools/Egamma"/> 
   <use   name="TrackingTools/IPTools"/>
   <use   name="DataFormats/GeometryCommonDetAlgo"/>
   <use   name="TrackingTools/Records"/>
@@ -16,5 +17,6 @@
   <use   name="DataFormats/EgammaCandidates"/>
   <use   name="RecoEgamma/EgammaTools"/>
   <use   name="RecoEgamma/ElectronIdentification"/>
+  <use   name="RecoEgamma/EgammaIsolationAlgos"/>
 <flags EDM_PLUGIN="1"/>
 </library>

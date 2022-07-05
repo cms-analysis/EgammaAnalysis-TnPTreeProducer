@@ -25,7 +25,8 @@
 #include <DataFormats/PatCandidates/interface/Electron.h>
 
 #include "DataFormats/EgammaCandidates/interface/Conversion.h"
-#include "RecoEgamma/EgammaTools/interface/ConversionTools.h"
+//#include "RecoEgamma/EgammaTools/interface/ConversionTools.h" //outdated
+#include "CommonTools/Egamma/interface/ConversionTools.h"
 
 #include "EgammaAnalysis/TnPTreeProducer/plugins/WriteValueMap.h"
 #include "EgammaAnalysis/TnPTreeProducer/plugins/isolations.h"

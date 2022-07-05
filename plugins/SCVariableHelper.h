@@ -11,7 +11,9 @@
 #include "DataFormats/Candidate/interface/Candidate.h"
 
 #include "DataFormats/RecoCandidate/interface/RecoEcalCandidate.h"
-#include "RecoEgamma/EgammaHLTAlgos/interface/EgammaHLTTrackIsolation.h"
+//#include "RecoEgamma/EgammaHLTAlgos/interface/EgammaHLTTrackIsolation.h" //outdated
+#include "RecoEgamma/EgammaIsolationAlgos/interface/EgammaHLTTrackIsolation.h" 
+
 #include "EgammaAnalysis/TnPTreeProducer/plugins/WriteValueMap.h"
 
 template <class T>

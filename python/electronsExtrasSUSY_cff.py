@@ -21,7 +21,7 @@ workingPoints = ["ConvVeto", "MVAVLooseFO", "MVAVLoose", "Mini", "Mini2", "Mini4
 
 
 def addSusyIDs(process, options):
-    print 'Warning: this option might be broken, and some of these variables are already implemented in the default trees'
+    print ('Warning: this option might be broken, and some of these variables are already implemented in the default trees')
 
     # For some reason importing the NanoAOD configuration breakes VID, so we need to make 
     # sure these lines are called before calling setIDs() in the egmTreesSetup

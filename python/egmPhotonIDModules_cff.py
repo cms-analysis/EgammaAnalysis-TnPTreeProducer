@@ -28,8 +28,8 @@ def setIDs(process, options):
         setupAllVIDIdsInModule(process, idmod, setupVIDPhotonSelection)
 
     process.egmPhotonIDs.physicsObjectSrc        = cms.InputTag(options['PHOTON_COLL'])
-    process.photonIDValueMapProducer.srcMiniAOD  = cms.InputTag(options['PHOTON_COLL'])
-    process.photonMVAValueMapProducer.srcMiniAOD = cms.InputTag(options['PHOTON_COLL'])
+    process.photonIDValueMapProducer.src  = cms.InputTag(options['PHOTON_COLL'])
+    process.photonMVAValueMapProducer.src = cms.InputTag(options['PHOTON_COLL'])
 #    process.photonMVAValueMapProducer.src        = cms.InputTag(options['PHOTON_COLL'])
 
     #

@@ -120,7 +120,7 @@ def leptonMvaSequence(process, options, tnpVars):
       'el_closestJetDeepFlavour' : cms.InputTag('leptonMvaTOP:closestJetDeepFlavour'), # For those crazy people who want to add even more cuts on top of their leptonMva but can't tell why they need it
       'el_closestJetDeepCsv'     : cms.InputTag('leptonMvaTOP:closestJetDeepCsv'),
     }
-    for i, j in newVariables.iteritems():
+    for i, j in newVariables.items():
       setattr(tnpVars.CommonStuffForGsfElectronProbe.variables, i, j)
 
     return leptonMva_sequence
