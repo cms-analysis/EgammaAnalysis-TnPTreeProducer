@@ -9,7 +9,7 @@ filesMiniAOD_2018 = {
 
 filesMiniAOD_2022 = {
     'mc' :   cms.untracked.vstring(''),
-    'data' : cms.untracked.vstring('root://cmsxrootd.fnal.gov//store/data/Run2022A/EGamma/MINIAOD/PromptReco-v1/000/352/785/00000/86eb68b6-ce48-4c28-b612-f97578787871.root'),
+    'data' : cms.untracked.vstring('root://cmsxrootd.fnal.gov//store/data/Run2022B/EGamma/MINIAOD/PromptReco-v1/000/355/558/00000/92629520-53fb-4f1d-8465-a15b5504e149.root'),
 }
 
 filesMiniAOD_2017 = {

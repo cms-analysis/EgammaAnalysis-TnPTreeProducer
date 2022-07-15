@@ -23,7 +23,7 @@ registerOption('is80X',       False,    'Compatibility to run on old 80X files')
 registerOption('doEleID',     False,     'Include tree for electron ID SF')
 registerOption('doPhoID',     False,     'Include tree for photon ID SF')
 registerOption('doTrigger',   False,     'Include tree for trigger SF')
-registerOption('doRECO',      True,    'Include tree for Reco SF (requires AOD)')
+registerOption('doRECO',      False,    'Include tree for Reco SF (requires AOD)')
 registerOption('calibEn',     False,    'Use EGM smearer to calibrate photon and electron energy')
 registerOption('includeSUSY', False,    'Add also the variables used by SUSY')
 
@@ -49,8 +49,8 @@ if not varOptions.isAOD and varOptions.doRECO: log.warning('miniAOD is not suppo
 from EgammaAnalysis.TnPTreeProducer.cmssw_version import isReleaseAbove
 if varOptions.era not in ['2016', '2017', '2018', '2022', 'UL2016preVFP', 'UL2016postVFP', 'UL2017', 'UL2018']: 
   log.error('%s is not a valid era' % varOptions.era)
-if ('UL' in varOptions.era)!=(isReleaseAbove(10, 6)):
-  log.error('Inconsistent release for era %s. Use CMSSW_10_6_X for UL and CMSSW_10_2_X for rereco' % varOptions.era)
+#if ('UL' in varOptions.era)!=(isReleaseAbove(10, 6)):
+  #log.error('Inconsistent release for era %s. Use CMSSW_10_6_X for UL and CMSSW_10_2_X for rereco' % varOptions.era)
 
 if varOptions.includeSUSY: log.info('Including variables for SUSY')
 if varOptions.doEleID:     log.info('Producing electron SF tree')
