@@ -5,11 +5,11 @@ config = config()
 submitVersion = "ntuple_Run3"
 
 doEleTree = 'doEleID=True'
-doPhoTree = 'doPhoID=False'
-doHLTTree = 'doTrigger=False'
+doPhoTree = 'doPhoID=True'
+doHLTTree = 'doTrigger=True'
 doRECO    = 'doRECO=False'
 
-mainOutputDir = '/store/group/phys_egamma/ec/swmukher/TnPcomm/%s' % submitVersion
+mainOutputDir = '/store/group/phys_egamma/ec/swmukher/TnP_Aug17/%s' % submitVersion
 
 config.General.transferLogs = False
 
@@ -48,12 +48,16 @@ if __name__ == '__main__':
     ##### now submit DATA
     config.Data.outLFNDirBase = '%s/%s/' % (mainOutputDir,'data')
     config.Data.splitting     = 'LumiBased'
-    #config.Data.lumiMask      = 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions17/13TeV/Final/Cert_294927-306462_13TeV_PromptReco_Collisions17_JSON.txt'    
+    config.Data.lumiMask      = 'https://cms-service-dqmdc.web.cern.ch/CAF/certification/Collisions22/Cert_Collisions2022_356309_356615_Golden.json'    
     config.Data.unitsPerJob   = 50
     config.JobType.pyCfgParams  = ['isMC=False','isAOD=False',doEleTree,doPhoTree,doHLTTree,doRECO]
 
     config.General.requestName  = 'Egamma2022B'
     config.Data.inputDataset    = '/EGamma/Run2022B-PromptReco-v1/MINIAOD' 
+    submit(config)
+
+    config.General.requestName  = 'Egamma2022C'
+    config.Data.inputDataset    = '/EGamma/Run2022C-PromptReco-v1/MINIAOD' 
     submit(config)
 
 
