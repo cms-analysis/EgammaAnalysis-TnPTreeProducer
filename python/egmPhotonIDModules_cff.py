@@ -16,7 +16,9 @@ def setIDs(process, options):
                      #'RecoEgamma.PhotonIdentification.Identification.mvaPhotonID_Spring16_nonTrig_V1_cff',
                      #'RecoEgamma.PhotonIdentification.Identification.cutBasedPhotonID_Fall17_94X_V1_cff',
                      'RecoEgamma.PhotonIdentification.Identification.mvaPhotonID_Fall17_94X_V2_cff',
-                     'RecoEgamma.PhotonIdentification.Identification.cutBasedPhotonID_Fall17_94X_V2_cff'
+                     'RecoEgamma.PhotonIdentification.Identification.cutBasedPhotonID_Fall17_94X_V2_cff',
+                     'RecoEgamma.PhotonIdentification.Identification.cutBasedPhotonID_RunIIIWinter22_122X_V1_cff',
+                     'RecoEgamma.PhotonIdentification.Identification.mvaPhotonID_Winter22_122X_V1_cff'
                      ]
 
     #if not isReleaseAbove(10, 6): # (photon mva 94X_V1 broken in CMSSW_10_6_X)
@@ -60,10 +62,12 @@ def setIDs(process, options):
       #addNewProbeModule(probeSequence, 'CutBased%s80X' % wp,   'egmPhotonIDs:cutBasedPhotonID-Spring16-V2p2-%s' % wp.lower())
       #addNewProbeModule(probeSequence, 'CutBased%s94X' % wp,   'egmPhotonIDs:cutBasedPhotonID-Fall17-94X-V1-%s' % wp.lower())
       addNewProbeModule(probeSequence, 'CutBased%s94XV2' % wp, 'egmPhotonIDs:cutBasedPhotonID-Fall17-94X-V2-%s' % wp.lower())
+      addNewProbeModule(probeSequence, 'CutBased%s122XV1' % wp, 'egmPhotonIDs:cutBasedPhotonID-RunIIIWinter22-122X-V1-%s' % wp.lower())
 
     for wp in ['wp80', 'wp90']:
       #addNewProbeModule(probeSequence, 'MVA80X%s' % wp,   'egmPhotonIDs:mvaPhoID-Spring16-nonTrig-V1-%s' % wp)
       addNewProbeModule(probeSequence, 'MVA94XV2%s' % wp, 'egmPhotonIDs:mvaPhoID-RunIIFall17-v2-%s' % wp)
+      addNewProbeModule(probeSequence, 'MVA122XV1%s' % wp, 'egmPhotonIDs:mvaPhoID-RunIIIWinter22-v1-%s' % wp)
       #if not isReleaseAbove(10, 6):
         #addNewProbeModule(probeSequence, 'MVA94X%s' % wp,   'egmPhotonIDs:mvaPhoID-RunIIFall17-v1-%s' % wp)
 

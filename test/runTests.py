@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import subprocess, shutil, os
 
 if not 'CMSSW_BASE' in os.environ or os.environ['CMSSW_BASE'].replace('/storage_mnt/storage','') not in os.getcwd():

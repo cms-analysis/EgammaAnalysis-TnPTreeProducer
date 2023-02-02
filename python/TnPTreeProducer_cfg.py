@@ -92,6 +92,8 @@ options['addSUSY']              = varOptions.includeSUSY and not options['useAOD
 
 options['OUTPUT_FILE_NAME']     = "TnPTree_%s.root" % ("mc" if options['isMC'] else "data")
 
+log.info('outputfile: %s' % options['OUTPUT_FILE_NAME'])
+
 #################################################
 # Settings for global tag
 #################################################
@@ -104,7 +106,8 @@ if varOptions.GT == "auto":
     if options['era'] == 'UL2016postVFP': options['GLOBALTAG'] = '106X_mcRun2_asymptotic_v15'
     if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_dataRun2_v28'
     if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_dataRun2_v28'
-    if options['era'] == '2022': options['GLOBALTAG'] = '123X_mcRun3_2021_realistic_v15'
+    #if options['era'] == '2022': options['GLOBALTAG'] = '123X_mcRun3_2021_realistic_v15'
+    if options['era'] == '2022': options['GLOBALTAG'] = 'auto:phase1_2022_realistic' #update GT for 2022 from PDMV
   else:
     if options['era'] == '2016':   options['GLOBALTAG'] = '94X_dataRun2_v10'
     if options['era'] == '2017':   options['GLOBALTAG'] = '94X_dataRun2_v11'
@@ -113,9 +116,12 @@ if varOptions.GT == "auto":
     if options['era'] == 'UL2016postVFP': options['GLOBALTAG'] = '106X_dataRun2_v32'
     if options['era'] == 'UL2017': options['GLOBALTAG'] = '106X_mc2017_realistic_v7'
     if options['era'] == 'UL2018': options['GLOBALTAG'] = '106X_upgrade2018_realistic_v11_L1v1'
-    if options['era'] == '2022': options['GLOBALTAG'] = '123X_dataRun3_Prompt_v12'
+    #if options['era'] == '2022': options['GLOBALTAG'] = '123X_dataRun3_Prompt_v12'
+    if options['era'] == '2022': options['GLOBALTAG'] = '124X_dataRun3_Prompt_v10' #update GT for 2022 from PDMV
 else:
   options['GLOBALTAG'] = varOptions.GT
+
+log.info('Globaltag: %s' % options['GLOBALTAG'])
 
 #################################################
 # Settings for trigger tag and probe measurement
@@ -177,7 +183,7 @@ importTestFiles = 'from EgammaAnalysis.TnPTreeProducer.etc.tnpInputTestFiles_cff
 exec(importTestFiles)
 
 options['INPUT_FILE_NAME'] = inputs['mc' if options['isMC'] else 'data']
-
+options['INPUT_FILE_NAME'] = cms.untracked.vstring('file:../test/data/f10037a7-aa8b-4c35-9c7a-be28ecf22736.root')
 
 ###################################################################
 ## Standard imports, GT and pile-up

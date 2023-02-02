@@ -21,7 +21,10 @@ def setIDs(process, options):
         #'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V2_cff',
         'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V2_cff',
-        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V2_cff'
+        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V2_cff',
+        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_RunIIIWinter22_iso_V1_cff',
+        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_RunIIIWinter22_noIso_V1_cff',
+        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Winter22_122X_V1_cff'
        ]
 
     ### add only miniAOD supported IDs
@@ -80,6 +83,7 @@ def setIDs(process, options):
       #addNewProbeModule(probeSequence, 'CutBased%s80X' % wp,   'egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-%s' % wp.lower())
       #addNewProbeModule(probeSequence, 'CutBased%s94X' % wp,   'egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-%s' % wp.lower())
       addNewProbeModule(probeSequence, 'CutBased%s94XV2' % wp, 'egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-%s' % wp.lower())
+      addNewProbeModule(probeSequence, 'CutBased%s122XV1' % wp, 'egmGsfElectronIDs:cutBasedElectronID-RunIIIWinter22-V1-%s' % wp.lower()) # Run III IDs
 
     #for wp in ['wp80', 'wp90']:
       #addNewProbeModule(probeSequence, 'MVA80X%s' %wp, 'egmGsfElectronIDs:mvaEleID-Spring16-GeneralPurpose-V1-%s' % wp)
@@ -89,8 +93,14 @@ def setIDs(process, options):
       #addNewProbeModule(probeSequence, 'MVA94X%siso' %wp,     'egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-%s' % wp)
       addNewProbeModule(probeSequence, 'MVA94X%snoisoV2' %wp, 'egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-%s' % wp)
       addNewProbeModule(probeSequence, 'MVA94X%sisoV2' %wp,   'egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-%s' % wp)
+      
+      if wp=='wpLoose': continue
+      addNewProbeModule(probeSequence, 'MVA122X%snoisoV1' %wp, 'egmGsfElectronIDs:mvaEleID-RunIIIWinter22-noIso-V1-%s' % wp)
+      addNewProbeModule(probeSequence, 'MVA122X%sisoV1' %wp, 'egmGsfElectronIDs:mvaEleID-RunIIIWinter22-iso-V1-%s' % wp)
 
     addNewProbeModule(probeSequence, 'MVA94XwpHZZisoV2', 'egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpHZZ')
+
+
 
     #
     # For cut based 94X V2, also check partial cuts
