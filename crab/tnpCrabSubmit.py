@@ -25,7 +25,11 @@ from multiprocessing import Process
 #
 ##submitVersion = "2022-06-16-Run2018A"  # add some date here
 #submitVersion = "2022-7-1-UL2018_NLO_inclusive"  # add some date here
-submitVersion = "2016-pre-7-28-2022-NLO-unbinned"  # add some date here
+
+#submitVersion = "2016post-NLO_amc_Vpt_0"  # add some date here
+#submitVersion = "2016_post_withHEEP_NLOamc"  # add some date here
+#submitVersion = "2016pre_withHEEP_data"
+submitVersion = "2017_withHEEP_Run2017D"
 doL1matching = False
 
 defaultArgs = ["doEleID=True", "doPhoID=False", "doTrigger=True"]
@@ -59,6 +63,9 @@ config.Data.publication = False
 #config.Site.storageSite = "T2_US_Florida"
 config.Site.storageSite = "T3_US_FNALLPC"
 
+#config.General.instance = "preprod" # use preproduction server
+config.Data.partialDataset = True
+#config.Data.runRange = "0" # a temporary hack until we have a properly named config. param.
 
 #
 # Certified lumis for the different eras
@@ -151,17 +158,17 @@ def submitWrapper(requestName, sample, era, extraParam=[]):
 
 #
 # List of samples to submit, with eras
-#era = "UL2017"
-## Data
+era = "UL2017"
+# Data
 #submitWrapper(
 #    "Run2017B", "/SingleElectron/Run2017B-UL2017_MiniAODv2-v1/MINIAOD", era
 #)
 #submitWrapper(
 #    "Run2017C", "/SingleElectron/Run2017C-UL2017_MiniAODv2-v1/MINIAOD", era
 #)
-#submitWrapper(
-#    "Run2017D", "/SingleElectron/Run2017D-UL2017_MiniAODv2-v1/MINIAOD", era
-#)
+submitWrapper(
+    "Run2017D", "/SingleElectron/Run2017D-UL2017_MiniAODv2-v1/MINIAOD", era
+)
 #submitWrapper(
 #    "Run2017E", "/SingleElectron/Run2017E-UL2017_MiniAODv2-v1/MINIAOD", era
 #)
@@ -207,28 +214,42 @@ def submitWrapper(requestName, sample, era, extraParam=[]):
 #submitWrapper("DY_NLO", "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM", era)
 
 
-era = "UL2016preVFP"
-# Data
-#submitWrapper("Run2016B", "/SingleElectron/Run2016B-ver1_HIPM_UL2016_MiniAODv2-v2/MINIAOD", era) #no good certified data
+#era = "UL2016preVFP"
+## Data
+##submitWrapper("Run2016B", "/SingleElectron/Run2016B-ver1_HIPM_UL2016_MiniAODv2-v2/MINIAOD", era) #no good certified data
 #submitWrapper("Run2016B_ver2", "/SingleElectron/Run2016B-ver2_HIPM_UL2016_MiniAODv2-v2/MINIAOD", era)
 #submitWrapper("Run2016C", "/SingleElectron/Run2016C-HIPM_UL2016_MiniAODv2-v2/MINIAOD", era)
 #submitWrapper("Run2016D", "/SingleElectron/Run2016D-HIPM_UL2016_MiniAODv2-v2/MINIAOD", era)
 #submitWrapper("Run2016E", "/SingleElectron/Run2016E-HIPM_UL2016_MiniAODv2-v5/MINIAOD", era)
 #submitWrapper("Run2016F", "/SingleElectron/Run2016F-HIPM_UL2016_MiniAODv2-v2/MINIAOD", era)
-# MC
-#submitWrapper("DY_pre_NLO", "/DYJetsToLL_LHEFilterPtZ-0To50_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v2/MINIAODSIM", era)
-##https://cms-pdmv.cern.ch/grasp/samples?dataset_query=*DYJetsToLL_LHEFilterPtZ*&campaign=RunIISummer20UL16*GEN,RunIISummer20UL16*GENAPV,RunIISummer20UL17*GEN,RunIISummer20UL18*GEN
+### MC
 #submitWrapper("DY_pre_LO",  "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM", era)
-submitWrapper("DY_pre_NLO", "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM", era)
+#submitWrapper("DY_pre_NLO", "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM", era)
+
+#submitWrapper("DY_pre_NLO_0-50", "/DYJetsToLL_LHEFilterPtZ-0To50_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v2/MINIAODSIM", era)
+#submitWrapper("DY_pre_NLO_50-100", "/DYJetsToLL_LHEFilterPtZ-50To100_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v2/MINIAODSIM", era)
+#submitWrapper("DY_pre_NLO_100-250", "/DYJetsToLL_LHEFilterPtZ-100To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v2/MINIAODSIM", era)
+#submitWrapper("DY_pre_NLO_250-400", "/DYJetsToLL_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v2/MINIAODSIM", era)
+#submitWrapper("DY_pre_NLO_400-650", "/DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v2/MINIAODSIM", era)
+#submitWrapper("DY_pre_NLO_650-inf", "/DYJetsToLL_LHEFilterPtZ-650ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v2/MINIAODSIM", era)
+
+##https://cms-pdmv.cern.ch/grasp/samples?dataset_query=*DYJetsToLL_LHEFilterPtZ*&campaign=RunIISummer20UL16*GEN,RunIISummer20UL16*GENAPV,RunIISummer20UL17*GEN,RunIISummer20UL18*GEN
 
 
 #era = "UL2016postVFP"
 #submitWrapper("Run2016F_postVFP", "/SingleElectron/Run2016F-UL2016_MiniAODv2-v2/MINIAOD", era)
 #submitWrapper("Run2016G", "/SingleElectron/Run2016G-UL2016_MiniAODv2-v2/MINIAOD", era)
 #submitWrapper("Run2016H", "/SingleElectron/Run2016H-UL2016_MiniAODv2-v2/MINIAOD", era)
-##submitWrapper("DY_post_NLO", "/DYJetsToLL_LHEFilterPtZ-0To50_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM", era)
 #submitWrapper("DY_post_LO",  "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM", era)
 #submitWrapper("DY_post_NLO", "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v1/MINIAODSIM", era)
+ ###                           #  /DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/MINIAODSIM
+#submitWrapper("DY_post_NLO_0-50", "/DYJetsToLL_LHEFilterPtZ-0To50_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM", era)
+#submitWrapper("DY_post_NLO_50-100", "/DYJetsToLL_LHEFilterPtZ-50To100_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM", era)
+#submitWrapper("DY_post_NLO_100-250", "/DYJetsToLL_LHEFilterPtZ-100To250_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM", era)
+#submitWrapper("DY_post_NLO_250-400", "/DYJetsToLL_LHEFilterPtZ-250To400_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM", era)
+#submitWrapper("DY_post_NLO_400-650", "/DYJetsToLL_LHEFilterPtZ-400To650_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM", era)
+#submitWrapper("DY_post_NLO_650-inf", "/DYJetsToLL_LHEFilterPtZ-650ToInf_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16MiniAODv2-106X_mcRun2_asymptotic_v17-v2/MINIAODSIM", era)
 
 #https://twiki.cern.ch/twiki/bin/viewauth/CMS/PdmVRun2LegacyAnalysis
-#NLO:https://cms-pdmv.cern.ch/grasp/samples?dataset_query=*DYJetsToLL_LHEFilterPtZ*&campaign=RunIISummer20UL16*GEN,RunIISummer20UL16*GENAPV,RunIISummer20UL17*GEN,RunIISummer20UL18*GEN
+
+#NLOptbinned:https://cms-pdmv.cern.ch/grasp/samples?dataset_query=*DYJetsToLL_LHEFilterPtZ*&campaign=RunIISummer20UL16*GEN,RunIISummer20UL16*GENAPV,RunIISummer20UL17*GEN,RunIISummer20UL18*GEN

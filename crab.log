@@ -17,3 +17,716 @@ Traceback (most recent call last):
     raise ConfigurationException(msg)
 ConfigurationException: [91mError[0m: crab_2016B-pre-7-27-2022/crab_UL2016preVFP_Run2016B_ver2 is not a valid CRAB project directory.
 INFO 2022-07-28 10:46:48.780 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/test/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-08-02 14:25:47.766 UTC: 	 CRAB Client version: v3.220323
+DEBUG 2022-08-02 14:25:47.767 UTC: 	 Running on: Linux lxplus722.cern.ch 3.10.0-1160.62.1.el7.x86_64 #1 SMP Tue Apr 5 16:57:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-08-02 14:25:47.767 UTC: 	 Executing command: 'submit'
+DEBUG 2022-08-02 14:25:47.787 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-08-02 14:25:47.828 UTC: 	 CRAB configuration file tnpCrabSubmit.py not found.
+ERROR 2022-08-02 14:25:47.828 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+ConfigurationException: CRAB configuration file tnpCrabSubmit.py not found.
+INFO 2022-08-02 14:25:47.878 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/test/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-08-18 08:24:34.266 UTC: 	 CRAB Client version: v3.220323
+DEBUG 2022-08-18 08:24:34.266 UTC: 	 Running on: Linux lxplus789.cern.ch 3.10.0-1160.71.1.el7.x86_64 #1 SMP Tue Jun 28 15:37:28 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-08-18 08:24:34.266 UTC: 	 Executing command: 'submit'
+DEBUG 2022-08-18 08:24:34.266 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-08-18 08:24:34.267 UTC: 	 CRAB configuration file tnpCrabSubmit.py not found.
+ERROR 2022-08-18 08:24:34.267 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+ConfigurationException: CRAB configuration file tnpCrabSubmit.py not found.
+INFO 2022-08-18 08:24:34.444 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-08-18 09:02:12.639 UTC: 	 CRAB Client version: v3.220323
+DEBUG 2022-08-18 09:02:12.639 UTC: 	 Running on: Linux lxplus742.cern.ch 3.10.0-1160.71.1.el7.x86_64 #1 SMP Tue Jun 28 15:37:28 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-08-18 09:02:12.639 UTC: 	 Executing command: 'submit'
+DEBUG 2022-08-18 09:02:12.640 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-08-18 09:02:12.645 UTC: 	 CRAB configuration file creb/tnpCrabSubmit.py not found.
+ERROR 2022-08-18 09:02:12.645 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220323.01/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+ConfigurationException: CRAB configuration file creb/tnpCrabSubmit.py not found.
+INFO 2022-08-18 09:02:12.720 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:15.325 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:15.326 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:15.326 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:15.335 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:15.351 UTC: 	 Error: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_0-50 is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:15.351 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_0-50 is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:15.449 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:15.725 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:15.725 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:15.725 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:15.725 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:15.726 UTC: 	 Error: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_50-100 is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:15.726 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_50-100 is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:15.727 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:15.963 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:15.963 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:15.963 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:15.963 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:15.964 UTC: 	 Error: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_100-250 is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:15.964 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_100-250 is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:15.965 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:16.205 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:16.205 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:16.205 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:16.205 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:16.206 UTC: 	 Error: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_250-400 is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:16.206 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_250-400 is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:16.207 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:16.446 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:16.446 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:16.446 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:16.446 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:16.447 UTC: 	 Error: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_400-650 is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:16.447 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_400-650 is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:16.448 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:16.680 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:16.680 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:16.680 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:16.680 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:16.681 UTC: 	 Error: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_650-inf is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:16.681 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-post-NLO-ptbinned-8_22/crab_UL2016postVFP_DY_post_NLO_650-inf is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:16.683 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:16.909 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:16.910 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:16.910 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:16.910 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:16.910 UTC: 	 Error: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_0-50 is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:16.910 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_0-50 is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:16.912 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:17.128 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:17.129 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:17.129 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:17.129 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:17.129 UTC: 	 Error: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_50-100 is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:17.129 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_50-100 is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:17.131 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:17.354 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:17.354 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:17.354 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:17.354 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:17.355 UTC: 	 Error: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_100-250 is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:17.355 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_100-250 is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:17.356 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:17.577 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:17.578 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:17.578 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:17.578 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:17.578 UTC: 	 Error: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_250-400 is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:17.579 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_250-400 is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:17.580 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:17.801 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:17.801 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:17.801 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:17.801 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:17.802 UTC: 	 Error: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_400-650 is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:17.802 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_400-650 is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:17.803 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-09-08 22:04:19.894 UTC: 	 CRAB Client version: v3.220823
+DEBUG 2022-09-08 22:04:19.894 UTC: 	 Running on: Linux lxplus718.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-09-08 22:04:19.894 UTC: 	 Executing command: 'status'
+DEBUG 2022-09-08 22:04:19.894 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-09-08 22:04:19.894 UTC: 	 Error: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_650-inf is not a valid CRAB project directory.
+ERROR 2022-09-08 22:04:19.895 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.220823.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016-pre-NLO-ptbinned-8_22/crab_UL2016preVFP_DY_pre_NLO_650-inf is not a valid CRAB project directory.
+INFO 2022-09-08 22:04:19.896 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-11-15 03:57:30.336 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2022-11-15 03:57:30.336 UTC: 	 Running on: Linux lxplus726.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-11-15 03:57:30.336 UTC: 	 Executing command: 'submit'
+DEBUG 2022-11-15 03:57:30.359 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-11-15 03:57:30.391 UTC: 	 CRAB configuration file tnpCrabSubmit.py not found.
+ERROR 2022-11-15 03:57:30.391 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+ConfigurationException: CRAB configuration file tnpCrabSubmit.py not found.
+INFO 2022-11-15 03:57:30.796 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-12-12 16:57:10.354 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2022-12-12 16:57:10.355 UTC: 	 Running on: Linux lxplus710.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-12-12 16:57:10.355 UTC: 	 Executing command: 'submit'
+DEBUG 2022-12-12 16:57:10.368 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-12-12 16:57:10.439 UTC: 	 CRAB configuration file tnpCrabSubmit.py not found.
+ERROR 2022-12-12 16:57:10.439 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+ConfigurationException: CRAB configuration file tnpCrabSubmit.py not found.
+INFO 2022-12-12 16:57:10.548 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-12-12 17:34:16.168 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2022-12-12 17:34:16.168 UTC: 	 Running on: Linux lxplus710.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-12-12 17:34:16.168 UTC: 	 Executing command: 'status'
+DEBUG 2022-12-12 17:34:16.169 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-12-12 17:34:16.170 UTC: 	 Error: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+ERROR 2022-12-12 17:34:16.170 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+INFO 2022-12-12 17:34:16.176 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-12-21 18:08:54.753 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2022-12-21 18:08:54.753 UTC: 	 Running on: Linux lxplus762.cern.ch 3.10.0-1160.80.1.el7.x86_64 #1 SMP Tue Nov 8 15:48:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-12-21 18:08:54.754 UTC: 	 Executing command: 'submit'
+DEBUG 2022-12-21 18:08:54.754 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-12-21 18:08:54.766 UTC: 	 CRAB configuration file tnpCrabSubmit.py not found.
+ERROR 2022-12-21 18:08:54.767 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+ConfigurationException: CRAB configuration file tnpCrabSubmit.py not found.
+INFO 2022-12-21 18:08:54.827 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-12-21 19:10:42.007 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2022-12-21 19:10:42.008 UTC: 	 Running on: Linux lxplus731.cern.ch 3.10.0-1160.80.1.el7.x86_64 #1 SMP Tue Nov 8 15:48:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-12-21 19:10:42.008 UTC: 	 Executing command: 'status'
+DEBUG 2022-12-21 19:10:42.008 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-12-21 19:10:42.009 UTC: 	 Error: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+ERROR 2022-12-21 19:10:42.009 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+INFO 2022-12-21 19:10:42.035 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-12-23 12:54:50.763 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2022-12-23 12:54:50.763 UTC: 	 Running on: Linux lxplus731.cern.ch 3.10.0-1160.80.1.el7.x86_64 #1 SMP Tue Nov 8 15:48:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-12-23 12:54:50.763 UTC: 	 Executing command: 'kill'
+DEBUG 2022-12-23 12:54:50.764 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-12-23 12:54:50.783 UTC: 	 Error: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+ERROR 2022-12-23 12:54:50.784 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+INFO 2022-12-23 12:54:50.822 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2022-12-23 16:58:00.087 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2022-12-23 16:58:00.087 UTC: 	 Running on: Linux lxplus752.cern.ch 3.10.0-1160.80.1.el7.x86_64 #1 SMP Tue Nov 8 15:48:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2022-12-23 16:58:00.087 UTC: 	 Executing command: 'submit'
+DEBUG 2022-12-23 16:58:00.088 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2022-12-23 16:58:00.088 UTC: 	 CRAB configuration file tnpCrabSubmit.py not found.
+ERROR 2022-12-23 16:58:00.088 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+ConfigurationException: CRAB configuration file tnpCrabSubmit.py not found.
+INFO 2022-12-23 16:58:00.093 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-01-03 16:50:24.213 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2023-01-03 16:50:24.213 UTC: 	 Running on: Linux lxplus779.cern.ch 3.10.0-1160.80.1.el7.x86_64 #1 SMP Tue Nov 8 15:48:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-01-03 16:50:24.213 UTC: 	 Executing command: 'submit'
+DEBUG 2023-01-03 16:50:24.213 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2023-01-03 16:50:24.214 UTC: 	 CRAB configuration file tnpCrabSubmit.py not found.
+ERROR 2023-01-03 16:50:24.214 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+ConfigurationException: CRAB configuration file tnpCrabSubmit.py not found.
+INFO 2023-01-03 16:50:24.274 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-01-06 09:19:41.985 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2023-01-06 09:19:41.986 UTC: 	 Running on: Linux lxplus710.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-01-06 09:19:41.986 UTC: 	 Executing command: 'status'
+DEBUG 2023-01-06 09:19:41.986 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2023-01-06 09:19:41.988 UTC: 	 Error: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+ERROR 2023-01-06 09:19:41.988 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+INFO 2023-01-06 09:19:42.019 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-01-06 09:19:51.720 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2023-01-06 09:19:51.721 UTC: 	 Running on: Linux lxplus710.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-01-06 09:19:51.721 UTC: 	 Executing command: 'kill'
+DEBUG 2023-01-06 09:19:51.721 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2023-01-06 09:19:51.721 UTC: 	 Error: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+ERROR 2023-01-06 09:19:51.722 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+INFO 2023-01-06 09:19:51.723 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-01-06 11:59:35.815 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2023-01-06 11:59:35.815 UTC: 	 Running on: Linux lxplus710.cern.ch 3.10.0-1160.76.1.el7.x86_64 #1 SMP Wed Aug 10 16:21:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-01-06 11:59:35.815 UTC: 	 Executing command: 'status'
+DEBUG 2023-01-06 11:59:35.817 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2023-01-06 11:59:35.831 UTC: 	 Error: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+ERROR 2023-01-06 11:59:35.832 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016post-NLO-amc_withLHE_Vpt/crab_UL2016postVFP_DY_post_NLO is not a valid CRAB project directory.
+INFO 2023-01-06 11:59:35.838 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-01-06 12:53:42.931 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2023-01-06 12:53:42.932 UTC: 	 Running on: Linux lxplus730.cern.ch 3.10.0-1160.80.1.el7.x86_64 #1 SMP Tue Nov 8 15:48:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-01-06 12:53:42.932 UTC: 	 Executing command: 'checkwrite'
+DEBUG 2023-01-06 12:53:42.932 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+DEBUG 2023-01-06 12:53:42.934 UTC: 	 Checking credentials
+DEBUG 2023-01-06 12:53:42.934 UTC: 	 Proxy file /tmp/x509up_u135567 not found
+DEBUG 2023-01-06 12:53:42.934 UTC: 	 Creating new proxy for 172:00 hours
+DEBUG 2023-01-06 12:53:42.934 UTC: 	 Executing command :
+ voms-proxy-init --rfc --cert ~/.globus/usercert.pem --key ~/.globus/userkey.pem --out /tmp/x509up_u135567 --valid 192:00 --voms cms:/cms
+DEBUG 2023-01-06 12:53:49.618 UTC: 	 output : 
+ error: 
+ retcode : 0
+DEBUG 2023-01-06 12:53:49.619 UTC: 	 Executing command :
+ voms-proxy-info --actimeleft --timeleft --file /tmp/x509up_u135567
+DEBUG 2023-01-06 12:53:50.148 UTC: 	 output : 499784
+691198
+
+ error: 
+ retcode : 0
+DEBUG 2023-01-06 12:53:50.148 UTC: 	 Proxy created.
+DEBUG 2023-01-06 12:53:50.149 UTC: 	 Command use: checkwrite
+DEBUG 2023-01-06 12:53:50.149 UTC: 	 Options use: ['--site=T3_US_FNALLPC']
+DEBUG 2023-01-06 12:53:50.149 UTC: 	 Instance is None
+DEBUG 2023-01-06 12:53:50.149 UTC: 	 Server base url is None
+DEBUG 2023-01-06 12:53:50.149 UTC: 	 Retrieving username ...
+DEBUG 2023-01-06 12:53:50.149 UTC: 	 Retrieving username from CRIC...
+DEBUG 2023-01-06 12:53:50.887 UTC: 	 username is ryi
+INFO 2023-01-06 12:53:50.887 UTC: 	 Will check write permission in the default location /store/user/<username>
+INFO 2023-01-06 12:53:50.888 UTC: 	 Validating LFN /store/user/ryi...
+INFO 2023-01-06 12:53:50.888 UTC: 	 LFN /store/user/ryi is valid.
+INFO 2023-01-06 12:53:50.910 UTC: 	 Will use `gfal-copy`, `gfal-rm` commands for checking write permissions
+INFO 2023-01-06 12:53:50.910 UTC: 	 Will check write permission in /store/user/ryi on site T3_US_FNALLPC
+INFO 2023-01-06 12:53:53.187 UTC: 	 Will use PFN: davs://cmseos.fnal.gov:9000/eos/uscms/store/user/ryi/crab3checkwrite_20230106_135350/crab3checkwrite_20230106_135350.tmp
+INFO 2023-01-06 12:53:53.187 UTC: 	 
+Attempting to create (dummy) directory crab3checkwrite_20230106_135350 and copy (dummy) file crab3checkwrite_20230106_135350.tmp to /store/user/ryi
+
+INFO 2023-01-06 12:53:53.191 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-copy -p -v -t 180 file:///afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab3checkwrite_20230106_135350.tmp 'davs://cmseos.fnal.gov:9000/eos/uscms/store/user/ryi/crab3checkwrite_20230106_135350/crab3checkwrite_20230106_135350.tmp'
+INFO 2023-01-06 12:53:53.192 UTC: 	 Please wait...
+INFO 2023-01-06 12:53:56.193 UTC: 	 
+Successfully created directory crab3checkwrite_20230106_135350 and copied file crab3checkwrite_20230106_135350.tmp to /store/user/ryi
+INFO 2023-01-06 12:53:56.193 UTC: 	 
+Attempting to delete file davs://cmseos.fnal.gov:9000/eos/uscms/store/user/ryi/crab3checkwrite_20230106_135350/crab3checkwrite_20230106_135350.tmp
+
+INFO 2023-01-06 12:53:56.193 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-rm -v -t 180 'davs://cmseos.fnal.gov:9000/eos/uscms/store/user/ryi/crab3checkwrite_20230106_135350/crab3checkwrite_20230106_135350.tmp'
+INFO 2023-01-06 12:53:56.193 UTC: 	 Please wait...
+INFO 2023-01-06 12:53:57.727 UTC: 	 
+Successfully deleted file davs://cmseos.fnal.gov:9000/eos/uscms/store/user/ryi/crab3checkwrite_20230106_135350/crab3checkwrite_20230106_135350.tmp
+INFO 2023-01-06 12:53:57.727 UTC: 	 
+Attempting to delete directory davs://cmseos.fnal.gov:9000/eos/uscms/store/user/ryi/crab3checkwrite_20230106_135350/
+
+INFO 2023-01-06 12:53:57.727 UTC: 	 Executing command: which scram >/dev/null 2>&1 && eval `scram unsetenv -sh`; gfal-rm -r -v -t 180 'davs://cmseos.fnal.gov:9000/eos/uscms/store/user/ryi/crab3checkwrite_20230106_135350/'
+INFO 2023-01-06 12:53:57.727 UTC: 	 Please wait...
+INFO 2023-01-06 12:53:59.726 UTC: 	 
+Successfully deleted directory davs://cmseos.fnal.gov:9000/eos/uscms/store/user/ryi/crab3checkwrite_20230106_135350/
+INFO 2023-01-06 12:53:59.732 UTC: 	 
+Checkwrite Result:
+INFO 2023-01-06 12:53:59.732 UTC: 	 Success: Able to write in /store/user/ryi on site T3_US_FNALLPC
+DEBUG 2023-01-06 12:55:20.240 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2023-01-06 12:55:20.241 UTC: 	 Running on: Linux lxplus730.cern.ch 3.10.0-1160.80.1.el7.x86_64 #1 SMP Tue Nov 8 15:48:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-01-06 12:55:20.241 UTC: 	 Executing command: 'submit'
+DEBUG 2023-01-06 12:55:20.241 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+INFO 2023-01-06 12:55:20.241 UTC: 	 Will use CRAB configuration file crabConfig.py
+DEBUG 2023-01-06 12:55:20.241 UTC: 	 Loading CRAB configuration file.
+ERROR 2023-01-06 12:55:20.244 UTC: 	 The 'maxJobRuntimeMin' parameter is not compatible with the 'Automatic' splitting mode (default).
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2023-01-06 12:55:20.245 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 94, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: The 'maxJobRuntimeMin' parameter is not compatible with the 'Automatic' splitting mode (default).
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+INFO 2023-01-06 12:55:20.246 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-01-06 13:05:01.647 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2023-01-06 13:05:01.648 UTC: 	 Running on: Linux lxplus730.cern.ch 3.10.0-1160.80.1.el7.x86_64 #1 SMP Tue Nov 8 15:48:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-01-06 13:05:01.648 UTC: 	 Executing command: 'submit'
+DEBUG 2023-01-06 13:05:01.648 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+INFO 2023-01-06 13:05:01.649 UTC: 	 Will use CRAB configuration file crabConfig.py
+DEBUG 2023-01-06 13:05:01.649 UTC: 	 Loading CRAB configuration file.
+DEBUG 2023-01-06 13:05:01.652 UTC: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+ERROR 2023-01-06 13:05:01.653 UTC: 	 Working area '/afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab_sumweight/crab_sumweight' already exists 
+Please change the requestName in the config file
+ERROR 2023-01-06 13:05:01.654 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 320, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/ClientUtilities.py", line 387, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab_sumweight/crab_sumweight' already exists 
+Please change the requestName in the config file
+INFO 2023-01-06 13:05:01.663 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-01-06 13:15:40.460 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2023-01-06 13:15:40.460 UTC: 	 Running on: Linux lxplus730.cern.ch 3.10.0-1160.80.1.el7.x86_64 #1 SMP Tue Nov 8 15:48:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-01-06 13:15:40.460 UTC: 	 Executing command: 'submit'
+DEBUG 2023-01-06 13:15:40.461 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+INFO 2023-01-06 13:15:40.463 UTC: 	 Will use CRAB configuration file crabConfig.py
+DEBUG 2023-01-06 13:15:40.463 UTC: 	 Loading CRAB configuration file.
+DEBUG 2023-01-06 13:15:40.465 UTC: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+ERROR 2023-01-06 13:15:40.467 UTC: 	 Working area '/afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab_sumweight/crab_sumweight' already exists 
+Please change the requestName in the config file
+ERROR 2023-01-06 13:15:40.467 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 320, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/ClientUtilities.py", line 387, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab_sumweight/crab_sumweight' already exists 
+Please change the requestName in the config file
+INFO 2023-01-06 13:15:40.474 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-01-18 22:25:17.939 UTC: 	 CRAB Client version: v3.221018
+DEBUG 2023-01-18 22:25:17.939 UTC: 	 Running on: Linux lxplus765.cern.ch 3.10.0-1160.80.1.el7.x86_64 #1 SMP Tue Nov 8 15:48:59 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-01-18 22:25:17.939 UTC: 	 Executing command: 'submit'
+DEBUG 2023-01-18 22:25:17.939 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2023-01-18 22:25:17.940 UTC: 	 CRAB configuration file tnpCrabSubmit.py not found.
+ERROR 2023-01-18 22:25:17.940 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.221018.00/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+ConfigurationException: CRAB configuration file tnpCrabSubmit.py not found.
+INFO 2023-01-18 22:25:18.127 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-02-12 19:43:54.165 UTC: 	 CRAB Client version: v3.230124
+DEBUG 2023-02-12 19:43:54.165 UTC: 	 Running on: Linux lxplus756.cern.ch 3.10.0-1160.81.1.el7.x86_64 #1 SMP Fri Dec 16 17:29:43 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-02-12 19:43:54.165 UTC: 	 Executing command: 'submit'
+DEBUG 2023-02-12 19:43:54.166 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2023-02-12 19:43:55.203 UTC: 	 CRAB configuration file tnpCrabSubmit.py not found.
+ERROR 2023-02-12 19:43:55.204 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+CRABClient.ClientExceptions.ConfigurationException: CRAB configuration file tnpCrabSubmit.py not found.
+INFO 2023-02-12 19:43:55.284 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-02-28 21:46:46.198 UTC: 	 CRAB Client version: v3.230124
+DEBUG 2023-02-28 21:46:46.199 UTC: 	 Running on: Linux lxplus791.cern.ch 3.10.0-1160.83.1.el7.x86_64 #1 SMP Wed Jan 25 16:41:43 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-02-28 21:46:46.199 UTC: 	 Executing command: 'submit'
+DEBUG 2023-02-28 21:46:46.200 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2023-02-28 21:46:46.226 UTC: 	 CRAB configuration file tnpCrabSubmit.py not found.
+ERROR 2023-02-28 21:46:46.226 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+ConfigurationException: CRAB configuration file tnpCrabSubmit.py not found.
+INFO 2023-02-28 21:46:46.248 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-03-01 14:55:59.785 UTC: 	 CRAB Client version: v3.230124
+DEBUG 2023-03-01 14:55:59.786 UTC: 	 Running on: Linux lxplus785.cern.ch 3.10.0-1160.81.1.el7.x86_64 #1 SMP Fri Dec 16 17:29:43 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-03-01 14:55:59.786 UTC: 	 Executing command: 'status'
+DEBUG 2023-03-01 14:55:59.791 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2023-03-01 14:55:59.833 UTC: 	 Error: crab_2016pre-NLO_ptbin_resubmit_corruptfile/crab_UL2016preVFP_DY_pre_NLO_50-100 is not a valid CRAB project directory.
+ERROR 2023-03-01 14:55:59.833 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/status.py", line 48, in __init__
+    SubCommand.__init__(self, logger, cmdargs)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/SubCommand.py", line 275, in __init__
+    SubCommand.validateOptions(self)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/SubCommand.py", line 642, in validateOptions
+    raise ConfigurationException(msg)
+ConfigurationException: [91mError[0m: crab_2016pre-NLO_ptbin_resubmit_corruptfile/crab_UL2016preVFP_DY_pre_NLO_50-100 is not a valid CRAB project directory.
+INFO 2023-03-01 14:55:59.951 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log
+DEBUG 2023-03-06 14:10:20.232 UTC: 	 CRAB Client version: v3.230124
+DEBUG 2023-03-06 14:10:20.233 UTC: 	 Running on: Linux lxplus772.cern.ch 3.10.0-1160.81.1.el7.x86_64 #1 SMP Fri Dec 16 17:29:43 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2023-03-06 14:10:20.233 UTC: 	 Executing command: 'submit'
+DEBUG 2023-03-06 14:10:20.233 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ryi/.crab3
+ERROR 2023-03-06 14:10:20.233 UTC: 	 CRAB configuration file tnpCrabSubmit.py not found.
+ERROR 2023-03-06 14:10:20.233 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/bin/crab.py", line 159, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/bin/crab.py", line 144, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/submit.py", line 36, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/SubCommand.py", line 316, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.230124.00/lib/CRABClient/Commands/SubCommand.py", line 51, in loadConfig
+    raise ConfigurationException("CRAB configuration file %s not found." % (configname))
+ConfigurationException: CRAB configuration file tnpCrabSubmit.py not found.
+INFO 2023-03-06 14:10:20.322 UTC: 	 Log file is /afs/cern.ch/user/r/ryi/CMSSW_10_6_13/src/EgammaAnalysis/TnPTreeProducer/crab.log

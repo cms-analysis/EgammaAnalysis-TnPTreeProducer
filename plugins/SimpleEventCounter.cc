@@ -2,11 +2,9 @@
 //
 // Package:    EventCounter/SimpleEventCounter
 // Class:      SimpleEventCounter
-// 
+//
 /**\class SimpleEventCounter SimpleEventCounter.cc EventCounter/SimpleEventCounter/plugins/SimpleEventCounter.cc
-
  Description: [one line class summary]
-
  Implementation:
      [Notes on implementation]
 */
@@ -85,7 +83,7 @@ SimpleEventCounter::SimpleEventCounter(const edm::ParameterSet& iConfig)
 
 SimpleEventCounter::~SimpleEventCounter()
 {
- 
+
   // do anything here that needs to be done at desctruction time
   // (e.g. close files, deallocate resources etc.)
 
@@ -108,7 +106,7 @@ SimpleEventCounter::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   Handle<ExampleData> pIn;
   iEvent.getByLabel("example",pIn);
 #endif
-   
+
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
   ESHandle<SetupData> pSetup;
   iSetup.get<SetupRecord>().get(pSetup);
@@ -121,7 +119,7 @@ SimpleEventCounter::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
 
 // ------------ method called once each job just before starting event loop  ------------
-void 
+void
 SimpleEventCounter::beginJob()
 {
   // to keep track of the sum of weights
@@ -130,8 +128,8 @@ SimpleEventCounter::beginJob()
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
-void 
-SimpleEventCounter::endJob() 
+void
+SimpleEventCounter::endJob()
 {
 }
 

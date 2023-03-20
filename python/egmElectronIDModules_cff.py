@@ -14,13 +14,14 @@ def setIDs(process, options):
     # define which IDs we want to produce
     my_id_modules = [
         'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Summer16_80X_V1_cff',
-        'RecoEgamma.ElectronIdentification.Identification.heepElectronID_HEEPV60_cff',
-        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring16_GeneralPurpose_V1_cff',
+        'RecoEgamma.ElectronIdentification.Identification.heepElectronID_HEEPV70_cff',
+        'RecoEgamma.ElectronIdentification.Identification.heepElectronID_HEEPV71_cff',
+        #'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Spring16_GeneralPurpose_V1_cff',
         'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V1_cff',
-        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V1_cff',
-        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V1_cff',
-        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V2_cff',
-        'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V2_cff',
+        #'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V1_cff',
+        #'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V1_cff',
+        #'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_noIso_V2_cff',
+        #'RecoEgamma.ElectronIdentification.Identification.mvaElectronID_Fall17_iso_V2_cff',
         'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Fall17_94X_V2_cff'
        ]
 
@@ -72,36 +73,39 @@ def setIDs(process, options):
 
 
     probeSequence = cms.Sequence()
-    if not options['useAOD']:
-      addNewProbeModule(probeSequence, 'HLTsafe',          'egmGsfElectronIDs:cutBasedElectronHLTPreselection-Summer16-V1')
-      addNewProbeModule(probeSequence, 'DoubleEleHLTsafe', 'egmGsfElectronIDs:cutBasedDoubleElectronHLTPreselection-Summer16-V1')
+    #if not options['useAOD']:
+    #  addNewProbeModule(probeSequence, 'HLTsafe',          'egmGsfElectronIDs:cutBasedElectronHLTPreselection-Summer16-V1')
+    #  addNewProbeModule(probeSequence, 'DoubleEleHLTsafe', 'egmGsfElectronIDs:cutBasedDoubleElectronHLTPreselection-Summer16-V1')
 
-    for wp in ['Veto', 'Loose', 'Medium', 'Tight']:
-      addNewProbeModule(probeSequence, 'CutBased%s80X' % wp,   'egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-%s' % wp.lower())
-      addNewProbeModule(probeSequence, 'CutBased%s94X' % wp,   'egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-%s' % wp.lower())
-      addNewProbeModule(probeSequence, 'CutBased%s94XV2' % wp, 'egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-%s' % wp.lower())
+    #for wp in ['Veto', 'Loose', 'Medium', 'Tight']:
+    #  addNewProbeModule(probeSequence, 'CutBased%s80X' % wp,   'egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-%s' % wp.lower())
+    #  addNewProbeModule(probeSequence, 'CutBased%s94X' % wp,   'egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V1-%s' % wp.lower())
+    #  addNewProbeModule(probeSequence, 'CutBased%s94XV2' % wp, 'egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-%s' % wp.lower())
 
-    for wp in ['wp80', 'wp90']:
-      addNewProbeModule(probeSequence, 'MVA80X%s' %wp, 'egmGsfElectronIDs:mvaEleID-Spring16-GeneralPurpose-V1-%s' % wp)
+    #for wp in ['wp80', 'wp90']:
+    #  addNewProbeModule(probeSequence, 'MVA80X%s' %wp, 'egmGsfElectronIDs:mvaEleID-Spring16-GeneralPurpose-V1-%s' % wp)
 
-    for wp in ['wp80', 'wp90', 'wpLoose']:
-      addNewProbeModule(probeSequence, 'MVA94X%snoiso' %wp,   'egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-%s' % wp)
-      addNewProbeModule(probeSequence, 'MVA94X%siso' %wp,     'egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-%s' % wp)
-      addNewProbeModule(probeSequence, 'MVA94X%snoisoV2' %wp, 'egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-%s' % wp)
-      addNewProbeModule(probeSequence, 'MVA94X%sisoV2' %wp,   'egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-%s' % wp)
+    #for wp in ['wp80', 'wp90', 'wpLoose']:
+    #  addNewProbeModule(probeSequence, 'MVA94X%snoiso' %wp,   'egmGsfElectronIDs:mvaEleID-Fall17-noIso-V1-%s' % wp)
+    #  addNewProbeModule(probeSequence, 'MVA94X%siso' %wp,     'egmGsfElectronIDs:mvaEleID-Fall17-iso-V1-%s' % wp)
+    #  addNewProbeModule(probeSequence, 'MVA94X%snoisoV2' %wp, 'egmGsfElectronIDs:mvaEleID-Fall17-noIso-V2-%s' % wp)
+    #  addNewProbeModule(probeSequence, 'MVA94X%sisoV2' %wp,   'egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-%s' % wp)
 
-    addNewProbeModule(probeSequence, 'MVA94XwpHZZisoV2', 'egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpHZZ')
+    #addNewProbeModule(probeSequence, 'MVA94XwpHZZisoV2', 'egmGsfElectronIDs:mvaEleID-Fall17-iso-V2-wpHZZ')
+
+    addNewProbeModule(probeSequence, "HEEPV70", "egmGsfElectronIDs:heepElectronID-HEEPV70")
+    addNewProbeModule(probeSequence, "HEEPV71", "egmGsfElectronIDs:heepElectronID-HEEPV71")
 
     #
     # For cut based 94X V2, also check partial cuts
     #
-    allCuts = ["MinPt", "GsfEleSCEtaMultiRange", "GsfEleDEtaInSeed", "GsfEleDPhiIn", "GsfEleFull5x5SigmaIEtaIEta",
-               "GsfEleHadronicOverEMEnergyScaled", "GsfEleEInverseMinusPInverse", "GsfEleRelPFIsoScaled", "GsfEleConversionVeto", "GsfEleMissingHits"]
+    #allCuts = ["MinPt", "GsfEleSCEtaMultiRange", "GsfEleDEtaInSeed", "GsfEleDPhiIn", "GsfEleFull5x5SigmaIEtaIEta",
+    #           "GsfEleHadronicOverEMEnergyScaled", "GsfEleEInverseMinusPInverse", "GsfEleRelPFIsoScaled", "GsfEleConversionVeto", "GsfEleMissingHits"]
 
-    for cut in allCuts:
-      otherCuts = cms.vstring([i + 'Cut_0' for i in allCuts if i!=cut])
-      for wp in ['Veto', 'Loose', 'Medium', 'Tight']:
-        addNewProbeModule(probeSequence, 'CutBased%s94XV2%sCut' % (wp, cut), 'egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-%s' % wp.lower(), cutNamesToMask=otherCuts)
+    #for cut in allCuts:
+    #  otherCuts = cms.vstring([i + 'Cut_0' for i in allCuts if i!=cut])
+    #  for wp in ['Veto', 'Loose', 'Medium', 'Tight']:
+    #    addNewProbeModule(probeSequence, 'CutBased%s94XV2%sCut' % (wp, cut), 'egmGsfElectronIDs:cutBasedElectronID-Fall17-94X-V2-%s' % wp.lower(), cutNamesToMask=otherCuts)
 
     #
     # Optional: SUSY variables (broken?)

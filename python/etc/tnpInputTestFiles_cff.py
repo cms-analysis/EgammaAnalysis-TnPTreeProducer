@@ -13,8 +13,8 @@ filesMiniAOD_2017 = {
 }
 
 filesMiniAOD_2016 = {
-    'mc' :   cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/RunIISummer16MiniAODv3-DYJetsToLL_M-50.root'),
-    'data' : cms.untracked.vstring('file:/eos/cms/store/group/phys_egamma/tnpTuples/testFiles/SingleElectron-Run2016B-17Jul2018_ver2-v1.root'),
+    'mc' :   cms.untracked.vstring('file:/eos/user/r/ryi/TagandProbe/TnP2016post/04A698D5-2AF9-B548-9A6D-DB5AFE92F0A6.root'),
+    'data' : cms.untracked.vstring('file:/eos/user/r/ryi/TagandProbe/TnP2016post/04A698D5-2AF9-B548-9A6D-DB5AFE92F0A6.root'),#test file from root://cmsxrootd.fnal.gov//store/mc/RunIISummer20UL16NanoAODv9/DYJetsToLL_LHEFilterPtZ-0To50_MatchEWPDG20_TuneCP5_13TeV-amcatnloFXFX-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/2430000/04D22720-70D4-AE43-A8D2-A7B20170D2D0.root .
 }
 
 

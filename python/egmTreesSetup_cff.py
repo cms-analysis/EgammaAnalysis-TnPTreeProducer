@@ -105,7 +105,10 @@ def setTagsProbes(process, options):
                                           src = cms.InputTag(genParticles),
                                           cut = cms.string(cut_gen_standard),
                                           )
-
+#        process.VpTFilter   = cms.EDFilter( "VpTFilter",
+#                                          src = cms.InputTag(genParticles),
+#                                #          cut = cms.string(cut_gen_standard),
+#                                          )
         process.genTagEle = cms.EDProducer("MCMatcher",
                                             src      = cms.InputTag("tagEle"),
                                             matched  = cms.InputTag("genEle"),
@@ -226,4 +229,3 @@ def customize( tnpTree, options ):
         tnpTree.PUWeightSrc = cms.InputTag("pileupReweightingProducer","pileupWeights")
     else:
         tnpTree.isMC = cms.bool( False )
-

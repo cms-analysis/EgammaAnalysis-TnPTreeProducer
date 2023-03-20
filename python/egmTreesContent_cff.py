@@ -3,7 +3,7 @@ import FWCore.ParameterSet.Config as cms
 ##########################################################################
 ## TREE CONTENT
 #########################################################################
-    
+
 from EgammaAnalysis.TnPTreeProducer.cmssw_version import isReleaseAbove
 
 ZVariablesToStore = cms.PSet(
@@ -11,7 +11,7 @@ ZVariablesToStore = cms.PSet(
     abseta = cms.string("abs(eta)"),
     pt  = cms.string("pt"),
     mass  = cms.string("mass"),
-    )   
+    )
 
 SCProbeVariablesToStore = cms.PSet(
     sc_eta    = cms.string("eta"),
@@ -24,6 +24,7 @@ SCProbeVariablesToStore = cms.PSet(
     )
 
 EleProbeVariablesToStore = cms.PSet(
+#    LHE_Vpt = cms.string("LHE_Vpt"),
     el_eta    = cms.string("eta"),
     el_phi    = cms.string("phi"),
     el_abseta = cms.string("abs(eta)"),
@@ -33,24 +34,25 @@ EleProbeVariablesToStore = cms.PSet(
     el_e      = cms.string("energy"),
     el_q      = cms.string("charge"),
     el_isGap  = cms.string("isGap"),
-    
+#    LHE_Vpt   = cms.string("LHE_Vpt"),
+
     ## super cluster quantities
     el_sc_e          = cms.string("superCluster().energy"),
     el_sc_rawE       = cms.string("superCluster().rawEnergy"),
     el_sc_esE        = cms.string("superCluster().preshowerEnergy"),
-    el_sc_et         = cms.string("superCluster().energy*sin(superClusterPosition.theta)"),    
+    el_sc_et         = cms.string("superCluster().energy*sin(superClusterPosition.theta)"),
     el_sc_eta        = cms.string("-log(tan(superCluster.position.theta/2))"),
-    el_sc_phi        = cms.string("superCluster.phi"),    
+    el_sc_phi        = cms.string("superCluster.phi"),
     el_sc_abseta     = cms.string("abs(-log(tan(superCluster.position.theta/2)))"),
-    el_seed_e        = cms.string("superCluster.seed.energy"), 
+    el_seed_e        = cms.string("superCluster.seed.energy"),
     el_ecalEnergy    = cms.string("ecalEnergy()"),
-#    el_xseed_e       = cms.string("superCluster.seed.seed.energy"), 
+#    el_xseed_e       = cms.string("superCluster.seed.seed.energy"),
 
     #id based
 #    el_dEtaSeeOut       = cms.string("deltaEtaSeedClusterTrackAtCalo"),
     el_dEtaIn        = cms.string("deltaEtaSuperClusterTrackAtVtx"),
     el_dPhiIn        = cms.string("deltaPhiSuperClusterTrackAtVtx"),
-    el_dEtaSeed      = cms.string("deltaEtaSuperClusterTrackAtVtx+log(tan(superCluster.position.theta/2))-log(tan(superCluster.seed.position.theta/2))"),    
+    el_dEtaSeed      = cms.string("deltaEtaSuperClusterTrackAtVtx+log(tan(superCluster.position.theta/2))-log(tan(superCluster.seed.position.theta/2))"),
     el_phiW          = cms.string("superCluster().phiWidth"),
     el_etaW          = cms.string("superCluster().etaWidth"),
 
@@ -58,8 +60,8 @@ EleProbeVariablesToStore = cms.PSet(
     el_5x5_e2x5      = cms.string("full5x5_showerShape().e2x5Max"),
     el_5x5_e5x5      = cms.string("full5x5_showerShape().e5x5"),
     el_5x5_r9        = cms.string("full5x5_showerShape().r9"),
-    el_5x5_sieie     = cms.string("full5x5_showerShape().sigmaIetaIeta"),    
-    el_5x5_sieip     = cms.string("full5x5_showerShape().sigmaIetaIphi"),    
+    el_5x5_sieie     = cms.string("full5x5_showerShape().sigmaIetaIeta"),
+    el_5x5_sieip     = cms.string("full5x5_showerShape().sigmaIetaIphi"),
     el_e1x5          = cms.string("showerShape().e1x5"),
     el_e2x5          = cms.string("showerShape().e2x5Max"),
     el_e5x5          = cms.string("showerShape().e5x5"),
@@ -69,7 +71,7 @@ EleProbeVariablesToStore = cms.PSet(
     el_5x5_circularity = cms.InputTag("eleVarHelper:5x5circularity"),
     el_5x5_hoe       = cms.string("full5x5_hcalOverEcal()"),
 
-    el_hoe           = cms.string("hadronicOverEm()"),    
+    el_hoe           = cms.string("hadronicOverEm()"),
     el_hoe_bc           = cms.string("hcalOverEcalBc"),
     el_eoverp_wES        = cms.string("(superCluster().rawEnergy+superCluster().preshowerEnergy)/gsfTrack().pMode()"),
     el_1overEminus1overP        = cms.string("abs(1-eSuperClusterOverP())/ecalEnergy()"),
@@ -83,7 +85,7 @@ EleProbeVariablesToStore = cms.PSet(
     el_noIsoMVA94XV2     = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV2RawValues"),
     el_IsoMVA94XV2     = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV2RawValues"),
 
-     
+
     #isolation
     el_chIso               = cms.string("pfIsolationVariables().sumChargedHadronPt"),
     el_phoIso              = cms.string("pfIsolationVariables().sumPhotonEt"),
@@ -191,10 +193,10 @@ TagVariablesToStore = cms.PSet(
     Ele_e      = cms.string("energy"),
     Ele_q      = cms.string("charge"),
     Ele_3charge = cms.string("chargeInfo().isGsfCtfScPixConsistent"),
-    
+
     ## super cluster quantities
     sc_e      = cms.string("superCluster.energy"),
-    sc_et     = cms.string("superCluster.energy*sin(superClusterPosition.theta)"),    
+    sc_et     = cms.string("superCluster.energy*sin(superClusterPosition.theta)"),
     sc_eta    = cms.string("-log(tan(superClusterPosition.theta/2))"),
     sc_abseta = cms.string("abs(-log(tan(superCluster.position.theta/2)))"),
 
@@ -207,9 +209,9 @@ TagVariablesToStore = cms.PSet(
 
     Ele_trigMVA       = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV1Values"),
 
-    Ele_noIsoMVA94X   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV1Values"), 
+    Ele_noIsoMVA94X   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV1Values"),
     Ele_IsoMVA94X   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV1Values"),
-    Ele_noIsoMVA94XV2   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV2Values"), 
+    Ele_noIsoMVA94XV2   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17NoIsoV2Values"),
     Ele_IsoMVA94XV2   = cms.InputTag("electronMVAValueMapProducer:ElectronMVAEstimatorRun2Fall17IsoV2Values"),
     )
 
@@ -222,7 +224,7 @@ CommonStuffForGsfElectronProbe = cms.PSet(
 
     addRunLumiInfo   = cms.bool (True),
     pileupInfoTag    = cms.InputTag("slimmedAddPileupInfo"),
-    vertexCollection = cms.InputTag("offlineSlimmedPrimaryVertices"),    
+    vertexCollection = cms.InputTag("offlineSlimmedPrimaryVertices"),
     beamSpot         = cms.InputTag("offlineBeamSpot"),
     addCaloMet       = cms.bool(False),
     pfMet            = cms.InputTag("slimmedMETsPuppi"),
@@ -232,8 +234,8 @@ CommonStuffForGsfElectronProbe = cms.PSet(
     pairFlags     =  cms.PSet(
 #    mass60to120 = cms.string("60 < mass < 120")
         ),
-    tagFlags       =  cms.PSet(),    
-    
+    tagFlags       =  cms.PSet(),
+
     )
 
 CommonStuffForPhotonProbe = CommonStuffForGsfElectronProbe.clone()
@@ -284,4 +286,3 @@ def setupTnPVariablesForAOD():
     del CommonStuffForGsfElectronProbe.variables.el_ecalIso
     del CommonStuffForGsfElectronProbe.variables.el_hcalIso
     del CommonStuffForGsfElectronProbe.variables.el_trkIso
-   
