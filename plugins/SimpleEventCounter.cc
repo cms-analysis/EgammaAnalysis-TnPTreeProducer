@@ -118,11 +118,11 @@ SimpleEventCounter::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
   // To keep track of the sum of weights
   const edm::EDGetTokenT<LHEEventProduct> src_;
-  double totWeight;
+  double weight;
   edm::Handle<LHEEventProduct> EvtHandle;
   iEvent.getByToken(src_,EvtHandle);
-  totWeight=EvtHandle->weights()[0].wgt;
-  h_sumW->Fill(0.5,totWeight);
+  weight=EvtHandle->weights()[0].wgt;
+  h_sumW->Fill(0.5,weight);
 
 }
 

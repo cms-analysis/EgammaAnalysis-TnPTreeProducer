@@ -503,7 +503,7 @@ process.evtCounter = cms.EDAnalyzer("SimpleEventCounter")
 
 process.p = cms.Path(
     process.evtCounter
-    + process.VpTFilter
+#    + process.VpTFilter
     + process.hltFilter
     + process.cand_sequence
     + process.tnpPairs_sequence
