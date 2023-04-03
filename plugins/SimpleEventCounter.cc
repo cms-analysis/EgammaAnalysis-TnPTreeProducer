@@ -29,6 +29,10 @@
 
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
+#include "SimDataFormats/GeneratorProducts/interface/LHEEventProduct.h"
+#include "FWCore/Utilities/interface/InputTag.h"
+
+
 
 #include "TH1F.h"
 
@@ -113,7 +117,12 @@ SimpleEventCounter::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 #endif
 
   // To keep track of the sum of weights
-  h_sumW->Fill(0.5);
+  const edm::EDGetTokenT<LHEEventProduct> src_;
+  double totWeight;
+  edm::Handle<LHEEventProduct> EvtHandle;
+  iEvent.getByToken(src_,EvtHandle);
+  totWeight=EvtHandle->weights()[0].wgt;
+  h_sumW->Fill(0.5,totWeight);
 
 }
 

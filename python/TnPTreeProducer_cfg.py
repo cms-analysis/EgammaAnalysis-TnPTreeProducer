@@ -295,7 +295,7 @@ if not options["useAOD"]:
 # Init and Load
 ###################################################################
 process.options = cms.untracked.PSet(wantSummary=cms.untracked.bool(True))
-<<<<<<< HEAD
+#<<<<<<< HEAD
                                     # SkipEvent = cms.untracked.vstring('ProductNotFound'))
 #ERROR== CMSSW: ----- Begin Fatal Exception 21-Dec-2022 12:50:27 CST-----------------------
 #== CMSSW: An exception of category 'ProductNotFound' occurred while
@@ -314,8 +314,8 @@ process.options = cms.untracked.PSet(wantSummary=cms.untracked.bool(True))
 #== CMSSW:
 #== CMSSW: ----- End Fatal Exception -------------------------------------------------
 #== CMSSW: 21-Dec-2022 12:50:27 CST  Closed file /cms/store/mc/RunIISummer20UL16MiniAODv2/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/MINIAODSIM/106X_mcRun2_asymptotic_v17-v1/2520000/04A698D5-2AF9-B548-9A6D-DB5AFE92F0A6.root
-=======
->>>>>>> d23131fd54f318eb3e0d49c8f725450c32175d50
+#=======
+#>>>>>>> d23131fd54f318eb3e0d49c8f725450c32175d50
 
 process.MessageLogger.cerr.threshold = ""
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
@@ -417,7 +417,7 @@ process.tnpPhoIDs = cms.EDAnalyzer(
     allProbes=cms.InputTag("probePho"),
     flags=cms.PSet(),
 )
-<<<<<<< HEAD
+#<<<<<<< HEAD
 process.VpTFilter   = cms.EDFilter(
     "VpTFilter",
     src = cms.InputTag("externalLHEProducer"),
@@ -425,8 +425,8 @@ process.VpTFilter   = cms.EDFilter(
     VpTMin = cms.double(0)
                         #          cut = cms.string(cut_gen_standard),
 )
-=======
->>>>>>> d23131fd54f318eb3e0d49c8f725450c32175d50
+#=======
+#>>>>>>> d23131fd54f318eb3e0d49c8f725450c32175d50
 
 # ID's to store in the photon ID tree
 # Simply look which probePhoX modules were made in egmPhotonIDModules_cff.py and convert them into a passingX boolean in the tree
@@ -498,18 +498,12 @@ if options["DEBUG"]:
     )
     process.outpath = cms.EndPath(process.out)
 
-<<<<<<< HEAD
-process.evtCounter = cms.EDAnalyzer("SimpleEventCounter",src = cms.InputTag("externalLHEProducer"))
-
-process.p = cms.Path(
-    process.evtCounter
-#    + process.VpTFilter
-=======
+#process.evtCounter = cms.EDAnalyzer("SimpleEventCounter",src = cms.InputTag("externalLHEProducer"))
 process.evtCounter = cms.EDAnalyzer("SimpleEventCounter")
 
 process.p = cms.Path(
     process.evtCounter
->>>>>>> d23131fd54f318eb3e0d49c8f725450c32175d50
+    + process.VpTFilter
     + process.hltFilter
     + process.cand_sequence
     + process.tnpPairs_sequence

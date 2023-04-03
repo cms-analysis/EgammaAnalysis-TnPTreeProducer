@@ -1,0 +1,1 @@
+root://cms-xrd-global.cern.ch//store/test/xrootd/T2_DE_DESY/store/mc/RunIISummer20UL16NanoAODAPVv9/LQToDEle_M-1000_pair_bMassZero_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/50000/49FA601A-4F26-F74C-99E4-A79DA21CB85B.root
