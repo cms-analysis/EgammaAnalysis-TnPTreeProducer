@@ -1,7 +1,7 @@
 #ifndef _ELECTRONVARIABLEHELPER_H
 #define _ELECTRONVARIABLEHELPER_H
 
-#include "FWCore/Framework/interface/EDProducer.h"
+#include "FWCore/Framework/interface/one/EDProducer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/Utilities/interface/InputTag.h"
@@ -35,7 +35,7 @@
 
 
 template <class T>
-class ElectronVariableHelper : public edm::EDProducer {
+class ElectronVariableHelper : public edm::one::EDProducer<>{
  public:
   explicit ElectronVariableHelper(const edm::ParameterSet & iConfig);
   virtual ~ElectronVariableHelper() ;
@@ -264,7 +264,7 @@ void ElectronVariableHelper<T>::produce(edm::Event & iEvent, const edm::EventSet
 	pfLeptonIsolations[i] /= (*probes)[i].pt();
       }
       writeValueMap(iEvent, probes, pfLeptonIsolations, "pfLeptonIsolation");
-    } catch (std::bad_cast){
+    } catch (std::bad_cast const&){
       isMiniAODformat = false;
     }
   }

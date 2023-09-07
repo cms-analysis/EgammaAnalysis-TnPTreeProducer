@@ -6,7 +6,7 @@
 
 // user include files
 #include "FWCore/Framework/interface/Frameworkfwd.h"
-#include "FWCore/Framework/interface/EDProducer.h"
+#include "FWCore/Framework/interface/one/EDProducer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 
@@ -21,7 +21,7 @@
 
 
 template <class T>
-class ElectronMatchedCandidateProducer : public edm::EDProducer {
+class ElectronMatchedCandidateProducer : public edm::one::EDProducer<>{
   
   typedef std::vector<T> TCollection;
   typedef edm::Ref<TCollection> TRef;

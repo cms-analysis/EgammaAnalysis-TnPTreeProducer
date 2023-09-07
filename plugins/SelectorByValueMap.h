@@ -3,7 +3,7 @@
 
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "FWCore/Framework/interface/Frameworkfwd.h"
-#include "FWCore/Framework/interface/EDProducer.h"
+#include "FWCore/Framework/interface/one/EDProducer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
@@ -34,7 +34,7 @@ struct CompatibleConfigurationType<float> {
 };
   
 template <typename T, typename C>
-class SelectorByValueMap : public edm::EDProducer {
+class SelectorByValueMap : public edm::one::EDProducer<>{
 public:
   explicit SelectorByValueMap(edm::ParameterSet const & config);
   

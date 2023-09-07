@@ -17,7 +17,7 @@
 //
 #include <numeric>
 #include "FWCore/Framework/interface/Frameworkfwd.h"
-#include "FWCore/Framework/interface/EDProducer.h"
+#include "FWCore/Framework/interface/one/EDProducer.h"
 
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
@@ -28,7 +28,7 @@
 #include <vector>
 #include <iostream>
 
-class PileupWeightProducer : public edm::EDProducer {
+class PileupWeightProducer : public edm::one::EDProducer<>{
 public:
   explicit PileupWeightProducer(const edm::ParameterSet&);
   ~PileupWeightProducer();

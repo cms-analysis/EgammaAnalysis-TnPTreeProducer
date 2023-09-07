@@ -1,4 +1,4 @@
-#include "FWCore/Framework/interface/EDProducer.h"
+#include "FWCore/Framework/interface/one/EDProducer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/Utilities/interface/InputTag.h"
@@ -187,7 +187,7 @@ namespace{
 
 
 
-class SusyElectronVariableHelper : public edm::EDProducer {
+class SusyElectronVariableHelper : public edm::one::EDProducer<>{
 public:
   explicit SusyElectronVariableHelper(const edm::ParameterSet & iConfig);
   virtual ~SusyElectronVariableHelper() ;

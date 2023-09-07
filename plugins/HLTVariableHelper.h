@@ -1,7 +1,7 @@
 #ifndef HLTVARIABLEHELPER_H
 #define HLTVARIABLEHELPER_H
 
-#include "FWCore/Framework/interface/EDProducer.h"
+#include "FWCore/Framework/interface/one/EDProducer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/Utilities/interface/InputTag.h"
@@ -18,7 +18,7 @@
 #include "EgammaAnalysis/TnPTreeProducer/plugins/WriteValueMap.h"
 
 template <class T>
-class HLTVariableHelper : public edm::EDProducer {
+class HLTVariableHelper : public edm::one::EDProducer<>{
 
   typedef std::vector<T> TCollection;
   typedef edm::Ref<TCollection> TRef;

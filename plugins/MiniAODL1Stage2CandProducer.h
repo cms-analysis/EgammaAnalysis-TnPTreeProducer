@@ -5,7 +5,7 @@
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
-#include "FWCore/Framework/interface/EDProducer.h"
+#include "FWCore/Framework/interface/one/EDProducer.h"
 
 //#include "DataFormats/L1Trigger/interface/L1EmParticle.h"                                                                                                          
 //#include "DataFormats/L1Trigger/interface/L1EmParticleFwd.h"                                                                                                       
@@ -18,7 +18,7 @@
 #include <vector>
 
 template <class T>
-class MiniAODL1Stage2CandProducer : public edm::EDProducer {
+class MiniAODL1Stage2CandProducer : public edm::one::EDProducer<>{
 
   typedef std::vector<T> TCollection;
   typedef edm::Ref<TCollection> TRef;

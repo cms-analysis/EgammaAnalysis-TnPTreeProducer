@@ -5,7 +5,7 @@
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
-#include "FWCore/Framework/interface/EDProducer.h"
+#include "FWCore/Framework/interface/one/EDProducer.h"
 
 #include "FWCore/Common/interface/TriggerNames.h"
 #include "DataFormats/Common/interface/TriggerResults.h"
@@ -25,7 +25,7 @@
 #include <vector>
 
 template <class T, class U>
-class MiniAODTriggerCandProducer : public edm::EDProducer {
+class MiniAODTriggerCandProducer : public edm::one::EDProducer<>{
 
   typedef std::vector<T> TCollection;
   typedef edm::Ref<TCollection> TRef;

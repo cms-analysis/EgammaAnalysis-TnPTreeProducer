@@ -1,7 +1,7 @@
 #ifndef _SCVARIABLEHELPER_H
 #define _SCVARIABLEHELPER_H
 
-#include "FWCore/Framework/interface/EDProducer.h"
+#include "FWCore/Framework/interface/one/EDProducer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/Utilities/interface/InputTag.h"
@@ -17,7 +17,7 @@
 #include "EgammaAnalysis/TnPTreeProducer/plugins/WriteValueMap.h"
 
 template <class T>
-class SCVariableHelper : public edm::EDProducer {
+class SCVariableHelper : public edm::one::EDProducer<>{
  public:
   explicit SCVariableHelper(const edm::ParameterSet & iConfig);
   virtual ~SCVariableHelper() ;

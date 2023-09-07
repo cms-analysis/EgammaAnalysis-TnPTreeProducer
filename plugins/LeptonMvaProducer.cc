@@ -1,4 +1,4 @@
-#include "FWCore/Framework/interface/EDProducer.h"
+#include "FWCore/Framework/interface/one/EDProducer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/Utilities/interface/InputTag.h"
@@ -26,7 +26,7 @@
 /*
  * LeptonMvaProducer class definition
  */
-class LeptonMvaProducer : public edm::EDProducer {
+class LeptonMvaProducer : public edm::one::EDProducer<>{
   public:
     explicit LeptonMvaProducer(const edm::ParameterSet & iConfig);
     virtual ~LeptonMvaProducer(){};

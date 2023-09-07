@@ -3,7 +3,7 @@
 
 #include "FWCore/Framework/interface/MakerMacros.h"
 #include "FWCore/Framework/interface/Frameworkfwd.h"
-#include "FWCore/Framework/interface/EDProducer.h"
+#include "FWCore/Framework/interface/one/EDProducer.h"
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/EventSetup.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
@@ -33,7 +33,7 @@
 //};
   
 template <typename T>
-class Nm1Selector : public edm::EDProducer {
+class Nm1Selector : public edm::one::EDProducer<>{
 public:
   explicit Nm1Selector(edm::ParameterSet const & config);
   
