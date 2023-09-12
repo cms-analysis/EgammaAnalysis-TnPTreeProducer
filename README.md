@@ -1,11 +1,10 @@
 # EgammaAnalysis-TnPTreeProducer
 
-Package of the EGamma group to produce Tag-and-Probe trees
-
+Package of the EGamma group to produce Tag-and-Probe trees. The repository has been updated to be thread safe for the CMSSW_13X releases.
 ```
-cmsrel CMSSW_12_3_6
+cmsrel CMSSW_13_1_0
 
-cd CMSSW_12_3_6/src
+cd CMSSW_13_1_0/src
 
 cmsenv
 
